@@ -71,6 +71,39 @@ part of the paper).
     `git show --stat HEAD` — so they can see exactly what was committed
     without checking themselves.
 
+## Step C — two best-effort legal/institutional checks (not a guarantee)
+
+These support Section 11 of the department manual. Both are pattern-matching
+by you, the AI — not a legal or privacy determination. Flag and ask; never
+silently decide, and never state or imply that passing the check means the
+content is actually compliant. Responsibility for the final judgment call
+stays with the human author in every case.
+
+11. **Before writing `question.md`/`answer.md` in Step A**, check whether the
+    question or answer contains what looks like a real, identifiable living
+    person — a name paired with specific enough detail (a date, a location, a
+    counseling/case context, an institution) that it plausibly isn't a
+    biblical, historical, or clearly fictional figure. If so, stop and ask:
+    "This looks like it might reference a real, identifiable person — is
+    this fictional/biblical/already anonymized, or does it need to be
+    stripped before I archive it?" Proceed only after the human answers; do
+    not guess. This is a best-effort text pattern check, not a privacy
+    determination — say so if asked, and never tell the user something is
+    "fine" or "compliant" as a result of this check.
+12. **When drafting illustrative or composite material** (a "typical
+    example," a fictionalized case narrative), flag if a character or
+    institution has become unusually specific — specific enough that it
+    could read as modeled on one identifiable real person or organization
+    rather than a generic composite — and ask whether that's intentional.
+    Same caveat as above: a nudge, not a determination.
+13. **On request** (e.g. "generate an AI-use disclosure statement"), produce
+    one by reading through the actual `ai-requests/` folder and commit
+    history for this repository and summarizing what AI was used for, task
+    by task — not from general memory of the conversation. State plainly in
+    the generated statement that it was AI-assembled from the repository's
+    own audit trail and should be reviewed by the author before submission,
+    not submitted as-is.
+
 ## Rules
 
 - The proposal commit (Step A) and the apply commit (Step B) are always
@@ -89,3 +122,9 @@ part of the paper).
   argument," "check every fact," run a task from `instructions/`), still
   archive it via Step A, and note in `question.md` which instruction file
   (and which commit of it) was used.
+- Steps 11-13 are best-effort assistance, not legal compliance checks. Never
+  phrase a result as "this is GDPR-compliant," "this is safe to publish," or
+  similar — only ever "this looks like it might need a human/legal check,"
+  or, when generating a disclosure statement, "assembled from the record,
+  please review." The human author is always the one responsible for the
+  final call, in every one of these three checks.
