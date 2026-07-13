@@ -20,7 +20,11 @@ Run, inside this folder:
 git log -p
 ```
 
-You will see five commits:
+You will see five commits that walk through the actual AI-request workflow
+(there will likely be one or two further small commits after these —
+regenerating the HTML rendering of this file, for instance — which are
+ordinary repository maintenance, not part of the workflow being
+demonstrated; `git log` will show them too, but they aren't numbered below):
 
 1. **Repository initialization** — the empty template structure (including
    `CLAUDE.md`), filled in with this specific research question.
