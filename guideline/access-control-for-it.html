@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Access control for research git repositories -- IT
+guidance</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="page">
+<p class="crumbs"><a href="README.html">&larr; back to the department manual</a></p>
+<nav class="toc" role="doc-toc">
+<p>Contents</p>
+<ul>
+<li><a
+href="#access-control-for-research-git-repositories--instructions-for-it"
+id="toc-access-control-for-research-git-repositories--instructions-for-it">Access
+control for research git repositories — instructions for IT</a>
+<ul>
+<li><a href="#the-core-rule" id="toc-the-core-rule">The core
+rule</a></li>
+<li><a
+href="#if-repositories-live-in-a-shared-folder-sync-tool-dropbox-onedrive-etc"
+id="toc-if-repositories-live-in-a-shared-folder-sync-tool-dropbox-onedrive-etc">If
+repositories live in a shared folder-sync tool (Dropbox, OneDrive,
+etc.)</a></li>
+<li><a
+href="#if-repositories-live-on-a-shared-git-server-self-hosted-gitlabgitea-githubgitlab-organization-etc"
+id="toc-if-repositories-live-on-a-shared-git-server-self-hosted-gitlabgitea-githubgitlab-organization-etc">If
+repositories live on a shared git server (self-hosted GitLab/Gitea,
+GitHub/GitLab organization, etc.)</a></li>
+<li><a
+href="#granting-a-supervisor-or-examiner-access-to-one-specific-repository-a-worked-procedure"
+id="toc-granting-a-supervisor-or-examiner-access-to-one-specific-repository-a-worked-procedure">Granting
+a supervisor or examiner access to one specific repository (a worked
+procedure)</a></li>
+<li><a
+href="#supporting-the-tooling-itself-hooks-shell-and-account-tier"
+id="toc-supporting-the-tooling-itself-hooks-shell-and-account-tier">Supporting
+the tooling itself: hooks, shell, and account tier</a></li>
+<li><a href="#when-someone-leaves-the-department"
+id="toc-when-someone-leaves-the-department">When someone leaves the
+department</a></li>
+<li><a href="#the-norms-layer-not-just-the-technical-one"
+id="toc-the-norms-layer-not-just-the-technical-one">The norms layer, not
+just the technical one</a></li>
+<li><a href="#quick-checklist-for-a-new-repository-hostshare"
+id="toc-quick-checklist-for-a-new-repository-hostshare">Quick checklist
+for a new repository host/share</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="access-control-for-research-git-repositories--instructions-for-it">Access
+control for research git repositories — instructions for IT</h1>
+<p>Audience: whoever administers storage/hosting for the department's
+research repositories (Section 12 of <code>README.md</code>: every
+researcher gets their own git repository per topic). This document
+exists for one reason: <strong>a repository under this workflow contains
+a researcher's raw, unpublished thinking — every question, every
+rejected hypothesis, every wrong turn — not just a finished
+paper.</strong> An idea sitting unpublished in someone else's
+<code>ai-requests/</code> folder or <code>paper.md</code> draft is
+exactly as real, and exactly as theirs, as a physical notebook, and
+needs the same expectation of privacy a physical notebook would get.
+This document is about preventing two related but distinct risks:
+another researcher (or an administrator without a need to) reading
+someone else's unpublished ideas before they're ready to be shared, and
+a technical setup that makes that easy to do by accident, not just by
+malice.</p>
+<h2 id="the-core-rule">The core rule</h2>
+<p><strong>Private by default, one owner, access granted deliberately —
+never a shared space where everyone can read everyone else's
+repository.</strong> This follows directly from Section 12's "everyone
+gets their own git repository space": that only works as a privacy
+boundary if it's enforced technically, not just described in a
+manual.</p>
+<h2
+id="if-repositories-live-in-a-shared-folder-sync-tool-dropbox-onedrive-etc">If
+repositories live in a shared folder-sync tool (Dropbox, OneDrive,
+etc.)</h2>
+<p>This is the setup already in use for some of this department's work,
+and it is the easiest one to get wrong by accident, because the failure
+mode is silent: a parent folder shared with a whole team, with every
+researcher's subfolder nested underneath, gives everyone in that share
+read access to everyone else's unpublished thinking by default — no one
+has to do anything wrong for this to happen; it's the default shape of
+"one shared folder tree."</p>
+<ul>
+<li><strong>Each researcher's topic-repository folder should be its own
+share, not a subfolder of one big shared team folder.</strong> If the
+sync tool supports folder-level sharing (Dropbox and OneDrive both do),
+share at the level of the individual repository, with only the people
+who actually need access (the researcher, and anyone they've explicitly
+added) — not at the level of a department-wide folder that happens to
+contain everyone's repositories as subfolders.</li>
+<li><strong>Audit existing shared folder trees for this specific
+mistake</strong> — a folder like <code>Bibel/</code> shared broadly,
+with individual researchers' work nested inside it, is the pattern to
+look for and correct.</li>
+<li><strong>A synced folder is not a substitute for git-level access
+control</strong> even once scoped correctly — see below for what to do
+when repositories are also hosted on a git server.</li>
+</ul>
+<h2
+id="if-repositories-live-on-a-shared-git-server-self-hosted-gitlabgitea-githubgitlab-organization-etc">If
+repositories live on a shared git server (self-hosted GitLab/Gitea,
+GitHub/GitLab organization, etc.)</h2>
+<ul>
+<li><strong>Every topic repository defaults to private, owned by the
+individual researcher</strong>, not created inside a department-wide
+group/organization with broad member read access. If your platform's
+org-level default is "all members can read all repos," override it
+per-repository or restructure so personal research repos live outside
+that org.</li>
+<li><strong>Collaborator access (an advisor, an examiner) is added
+explicitly, per repository, by the owner</strong> — not granted
+automatically to a role (e.g. "all faculty can read all student repos").
+A supervisor who needs to see a specific student's work gets added to
+that specific repository, ideally for a specific period (a supervision
+meeting, a submission window), not standing indefinite access to every
+repository that student will ever create.</li>
+<li><strong>Authentication</strong>: SSH keys or platform-enforced
+two-factor authentication for all accounts with repository access — this
+is a standard baseline for any private-repository setup, not something
+specific to this workflow, but worth confirming it's actually enforced
+rather than optional.</li>
+<li><strong>IT/admin accounts should not have blanket standing read
+access to every private repository "for convenience."</strong> Where an
+admin-level bypass is technically necessary (backups, platform
+maintenance), it should be logged/audited — the same audit-trail
+philosophy this manual applies to research claims (Section 12) applies
+to <em>access</em> to that research: if someone with elevated access did
+read a private repository, there should be a record of it.</li>
+<li><strong>Backups preserve the same access restrictions as the live
+system.</strong> A backup console or restore tool that any admin can
+browse defeats per-repository privacy just as thoroughly as a
+misconfigured live share would, and is easy to overlook because it isn't
+the system anyone thinks of as "the repository."</li>
+</ul>
+<h2
+id="granting-a-supervisor-or-examiner-access-to-one-specific-repository-a-worked-procedure">Granting
+a supervisor or examiner access to one specific repository (a worked
+procedure)</h2>
+<p>This is the concrete version of the "collaborator access added
+explicitly, per repository" rule above, for the single most common real
+case: a supervisor or examiner needs to read a student's thesis
+repository — including its <code>ai-requests/</code> history — while
+supervising or grading it.</p>
+<ol type="1">
+<li><strong>Confirm the request is scoped to one specific
+repository.</strong> One topic is one repository (Section 12), so a
+thesis's git history is already naturally isolated from that student's
+other, unrelated topic repositories. Never grant access to "all of this
+student's repositories" for a request that is actually about one piece
+of work.</li>
+<li><strong>Add the supervisor/examiner as a read-only collaborator on
+that one repository</strong> — write access only if they are actually
+expected to make edits themselves.</li>
+<li><strong>Set an end date wherever the platform supports time-boxed
+access</strong> (several enterprise git-hosting tiers support expiring
+repository membership). If yours doesn't, set a calendar reminder to
+revoke access once the examination period ends, and log the revocation
+date.</li>
+<li><strong>Give the student the notice below at or before the point
+access is granted, not after the fact.</strong> This is what actually
+settles the concern raised in Section 11.6: the student knows exactly
+who can see the repository, why, and for how long, <em>before</em> it
+happens — not informed after the fact, and not left to assume the
+worst.</li>
+</ol>
+<h3
+id="notice-of-access-statement-fill-in-and-give-to-the-student">Notice-of-access
+statement (fill in and give to the student)</h3>
+<blockquote>
+<p><strong>Notice of repository access</strong> <strong>Granted
+to:</strong> <em>[supervisor/examiner name and role]</em>
+<strong>Repository:</strong> <em>[this one topic repository, named
+explicitly — not "all repositories"]</em> <strong>Purpose:</strong>
+<em>[e.g. "thesis supervision meeting on [date]" or "formal examination
+of the submitted thesis"]</em> <strong>What will be reviewed:</strong>
+the final paper and the <code>ai-requests/</code> / commit history
+behind it, evaluated against the department's stated norm of assessing
+the work and the diligence of its fact-checking — <strong>not</strong>
+used to judge exploratory questions, naive early attempts, or rejected
+hypotheses found in the history (Section 11.6). <strong>Access
+period:</strong> <em>[start date]</em> to <em>[end date]</em>; access is
+revoked after this date unless renewed with a new notice. <strong>Your
+rights:</strong> you may ask <em>[data protection contact]</em> what was
+accessed and when. This access is limited to the repository named above
+and does not extend to any other repository you maintain.</p>
+</blockquote>
+<p>Keep a copy of every completed notice (who, which repository, why,
+for how long) in the department's own access log — the human-readable
+twin of the technical audit log this document asks IT to keep for
+admin/backup access above. Together, the two mean that <em>every</em>
+access to a private repository — by a supervisor or by an administrator
+— has a record of who, why, and for how long, matching the same
+audit-trail standard this manual holds research claims to (Section
+12).</p>
+<h2
+id="supporting-the-tooling-itself-hooks-shell-and-account-tier">Supporting
+the tooling itself: hooks, shell, and account tier</h2>
+<p>The workflow described in <code>README.md</code> and
+<code>templates/new-topic-repo/</code> now depends on a few things
+actually working on each researcher's machine that go beyond "git is
+installed." None of these are optional extras — without them, features
+the manual describes as automatic silently don't run, which is worse
+than not having them, since nobody notices.</p>
+<ul>
+<li><strong>A POSIX shell must be available.</strong>
+<code>scripts/check-repo-invariants.sh</code> and the
+<code>.claude/settings.json</code> hook that runs it are shell scripts
+(<code>bash</code>, <code>grep</code>, <code>sed</code>). On Windows
+machines this means <strong>Git for Windows</strong> (which bundles Git
+Bash) needs to actually be part of the standard department machine
+image, not just any git client — a GUI-only git installation without Git
+Bash leaves these scripts with nothing to run them.</li>
+<li><strong>Don't let a managed/enterprise Claude Code configuration
+silently disable project-level hooks.</strong> If IT deploys a
+centrally-managed configuration (an admin policy file), check it doesn't
+set <code>disableAllHooks: true</code> or
+<code>allowManagedHooksOnly: true</code> — either would silently stop
+the <code>.claude/settings.json</code> hook (Section 18) from ever
+running, with no error a student would notice; the invariant check would
+just quietly never fire.</li>
+<li><strong>A hook added to <code>.claude/settings.json</code>
+<em>after</em> a project's first session may need a manual reload to
+take effect</strong> (opening the <code>/hooks</code> menu once, or
+restarting) — a known quirk of how the underlying tool watches for new
+settings files. This does not affect the department template itself
+(<code>.claude/settings.json</code> ships inside
+<code>templates/new-topic-repo/</code> from the start, so it's present
+before any session begins), but is worth knowing if IT or a student adds
+a hook to an <em>existing</em>, already-in-use repository later.</li>
+<li><strong>Provision Claude for Education/Work/Enterprise accounts
+department-wide rather than leaving individuals on personal consumer
+accounts.</strong> This is the concrete action behind
+<code>README.md</code> Section 11.4's recommendation: a commercial-tier
+account is what actually makes "not used for model training by default"
+true, with no per-user toggle to forget. Leaving this to individual
+students to opt out of on a personal account is a weaker default than IT
+provisioning the right account tier centrally.</li>
+<li><strong>The new review-comment mechanism (<code>TODO.md</code>
+entries for Step C/D flags, README.md Section 18) needs no new IT
+infrastructure at all</strong> — it's the same plain Markdown file
+already covered by the access controls above. Worth stating explicitly
+so this document's scope stays clear: everything in this section is
+about what makes the <em>tooling</em> run, not an expansion of what
+needs to be secured or provisioned beyond it.</li>
+</ul>
+<h2 id="when-someone-leaves-the-department">When someone leaves the
+department</h2>
+<ul>
+<li><strong>Revoke access promptly</strong> — a departing student or
+staff member's collaborator access to others' repositories should be
+removed as part of offboarding, not left to lapse naturally.</li>
+<li><strong>Decide and document, in advance, who owns a repository after
+its creator leaves.</strong> The researcher's own unpublished ideas
+remain theirs; give departing researchers a clear, simple way to export
+or retain their own repositories (a <code>git clone</code> of their own
+work is enough) rather than leaving ownership ambiguous.</li>
+</ul>
+<h2 id="the-norms-layer-not-just-the-technical-one">The norms layer, not
+just the technical one</h2>
+<p>Technical access control only works alongside a stated policy that
+<strong>reading a colleague's private repository without being
+explicitly granted access is a policy violation</strong>, equivalent to
+reading someone's private notebook, regardless of whether it happens to
+be technically reachable (a misconfigured share, a forgotten
+permission). Publish this as an explicit, short policy statement, not
+just an assumption — the easiest way for an idea to be "read" before its
+author is ready is a technical default nobody thought to check, not a
+deliberate act, which is exactly why the defaults in this document
+matter more than any single rule about intent.</p>
+<h2 id="quick-checklist-for-a-new-repository-hostshare">Quick checklist
+for a new repository host/share</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Private by default, one owner per
+topic repository</label></li>
+<li><label><input type="checkbox" />No department-wide folder or group
+grants blanket read access to individual research
+repositories</label></li>
+<li><label><input type="checkbox" />Collaborator access added
+explicitly, per repository, by the owner</label></li>
+<li><label><input type="checkbox" />SSH keys or 2FA enforced for all
+accounts with any repository access</label></li>
+<li><label><input type="checkbox" />Admin/backup access to private
+repository contents is logged</label></li>
+<li><label><input type="checkbox" />Offboarding process includes prompt
+revocation and clear ownership handoff</label></li>
+<li><label><input type="checkbox" />A short, published policy states
+that reading a colleague's private repository without granted access is
+a violation, independent of technical reachability</label></li>
+<li><label><input type="checkbox" />Git for Windows (with Git Bash) is
+part of the standard machine image, not just a GUI git
+client</label></li>
+<li><label><input type="checkbox" />Managed AI-tool configuration
+doesn't set <code>disableAllHooks</code> or
+<code>allowManagedHooksOnly</code>, which would silently stop the
+department's invariant-check hook from running</label></li>
+<li><label><input type="checkbox" />Department-wide Claude for
+Education/Work/Enterprise accounts are provisioned, rather than leaving
+individuals on personal consumer accounts</label></li>
+</ul>
+</div>
+</body>
+</html>

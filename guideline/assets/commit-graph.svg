@@ -1,0 +1,46 @@
+<svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" color="var(--fg, #1b1f23)">
+  <style>
+    .line { stroke: currentColor; stroke-width: 2; opacity: .55; }
+    .dot { fill: currentColor; }
+    .hash { font-size: 13px; fill: currentColor; opacity: .75; }
+    .msg { font-size: 14px; fill: currentColor; }
+    .badge-bg { fill: color-mix(in srgb, currentColor 12%, transparent); stroke: currentColor; stroke-width: 1; }
+    .badge-txt { font-size: 11px; fill: currentColor; }
+  </style>
+
+  <line x1="30" y1="30" x2="30" y2="390" class="line"/>
+
+  <!-- commit 1 -->
+  <circle cx="30" cy="30" r="6" class="dot"/>
+  <text x="55" y="26" class="hash">bb4e585</text>
+  <text x="55" y="46" class="msg">Initialize revelation-dating research repository</text>
+  <rect x="55" y="58" width="66" height="20" rx="10" class="badge-bg"/>
+  <text x="88" y="72" text-anchor="middle" class="badge-txt">init</text>
+
+  <!-- commit 2 -->
+  <circle cx="30" cy="120" r="6" class="dot"/>
+  <text x="55" y="116" class="hash">779d25b</text>
+  <text x="55" y="136" class="msg">Archive AI answer: dating-debate-overview</text>
+  <rect x="55" y="148" width="90" height="20" rx="10" class="badge-bg"/>
+  <text x="100" y="162" text-anchor="middle" class="badge-txt">proposal</text>
+
+  <!-- commit 3 -->
+  <circle cx="30" cy="210" r="6" class="dot"/>
+  <text x="55" y="206" class="hash">09fdca8</text>
+  <text x="55" y="226" class="msg">Draft dating-debate section from AI answer 0001</text>
+  <rect x="55" y="238" width="66" height="20" rx="10" class="badge-bg"/>
+  <text x="88" y="252" text-anchor="middle" class="badge-txt">apply</text>
+
+  <!-- commit 4 -->
+  <circle cx="30" cy="300" r="6" class="dot"/>
+  <text x="55" y="296" class="hash">7a7a220</text>
+  <text x="55" y="316" class="msg">Fact-check request 0001: confirm Irenaeus, catch</text>
+  <text x="55" y="334" class="msg">fabricated Thornbury cite</text>
+  <rect x="55" y="346" width="92" height="20" rx="10" class="badge-bg"/>
+  <text x="101" y="360" text-anchor="middle" class="badge-txt">fact-check</text>
+
+  <!-- commit 5 -->
+  <circle cx="30" cy="390" r="6" class="dot"/>
+  <text x="55" y="386" class="hash">cd47cc8</text>
+  <text x="55" y="406" class="msg">Add legal-check steps to CLAUDE.md + invariant script</text>
+</svg>

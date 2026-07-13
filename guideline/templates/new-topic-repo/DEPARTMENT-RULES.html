@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template: DEPARTMENT-RULES.md</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="page">
+<p class="crumbs"><a href="../../README.html">&larr; back to the department manual</a></p>
+<h1 id="departmentprogram-specific-rules">Department/program-specific
+rules</h1>
+<p><strong>For department administrators:</strong> fill this file in
+once, here in the template
+(<code>templates/new-topic-repo/DEPARTMENT-RULES.md</code>), before
+distributing it further. Every new topic repository created from
+<code>cp -r templates/new-topic-repo ...</code> (see
+<code>README.md</code> Section 16) inherits whatever this file says
+<em>at the time it's copied</em> — that's the whole mechanism, no
+separate installation step. If your rules change later, existing
+repositories keep the version they were created with (a feature, not a
+bug — see Section 17 of the manual on why silently changing a standing
+instruction after the fact is worse than a stale one you can see).</p>
+<p><strong>For students/researchers:</strong> this file, if your copy
+has one filled in, adds to — and can only <em>tighten</em>, never loosen
+— the default process in the main manual (<code>../../README.md</code>).
+Read it before your first AI request in this repository. Your AI
+assistant is instructed (see <code>CLAUDE.md</code>, Step 0) to read and
+follow it automatically.</p>
+<hr />
+<h2 id="how-to-write-a-rule-here-so-the-ai-can-actually-act-on-it">How
+to write a rule here so the AI can actually act on it</h2>
+<p>Same discipline as Section 7 of the manual applies to writing rules,
+not just questions: a rule the AI can act on is specific and checkable.
+Compare:</p>
+<ul>
+<li>Good: <em>"All citations must use SBL (Society of Biblical
+Literature) style, not Chicago or MLA."</em> — checkable against a
+specific named standard.</li>
+<li>Bad: <em>"Cite properly."</em> — not actionable; "properly" by whose
+standard?</li>
+<li>Good: <em>"For any assignment marked <code>[no-AI]</code> in its own
+instructions, do not use this workflow at all — write and research
+without AI assistance, full stop."</em></li>
+<li>Bad: <em>"Use good judgment about when AI is appropriate."</em> —
+pushes a judgment call onto the AI that only the instructor can actually
+make.</li>
+</ul>
+<p>A rule that only a human can evaluate (e.g. "make sure the argument
+is theologically sound") isn't wrong to state, but say so plainly — mark
+it as something the AI should flag for human judgment, not something it
+can verify itself (this mirrors Section 11.7's three-way split:
+scriptable, AI-pattern-check, or human-only).</p>
+<hr />
+<h2
+id="example-department-rules-replace-this-whole-section-with-your-own">Example
+department rules (replace this whole section with your own)</h2>
+<p><em>(The block below is a worked example, not a real policy — delete
+or replace it entirely when adopting this template. It's here so a
+first-time department administrator has a concrete shape to copy, per
+Section 6.2's "specify the exact format" advice applied to writing rules
+about rules.)</em></p>
+<h3 id="citation-style">Citation style</h3>
+<p>All citations in <code>paper.md</code> and any generated book/paper
+must use <strong>SBL style</strong> (Society of Biblical Literature
+Handbook of Style). If an AI answer suggests a citation in a different
+format, reformat it before adding it to <code>sources.md</code> — this
+is mechanical enough that the AI can do it itself.</p>
+<h3 id="language-requirements">Language requirements</h3>
+<p>Seminar papers: English or German, either is acceptable. Thesis
+submissions: German only, with an English abstract. If a draft is in the
+wrong language for its target, flag it — don't translate it
+automatically, since translation choices for a thesis are the student's
+own to make deliberately (Section 5).</p>
+<h3 id="per-assignment-ai-permission">Per-assignment AI permission</h3>
+<p>Check the specific assignment instructions for an explicit AI policy
+tag before starting:</p>
+<ul>
+<li><code>[ai-ok]</code> — this workflow applies as described in the
+main manual.</li>
+<li><code>[ai-disclosed-only]</code> — AI assistance is allowed but must
+be disclosed in a dedicated section of the final submission, generated
+from <code>ai-requests/</code> per Section 6 of the manual.</li>
+<li><code>[no-ai]</code> — do not use this workflow, or any AI
+assistance, for this specific piece of work. If no tag is present, treat
+the assignment as <code>[ai-disclosed-only]</code> by default, and ask
+the instructor to confirm if genuinely unclear — never assume
+<code>[ai-ok]</code> by default.</li>
+</ul>
+<h3 id="stricter-fact-checking-for-capstonethesis-work">Stricter
+fact-checking for capstone/thesis work</h3>
+<p>For any repository whose <code>README.md</code> describes itself as a
+thesis or capstone (not a regular seminar paper), every claim central to
+the argument must reach at least "Moderately attested" (Section 6.5)
+before submission — "Proposed, plausible" is not sufficient for a claim
+the thesis's own conclusion depends on. Regular seminar papers follow
+the manual's normal minimum bar (checked or logged in
+<code>TODO.md</code>) without this stricter threshold.</p>
+<h3 id="additional-required-disclosure-text">Additional required
+disclosure text</h3>
+<p>Beyond the standard disclosure statement (<code>CLAUDE.md</code> Step
+C, item 13), this program requires the exact sentence: <em>"Generative
+AI was used in the preparation of this work in accordance with
+[Department]'s AI-use policy, version [X], and a full record of its use
+is available on request."</em> Append this verbatim to any generated
+disclosure statement before submission.</p>
+</div>
+</body>
+</html>

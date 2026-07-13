@@ -1,0 +1,60 @@
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" color="var(--fg, #1b1f23)">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.6; }
+    .box-a { fill: color-mix(in srgb, currentColor 10%, transparent); }
+    .box-b { fill: color-mix(in srgb, currentColor 6%, transparent); }
+    .lbl { font-size: 15px; fill: currentColor; }
+    .lbl-b { font-size: 12.5px; fill: currentColor; opacity: .85; }
+    .step { font-size: 12px; fill: currentColor; opacity: .7; }
+    .edge { stroke: currentColor; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    .diamond { fill: color-mix(in srgb, currentColor 10%, transparent); stroke: currentColor; stroke-width: 1.6; }
+  </style>
+
+  <!-- Ask -->
+  <rect x="330" y="10" width="240" height="46" rx="8" class="box box-a"/>
+  <text x="450" y="38" text-anchor="middle" class="lbl">1. Ask the AI a question</text>
+
+  <line x1="450" y1="56" x2="450" y2="90" class="edge"/>
+
+  <!-- Step A: proposal -->
+  <rect x="260" y="90" width="380" height="90" rx="8" class="box box-a"/>
+  <text x="450" y="114" text-anchor="middle" class="lbl">Step A — Proposal commit</text>
+  <text x="450" y="136" text-anchor="middle" class="lbl-b">question.md + answer.md archived verbatim</text>
+  <text x="450" y="155" text-anchor="middle" class="step">committed immediately — nothing decided yet</text>
+
+  <line x1="450" y1="180" x2="450" y2="214" class="edge"/>
+
+  <!-- Decision diamond -->
+  <polygon points="450,214 560,264 450,314 340,264" class="diamond"/>
+  <text x="450" y="258" text-anchor="middle" class="lbl">Apply it?</text>
+  <text x="450" y="278" text-anchor="middle" class="step">(explicit yes / no / not now)</text>
+
+  <!-- No branch -->
+  <line x1="340" y1="264" x2="120" y2="264" class="edge"/>
+  <text x="230" y="252" text-anchor="middle" class="step">no / not now</text>
+  <rect x="20" y="240" width="200" height="50" rx="8" class="box box-b"/>
+  <text x="120" y="270" text-anchor="middle" class="lbl-b">Done — proposal stands</text>
+
+  <!-- Yes branch -->
+  <line x1="450" y1="314" x2="450" y2="350" class="edge"/>
+  <text x="470" y="335" class="step">yes</text>
+
+  <!-- Step B: apply -->
+  <rect x="240" y="350" width="420" height="110" rx="8" class="box box-a"/>
+  <text x="450" y="374" text-anchor="middle" class="lbl">Step B — Apply commit</text>
+  <text x="450" y="396" text-anchor="middle" class="lbl-b">paper.md / sources.md updated; every claim</text>
+  <text x="450" y="414" text-anchor="middle" class="lbl-b">defaults to NOT YET CHECKED in TODO.md</text>
+  <text x="450" y="435" text-anchor="middle" class="step">one optional question: "anything to add?" — not a checklist</text>
+
+  <line x1="450" y1="460" x2="450" y2="494" class="edge"/>
+
+  <!-- Fact-check -->
+  <rect x="240" y="494" width="420" height="58" rx="8" class="box box-a"/>
+  <text x="450" y="518" text-anchor="middle" class="lbl">Later — Fact-check commit(s)</text>
+  <text x="450" y="538" text-anchor="middle" class="lbl-b">checks off TODO.md items, whenever they actually get checked</text>
+</svg>

@@ -1,0 +1,1819 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working with AI in Theological Research and Paper Writing</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="page">
+<nav class="toc" role="doc-toc">
+<p>Contents</p>
+<ul>
+<li><a href="#working-with-ai-in-theological-research-and-paper-writing"
+id="toc-working-with-ai-in-theological-research-and-paper-writing">Working
+with AI in Theological Research and Paper Writing</a>
+<ul>
+<li><a href="#how-to-read-this-manual-guideline-vs-best-practices"
+id="toc-how-to-read-this-manual-guideline-vs-best-practices">How to read
+this manual: guideline vs. best practices</a></li>
+<li><a href="#table-of-contents" id="toc-table-of-contents">Table of
+contents</a></li>
+<li><a href="#1-why-this-process-exists"
+id="toc-1-why-this-process-exists">1. Why this process exists</a></li>
+<li><a href="#2-how-ai-language-models-actually-work"
+id="toc-2-how-ai-language-models-actually-work">2. How AI language
+models actually work</a></li>
+<li><a href="#3-what-hallucination-is-and-why-you-must-check-everything"
+id="toc-3-what-hallucination-is-and-why-you-must-check-everything">3.
+What hallucination is, and why you must check everything</a></li>
+<li><a href="#4-what-ai-is-genuinely-good-for"
+id="toc-4-what-ai-is-genuinely-good-for">4. What AI is genuinely good
+for</a></li>
+<li><a
+href="#5-division-of-labor-what-you-contribute-what-ai-contributes"
+id="toc-5-division-of-labor-what-you-contribute-what-ai-contributes">5.
+Division of labor: what you contribute, what AI contributes</a></li>
+<li><a href="#6-six-techniques-worth-adopting-deliberately"
+id="toc-6-six-techniques-worth-adopting-deliberately">6. Six techniques
+worth adopting deliberately</a></li>
+<li><a
+href="#7-writing-good-research-questions-what-separates-a-good-prompt-from-a-bad-one"
+id="toc-7-writing-good-research-questions-what-separates-a-good-prompt-from-a-bad-one">7.
+Writing good research questions: what separates a good prompt from a bad
+one</a></li>
+<li><a
+href="#8-recognizing-flawed-ai-answers-and-feeding-that-back-into-better-prompts"
+id="toc-8-recognizing-flawed-ai-answers-and-feeding-that-back-into-better-prompts">8.
+Recognizing flawed AI answers and feeding that back into better
+prompts</a></li>
+<li><a href="#9-using-more-than-one-ai-to-cover-each-others-blind-spots"
+id="toc-9-using-more-than-one-ai-to-cover-each-others-blind-spots">9.
+Using more than one AI to cover each other's blind spots</a></li>
+<li><a href="#10-cost-awareness-using-ai-economically"
+id="toc-10-cost-awareness-using-ai-economically">10. Cost awareness:
+using AI economically</a></li>
+<li><a href="#11-legal-and-institutional-considerations"
+id="toc-11-legal-and-institutional-considerations">11. Legal and
+institutional considerations</a></li>
+<li><a
+href="#12-configuration-management-setup-repositories-and-folders"
+id="toc-12-configuration-management-setup-repositories-and-folders">12.
+Configuration Management setup: repositories and folders</a></li>
+<li><a
+href="#13-collaborative-work-co-authorship-and-supervision-feedback"
+id="toc-13-collaborative-work-co-authorship-and-supervision-feedback">13.
+Collaborative work: co-authorship and supervision feedback</a></li>
+<li><a href="#14-the-request--document--commit--fact-check-workflow"
+id="toc-14-the-request--document--commit--fact-check-workflow">14. The
+request → document → commit → fact-check workflow</a></li>
+<li><a href="#15-commit-message-template"
+id="toc-15-commit-message-template">15. Commit message template</a></li>
+<li><a href="#16-file-and-folder-naming-conventions"
+id="toc-16-file-and-folder-naming-conventions">16. File and folder
+naming conventions</a></li>
+<li><a href="#17-using-the-template" id="toc-17-using-the-template">17.
+Using the template</a></li>
+<li><a href="#18-introducing-department--or-program-specific-rules"
+id="toc-18-introducing-department--or-program-specific-rules">18.
+Introducing department- or program-specific rules</a></li>
+<li><a href="#19-worked-example" id="toc-19-worked-example">19. Worked
+example</a></li>
+<li><a href="#20-quick-checklist" id="toc-20-quick-checklist">20. Quick
+checklist</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="working-with-ai-in-theological-research-and-paper-writing">Working
+with AI in Theological Research and Paper Writing</h1>
+<p>A manual for the department: colleagues and students, on how to use
+AI assistance responsibly and traceably when writing papers and doing
+research, organized with standard software Configuration Management (CM)
+practice — i.e. git.</p>
+<p>This manual is the entry point. It links to a copyable
+<strong>template repository</strong>
+(<code>templates/new-topic-repo/</code>), a <strong>worked
+example</strong> (<code>example/</code>) that shows the whole process on
+a small, real research question with real git commits, <a
+href="access-control-for-it.md"><code>access-control-for-it.md</code></a>
+(IT-facing guidance on keeping each researcher's repository private by
+default), and <a
+href="tutorial-git-markdown-pdf.md"><code>tutorial-git-markdown-pdf.md</code></a>
+(a beginner's walkthrough of git, Markdown, and producing a
+properly-cited PDF from your draft — start there if any of those are new
+to you).</p>
+<hr />
+<h2 id="how-to-read-this-manual-guideline-vs-best-practices">How to read
+this manual: guideline vs. best practices</h2>
+<p>Not everything below carries the same weight, and treating a good
+idea as if it were a rule (or a rule as if it were just a suggestion) is
+its own kind of mistake. Three categories, used consistently
+throughout:</p>
+<ul>
+<li>🔵 <strong>Context</strong> — background you need to understand
+<em>why</em> the guideline looks the way it does. Not itself a checklist
+item.</li>
+<li>🟢 <strong>Best practice</strong> — recommended, genuinely useful,
+but a judgment call: adapt or skip based on the situation.</li>
+<li>🔴 <strong>Guideline (required)</strong> — the actual process: the
+repository structure, the commit discipline, the legal/compliance
+points, the checklist. This is what "following this manual" means in
+practice.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Section</th>
+<th>Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Why this process exists</td>
+<td>🔵 Context</td>
+</tr>
+<tr>
+<td>2</td>
+<td>How AI language models actually work</td>
+<td>🔵 Context</td>
+</tr>
+<tr>
+<td>3</td>
+<td>What hallucination is, and why you must check everything</td>
+<td>🔵 Context</td>
+</tr>
+<tr>
+<td>4</td>
+<td>What AI is genuinely good for</td>
+<td>🔵 Context</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Division of labor: what you contribute, what AI contributes</td>
+<td>🔵 Context</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Six techniques worth adopting deliberately</td>
+<td>🟢 Best practice (except 6.6, which is 🔴 required — Section 14
+depends on it)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Writing good research questions</td>
+<td>🟢 Best practice</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Recognizing flawed AI answers and feeding that back into better
+prompts</td>
+<td>🟢 Best practice</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Using more than one AI to cover each other's blind spots</td>
+<td>🟢 Best practice</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Cost awareness: using AI economically</td>
+<td>🟢 Best practice</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Legal and institutional considerations</td>
+<td>🔴 Required</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Configuration Management setup: repositories and folders</td>
+<td>🔴 Required</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Collaborative work: co-authorship and supervision feedback</td>
+<td>🔴 Required (when applicable)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>The request → document → commit → fact-check workflow</td>
+<td>🔴 Required</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Commit message template</td>
+<td>🔴 Required</td>
+</tr>
+<tr>
+<td>16</td>
+<td>File and folder naming conventions</td>
+<td>🔴 Required</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Using the template</td>
+<td>🔴 Required</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Introducing department- or program-specific rules</td>
+<td>🔴 Required (when applicable)</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Worked example</td>
+<td>🔵 Context (illustrative, not itself a rule)</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Quick checklist</td>
+<td>🔴 Required</td>
+</tr>
+</tbody>
+</table>
+<p>In short: if you only have time to actually <em>follow</em>
+something, that's Sections 11–18 and 20 (plus 6.6). Sections 1–5, 19
+explain the reasoning; Sections 6 (mostly), 7, 8, 9, 10 make you
+noticeably better at this without being things a supervisor should check
+you did.</p>
+<h2 id="table-of-contents">Table of contents</h2>
+<ol type="1">
+<li><a href="#1-why-this-process-exists">Why this process exists</a>
+🔵</li>
+<li><a href="#2-how-ai-language-models-actually-work">How AI language
+models actually work</a> 🔵</li>
+<li><a
+href="#3-what-hallucination-is-and-why-you-must-check-everything">What
+hallucination is, and why you must check everything</a> 🔵</li>
+<li><a href="#4-what-ai-is-genuinely-good-for">What AI is genuinely good
+for</a> 🔵</li>
+<li><a
+href="#5-division-of-labor-what-you-contribute-what-ai-contributes">Division
+of labor: what you contribute, what AI contributes</a> 🔵</li>
+<li><a href="#6-six-techniques-worth-adopting-deliberately">Six
+techniques worth adopting deliberately</a> 🟢</li>
+<li><a
+href="#7-writing-good-research-questions-what-separates-a-good-prompt-from-a-bad-one">Writing
+good research questions: what separates a good prompt from a bad one</a>
+🟢</li>
+<li><a
+href="#8-recognizing-flawed-ai-answers-and-feeding-that-back-into-better-prompts">Recognizing
+flawed AI answers and feeding that back into better prompts</a> 🟢</li>
+<li><a
+href="#9-using-more-than-one-ai-to-cover-each-others-blind-spots">Using
+more than one AI to cover each other's blind spots</a> 🟢</li>
+<li><a href="#10-cost-awareness-using-ai-economically">Cost awareness:
+using AI economically</a> 🟢</li>
+<li><a href="#11-legal-and-institutional-considerations">Legal and
+institutional considerations</a> 🔴</li>
+<li><a
+href="#12-configuration-management-setup-repositories-and-folders">Configuration
+Management setup: repositories and folders</a> 🔴</li>
+<li><a
+href="#13-collaborative-work-co-authorship-and-supervision-feedback">Collaborative
+work: co-authorship and supervision feedback</a> 🔴</li>
+<li><a href="#14-the-request--document--commit--fact-check-workflow">The
+request → document → commit → fact-check workflow</a> 🔴</li>
+<li><a href="#15-commit-message-template">Commit message template</a>
+🔴</li>
+<li><a href="#16-file-and-folder-naming-conventions">File and folder
+naming conventions</a> 🔴</li>
+<li><a href="#17-using-the-template">Using the template</a> 🔴</li>
+<li><a
+href="#18-introducing-department--or-program-specific-rules">Introducing
+department- or program-specific rules</a> 🔴</li>
+<li><a href="#19-worked-example">Worked example</a> 🔵</li>
+<li><a href="#20-quick-checklist">Quick checklist</a> 🔴</li>
+</ol>
+<hr />
+<h2 id="1-why-this-process-exists">1. Why this process exists</h2>
+<p><em>🔵 Context</em></p>
+<p>AI assistants (ChatGPT, Claude, and similar large language models)
+are now good enough to genuinely speed up research and writing. They are
+also good enough to be <em>convincing while wrong</em>. Theological
+scholarship lives or dies by the verifiability of its claims — a date, a
+manuscript reading, a translation choice, a citation of a Church Father.
+We cannot outsource that verification to the tool that produced the
+claim.</p>
+<p>The process in this manual exists to get the speed benefit of AI
+without losing:</p>
+<ul>
+<li><strong>Traceability</strong> — anyone (a supervisor, a peer
+reviewer, your future self) can see exactly what was asked, what the AI
+answered, and what you did with it.</li>
+<li><strong>Accountability</strong> — every AI-influenced change to a
+paper is a distinct, attributable git commit, not silently blended into
+your prose.</li>
+<li><strong>Verification discipline</strong> — nothing from an AI answer
+enters your paper as a factual claim until it has been checked against a
+primary or reputable secondary source. If you cannot check it
+immediately, it is logged as a TODO, not forgotten.</li>
+<li><strong>A real, recoverable history of your own thinking</strong> —
+not just the AI's. If you have ever maintained a single running "open
+questions" or "plan" file and periodically rewritten it to drop resolved
+items and fold in new findings, you have already discovered the actual
+problem this manual solves: the moment you overwrite that file, the
+previous state — what you used to think, what changed your mind, when —
+is gone unless you kept it somewhere. A plain folder of Markdown files
+has no memory of its own past. Git gives the file that memory for free:
+you can overwrite <code>plan.md</code> freely, keep it clean and
+current, and still recover <em>exactly</em> what it said before, because
+the previous version lives in the commit before yours, forever, without
+cluttering the file you actually read day to day.</li>
+<li><strong>Your job, not put at risk by any of this.</strong>
+Everything AI is actually good at (Section 4) is mechanical,
+error-prone-for-humans busywork; everything that makes the work worth
+doing — the hypothesis, the interpretive judgment, the verification, the
+pastoral framing (Section 5) — stays irreducibly yours. The point of
+this process is to spend less time on the parts nobody enjoys, not to
+make the scholar optional.</li>
+<li><strong>Privacy and confidentiality, taken seriously, not as an
+afterthought.</strong> Real personal data has a firm rule keeping it out
+of AI prompts entirely (Section 11.2); the record this process creates
+of <em>your own</em> thinking is protected by the same care (Section
+11.6) and by concrete, IT-enforced access controls
+(<code>access-control-for-it.md</code>) — private by default, access
+granted deliberately, never standing or continuous.</li>
+</ul>
+<p>This is Configuration Management applied to research: the same
+discipline software engineers use to keep large codebases correct and
+auditable, applied instead to arguments, citations, and drafts.</p>
+<h3 id="this-is-meant-to-run-in-the-background-not-slow-you-down">This
+is meant to run in the background, not slow you down</h3>
+<p>None of this should feel like paperwork. The archiving, the commit
+messages, the TODO bookkeeping — all of it is mechanical, which means it
+belongs to the AI assistant, not to you (Section 17's
+<code>CLAUDE.md</code> does exactly this: it writes the files and drafts
+the commit automatically). Your actual overhead per question should be a
+few seconds: glance at what it filed, answer one short prompt about what
+you've checked, say yes or no to applying it. If the process ever feels
+like it's slowing down the actual thinking, that's a sign the automation
+isn't doing its job, not a sign you should skip the record.</p>
+<p>It also does not apply uniformly to every single exchange. Scale it
+to the stakes:</p>
+<ul>
+<li><strong>Pure exploration or a clarifying question</strong> ("what do
+scholars usually say about X," "does this argument make sense," a
+back-and-forth that never touches <code>paper.md</code> or
+<code>sources.md</code>) needs no folder and no commit at all — it
+produced nothing that needs to be traced yet. If it later turns into
+something you want to use, log it <em>then</em>.</li>
+<li><strong>Anything whose answer actually changes the paper, the
+sources, or a claim you intend to rely on</strong> gets the full
+treatment: archived, fact-check status noted, committed (Section 14).
+This is the boundary that matters — not "did I talk to the AI," but "did
+something the AI said just become part of what I'm claiming."</li>
+</ul>
+<h2 id="2-how-ai-language-models-actually-work">2. How AI language
+models actually work</h2>
+<p><em>🔵 Context</em></p>
+<p>You do not need to be able to implement one, but you do need a
+working mental model, because that model explains <em>why</em>
+hallucination happens and <em>why</em> verification is
+non-negotiable.</p>
+<ul>
+<li>A large language model (LLM) is a statistical model trained on
+enormous amounts of text. During training it repeatedly does one task:
+given the text so far, predict the next word (technically, the next
+<em>token</em>, a word-piece). It adjusts billions of internal
+parameters (numeric weights) to get better and better at this
+prediction, across trillions of examples.</li>
+<li>After training, "using" the model means running that same next-token
+prediction over and over, feeding each predicted word back in, to
+generate a whole answer. There is no lookup step where it "checks a
+fact" against a database — everything it produces is generated from
+learned statistical patterns of how language and ideas co-occur.</li>
+<li>It also has no persistent memory of a specific book, verse, or
+article unless something very similar to that content appeared often
+enough, and clearly enough, in its training data for the pattern to be
+captured in its weights. Rare sources (an obscure Syriac commentary, a
+niche monograph, a named modern commentator's precise page-level
+argument) are systematically under-represented or absent — which is
+exactly why, as in the worked example in Section 19, checking a specific
+claim often means going to a named commentary or database yourself, not
+asking the AI to check itself.</li>
+<li>A further round of training ("fine-tuning" / reinforcement learning
+from human feedback) shapes the model to produce answers that
+<em>sound</em> helpful, confident, and well-structured. This optimizes
+for the <em>appearance</em> of a good answer, which is not the same
+thing as optimizing for truth.</li>
+</ul>
+<p>The upshot: an LLM produces the text that is <em>statistically
+plausible as a continuation</em>, not a text that has been checked
+against reality. Most of the time these coincide, because plausible
+theological or historical language usually is accurate — the model has
+seen a great deal of correct information. But "usually" is exactly the
+gap that scholarship cannot tolerate.</p>
+<h2 id="3-what-hallucination-is-and-why-you-must-check-everything">3.
+What hallucination is, and why you must check everything</h2>
+<p><em>🔵 Context</em></p>
+<p><strong>Hallucination</strong> is the term for when a model generates
+a statement that is false, fabricated, or unsupported, but presents it
+with the same fluent confidence as a true statement. It is not a bug
+that occasionally misfires and is otherwise absent — it is the direct,
+expected consequence of how the model works (Section 2): it always
+generates the <em>most plausible-sounding</em> continuation, whether or
+not a true continuation was in its training data.</p>
+<p>Typical shapes hallucination takes in theological/historical
+research:</p>
+<ul>
+<li><strong>Fabricated citations</strong> — a plausible-looking book
+title, author, page number, or journal article that does not exist, or
+that exists but does not say what is claimed. (See Section 19 for a
+worked case of exactly this.)</li>
+<li><strong>Misattributed quotations</strong> — a real quotation
+attached to the wrong author, council, or century.</li>
+<li><strong>Invented specificity</strong> — confidently giving a precise
+date, manuscript number, or statistic where the real scholarly answer is
+contested or unknown, because a specific-sounding answer is more
+"plausible" as text than a hedged one.</li>
+<li><strong>Conflation</strong> — merging two similar things (two
+councils, two people with the same name, two textual variants) into one
+incorrect composite.</li>
+<li><strong>Confident wrongness on minority positions</strong> —
+flattening genuine scholarly disagreement into a single answer, usually
+the majority or best-documented view, silently.</li>
+<li><strong>Quiet compression of nuance</strong> — asked to summarize a
+set of source files, an AI will often merge, shorten, or soften caveats
+and exceptions unless explicitly told not to. This is not "wrong" in the
+fabrication sense, but it is a real, common failure mode: an argument
+that was hedged in the source comes out flat and confident in the
+summary. If a task depends on every distinct statement surviving intact,
+say so explicitly in the instruction ("do not compress or comprehend
+statements; use them in full length, list contradicting arguments too")
+rather than assuming a summary preserves them.</li>
+</ul>
+<p>None of these come with a warning label. The text reads exactly as
+fluently and confidently whether it is correct or invented. <strong>This
+is why every factual claim taken from an AI answer must be checked
+against a primary source or a reputable, citable secondary source before
+it is used in a paper.</strong> Section 14 makes this a mandatory,
+logged step in the workflow, and Section 14 also tells you what to do
+when you cannot check something immediately: you log it, you do not let
+it slide.</p>
+<h2 id="4-what-ai-is-genuinely-good-for">4. What AI is genuinely good
+for</h2>
+<p><em>🔵 Context</em></p>
+<p>None of the above means AI is not useful — it means its usefulness
+lies in a specific place: <strong>tedious, mechanical,
+error-prone-for-humans work that is cheap to check</strong>, not in
+being an oracle of settled fact. Concretely, AI is strong at:</p>
+<ul>
+<li><strong>Applying a fixed method across a lot of text</strong> — e.g.
+"list every use of the Greek word <em>ekklesia</em> in this chapter and
+classify it as local-congregation vs. universal-church sense." A human
+doing this for 40 pages will get tired and miss instances around page
+25. The AI does not get tired. It will still make some errors — but a
+different, more <em>checkable</em> kind: you are verifying a
+classification against text right in front of you, not verifying an
+unsupported claim.</li>
+<li><strong>Finding candidate resources</strong> — suggesting
+commentaries, articles, or primary sources that might be relevant, as a
+starting list to independently verify exist and are on-topic — not as a
+finished bibliography.</li>
+<li><strong>Summarizing a topic or a long text</strong> as a first-pass
+orientation, to be checked against the source, not as a citable
+substitute for the source.</li>
+<li><strong>Formulating and drafting</strong> — turning rough notes or
+bullet points into readable prose, restructuring a clunky paragraph,
+suggesting a clearer argument order. Style suggestions carry none of the
+factual risk that claims do, though they still deserve a read for
+theological nuance the AI may have flattened.</li>
+<li><strong>Consistency checks</strong> — "does chapter 3 use this term
+the same way chapter 1 defined it?", "did I number these footnotes
+correctly?", "does this argument contradict something I said on page 4?"
+This is exactly the kind of mechanical cross-referencing where humans
+have blind spots simply from having read their own draft too many
+times.</li>
+</ul>
+<p>The unifying theme, worth stating as plainly as possible: <strong>AI
+takes over tedious work, not jobs.</strong> It reduces the number of
+errors and closes blind spots that come from human tedium and fatigue.
+It never fully eliminates errors, and it can introduce new ones of its
+own (hallucination) that a human would not have made. It is a very good
+assistant and a bad final authority. Every output is a draft to be
+checked, never a citation to be trusted — which is exactly why the
+scholar doing the checking, the interpreting, and the deciding remains
+essential (Section 5), not a role this process is trying to shrink.</p>
+<h2 id="5-division-of-labor-what-you-contribute-what-ai-contributes">5.
+Division of labor: what you contribute, what AI contributes</h2>
+<p><em>🔵 Context</em></p>
+<p>It helps to say plainly what each side of this collaboration is
+actually for, both so credit is attributed honestly and so you spend
+your own limited time where it matters.</p>
+<h3 id="what-only-you-can-contribute">What only you can contribute</h3>
+<ul>
+<li><strong>The original theological question or hypothesis worth
+pursuing.</strong> Noticing that a particular verse sits at a
+structurally significant point, wondering whether two seemingly
+unrelated episodes echo each other, proposing that a character's arc
+reflects a psychological or social dynamic — this is the genuinely
+creative, interpretive work. AI can extend, test, and help articulate a
+hypothesis once you have it; it rarely originates the theologically
+interesting one on its own initiative from nothing.</li>
+<li><strong>Judging whether a proposed parallel or pattern is actually
+sound</strong>, not just interesting-looking. AI will readily produce a
+comparison; only your domain judgment can tell you whether it is a real
+authorial signal or a coincidence dressed up as one (see Section 8 for
+concrete cases).</li>
+<li><strong>The decision to accept, defer, or reject any specific
+proposal.</strong> Nothing an AI drafts should be treated as part of the
+paper until a human has explicitly said so — a plain "yes," "not now,
+revisit later," or "no, ignore this" after each proposal is not
+excessive caution, it is the actual mechanism by which the paper stays
+yours. See Section 6.6 for making this a standing habit rather than
+something you only remember to do sometimes.</li>
+<li><strong>All primary-source verification and
+citation-checking</strong> (Section 3) — this cannot be delegated back
+to the tool whose output is being checked.</li>
+<li><strong>Ethical and pastoral framing decisions</strong> — deciding
+what terminology is appropriate, what a text should and should not be
+claimed to say, and how a sensitive topic should be presented to a given
+audience are judgment calls only a human is positioned to make and be
+accountable for.</li>
+<li><strong>Deciding when "good enough" isn't</strong> — recognizing
+when an AI-produced structure, summary, or argument is superficially
+plausible but actually thin, and pushing back rather than accepting the
+first fluent answer.</li>
+</ul>
+<h3 id="what-ai-reliably-contributes">What AI reliably contributes</h3>
+<ul>
+<li>Fast synthesis across many source files, chapters, or a large
+existing document.</li>
+<li>Drafting readable prose from rough notes, bullet points, or an
+outline.</li>
+<li>Mechanical consistency checks and cross-referencing across a long
+text.</li>
+<li>Producing several candidate options or comparisons quickly, when
+explicitly asked for options rather than a single converged answer
+(Section 8).</li>
+<li>Restructuring or reorganizing content on request, without the
+fatigue that makes a full human reorganization of a long document
+unappealing to attempt.</li>
+<li>A first-pass structured breakdown of a broad task — e.g. splitting a
+long paper into per-chapter or per-audience files (Section 6.3) — ready
+for you to review piece by piece.</li>
+</ul>
+<h3 id="why-the-split-matters-in-practice">Why the split matters in
+practice</h3>
+<p>Naming this split keeps the paper's actual intellectual contribution
+correctly attributed: the thesis, the interpretive judgment, and the
+verification are yours; the synthesis and drafting labor is borrowed. It
+also tells you where to spend your own limited time — not drafting prose
+the AI can draft just as well, but forming the hypothesis in the first
+place and deciding, case by case, whether the AI's proposal actually
+holds up. None of this labor-saving is labor-<em>replacing</em>: the
+list above is deliberately all mechanical/synthetic work, and the "what
+only you can contribute" list is deliberately everything that actually
+constitutes scholarship.</p>
+<h2 id="6-six-techniques-worth-adopting-deliberately">6. Six techniques
+worth adopting deliberately</h2>
+<p><em>🟢 Best practice — except 6.6, which is 🔴 required</em></p>
+<p>These are not theoretical. They are patterns that already work in
+practice for exactly this kind of research; naming them explicitly makes
+it easier to reuse them on purpose rather than reinvent them ad hoc each
+time.</p>
+<h3 id="61-turn-the-ai-into-an-adversarial-reader-of-your-own-draft">6.1
+Turn the AI into an adversarial reader of your own draft</h3>
+<p>Rather than asking generally "is this any good?", ask for specific,
+separately-filed categories of critique. For example, ask it to read a
+draft and produce:</p>
+<ul>
+<li><code>wrong_facts.md</code> — the claim, what is wrong, what would
+be correct.</li>
+<li><code>weak_arg.md</code> — the argument, what makes it weak, how to
+strengthen it.</li>
+<li><code>contradict.md</code> — pairs of statements in the draft that
+contradict each other.</li>
+<li><code>wrong_citations.md</code> — the reference used, and what the
+correct reference should be.</li>
+<li><code>critic.md</code> — anything else, uncategorized.</li>
+</ul>
+<p>Splitting critique into separate, single-purpose files (rather than
+one freeform "review") makes each category independently actionable,
+easy to turn into <code>TODO.md</code> items, and easy to re-run later
+to check whether a category is now empty. It also tends to surface more
+issues than a single "review this" prompt, because the AI is forced to
+actually fill each bucket rather than produce one general paragraph of
+praise-plus-caveats.</p>
+<p>The template packages exactly this as a one-word convenience: run
+<code>/update_paper</code>
+(<code>.claude/commands/update_paper.md</code>) to get open
+<code>TODO.md</code> items, <code>wrong_facts.md</code>,
+<code>contradict.md</code>, weak-argument flags, and a
+citation-placement check in one pass, without retyping this section's
+instructions by hand each time. It never edits <code>paper.md</code>
+itself — only reports findings — so it stays a checking tool, not a
+drafting one.</p>
+<h3
+id="62-keep-reusable-instruction-files-for-recurring-tasks-separate-from-one-off-questions">6.2
+Keep reusable "instruction files" for recurring tasks, separate from
+one-off questions</h3>
+<p>Section 14's <code>ai-requests/NNNN-.../question.md</code> is for a
+specific question asked once. But some tasks recur across a project in
+the same shape — "find every gap in this argument," "check every fact
+against the sources," "expand every claim in this chapter with full
+supporting citations." For those, keep a standing instruction file (e.g.
+<code>instructions/instruction_find_gaps.md</code>) that states the
+task, the rules, and the exact output file(s) expected, and reuse and
+refine that file every time you run the task, instead of retyping a
+similar prompt slightly differently each time. Two things matter for
+this to stay traceable:</p>
+<ul>
+<li>The instruction file itself is a versioned file in the repository,
+so improving <em>how</em> you ask a recurring question is visible in the
+git history like anything else. Each <em>run</em> of it is still logged
+as its own <code>ai-requests/NNNN-.../</code> entry per Section 14,
+noting which instruction file (and which commit of it) was used, so a
+later reader can tell "gap-finding was run with v3 of the instruction,
+which by then excluded literature checks" rather than assuming every
+gap-finding run used the same method.</li>
+<li>Specify the exact output format and files in the instruction itself
+(e.g. "use <code># header (topic)</code> / <code>## fact 1</code> /
+<code>## evidence</code> ...", "write results to
+<code>wrong_facts.md</code>"). A precise, fixed format is what makes
+runs from different dates actually comparable, and prevents the AI from
+silently restructuring the output in a way that hides whether something
+was missed.</li>
+</ul>
+<h3
+id="63-expand-a-paper-into-one-file-per-claim-when-depth-review-matters">6.3
+Expand a paper into one file per claim, when depth-review matters</h3>
+<p>For a finished draft that needs to hold up point by point (a thesis
+chapter close to submission, a paper making contested claims), it is
+worth going further than a single review pass: create one file per
+chapter/subchapter/individual statement and have the AI argue <em>that
+specific statement</em> in full, with exhaustive supporting references,
+in its own file. This turns "is this paper well-argued?" into a
+checklist of individually reviewable, individually fact-checkable units,
+each small enough to actually verify claim-by-claim rather than skimmed
+as one long document.</p>
+<h3
+id="64-state-a-falsifiable-prediction-before-you-check-not-after">6.4
+State a falsifiable prediction before you check, not after</h3>
+<p>When a claim genuinely cannot be checked immediately (the source
+needs library or database access, say), it is tempting to defer judgment
+entirely. A stronger habit: write down, in <code>TODO.md</code> or the
+relevant note, what you <em>expect</em> the check to show and why,
+before you actually look. For example: "expect this patristic
+commentary's divisions to partially, not strongly, overlap our proposed
+structure, because its divisions are keyed to a numerological pattern
+rather than to content boundaries." Then when the check is finally done,
+the result is compared against a prediction already on record — it
+cannot be quietly reframed as confirming whatever you already believed,
+which is a real risk once a claim has sat unresolved for a while and
+started to feel true by familiarity.</p>
+<h3
+id="65-rate-how-well-attested-each-claim-is-not-just-whether-it-was-checked">6.5
+Rate how well-attested each claim is, not just whether it was
+checked</h3>
+<p>A single CHECKED / NOT-CHECKED flag (Section 14's minimum bar) is
+necessary but coarse. For claims that matter to a paper's central
+argument, consider a three-tier confidence rating instead:</p>
+<ul>
+<li><strong>Strongly attested</strong> — confirmed by two or more
+independent sources/methods.</li>
+<li><strong>Moderately attested</strong> — confirmed by one
+source/method beyond your own reasoning.</li>
+<li><strong>Proposed, plausible</strong> — your own argument or
+inference; not independently attested, and the paper should say so
+plainly rather than imply otherwise.</li>
+</ul>
+<p>Adding this as an explicit column or tag (in a summary table, in
+<code>sources.md</code>, or inline) converts an open-ended "how sure are
+we, really" question into a stated, checkable claim — which is both more
+honest and more useful to a reader deciding how much weight to put on a
+given point than a confident tone that does not distinguish its
+best-supported claims from its most speculative ones.</p>
+<h3 id="66-propose-then-confirm-before-anything-touches-the-paper">6.6
+Propose, then confirm, before anything touches the paper</h3>
+<p>Default to a two-step pattern for anything beyond a small,
+obviously-correct edit: ask the AI to draft or propose the change into a
+scratch file (or just into the conversation) first, review it, and only
+then explicitly tell it to apply the change to
+<code>paper.md</code>/<code>sources.md</code>/wherever it belongs. A
+plain "yes, please add," "not now, revisit later," or "no, ignore this"
+after each proposal costs a few seconds and is what actually keeps the
+paper's content under your control rather than the AI's default
+judgment. This matters most exactly when you are tempted to skip it — on
+a proposal that sounds plausible and you're in a hurry, which is
+precisely when an unsound parallel or an overclaim is most likely to
+slip through unexamined (Section 8).</p>
+<p>The proposal and the apply are <strong>two separate commits</strong>,
+not one (Section 14). The proposal can be archived and committed the
+moment it exists — it's just a record of what was asked and answered,
+nothing about the paper changed yet, so there's nothing to decide before
+committing it. The apply commit happens later, only once you've said
+yes, and is the one that actually touches
+<code>paper.md</code>/<code>sources.md</code>/<code>TODO.md</code>.
+Keeping them apart means a rejected or "not now" proposal still leaves a
+clean record of having been considered, without ever mixing an undecided
+idea into the same commit as the paper's actual content.</p>
+<h2
+id="7-writing-good-research-questions-what-separates-a-good-prompt-from-a-bad-one">7.
+Writing good research questions: what separates a good prompt from a bad
+one</h2>
+<p><em>🟢 Best practice</em></p>
+<p>Looking back over a large number of real AI requests written for
+actual research and writing work, the quality of the <em>request
+itself</em> — independent of how good the underlying idea was — reliably
+predicted whether the result added real value or had to be redone. None
+of the pairs below are quotes; they are constructed to illustrate each
+pattern.</p>
+<p><strong>Bounded scope and an explicit source list.</strong> Good:
+<em>"Read only <code>smith-commentary-ch3.md</code> and
+<code>jones-article-2019.md</code>. Ignore every other file in this
+folder. List every place these two sources disagree about the date of
+composition, quoting the specific sentence from each."</em> Bad:
+<em>"Look into everything we have on this topic and tell me what's true
+about when it was written."</em> — "everything we have" is not a set the
+AI can actually enumerate or a reader can later re-derive, and "what's
+true" invites it to flatten genuine disagreement into one confident
+answer.</p>
+<p><strong>Output format specified in advance.</strong> Good: <em>"For
+each argument found, output <code>## &lt;claim&gt;</code>, then
+<code>### Evidence for</code>, then <code>### Evidence against</code>;
+one file per chapter, named <code>ch&lt;N&gt;-evidence.md</code>."</em>
+Bad: <em>"Give me a thorough write-up of the arguments for and
+against."</em> — with no fixed shape, a rerun next month may organize
+the same material completely differently, so you can't tell whether a
+later run found something new or just reorganized old content.</p>
+<p><strong>Naming what the AI cannot reliably do, and routing it to a
+human instead.</strong> Good: <em>"Summarize the argument structure of
+these two files. Do not attempt to verify any citation yourself — just
+list every citation you find so I can check them by hand."</em> Bad:
+<em>"Make sure every citation is accurate and up to date."</em> — an LLM
+cannot "make sure" of this; it can only generate text that
+<em>looks</em> like a checked citation, so an instruction phrased this
+way manufactures false confidence rather than accuracy.</p>
+<p><strong>Invented material labeled as invented.</strong> Good:
+<em>"Where the sources don't specify a detail you need for the
+narrative, invent a plausible one, but list every invented detail
+separately in <code>assumptions.md</code>."</em> Bad: leaving this
+unsaid, so invented detail is allowed implicitly with no requirement to
+flag it — an invented date, name, or number that is never flagged is
+indistinguishable from a hallucinated one once it is sitting in the
+draft, because the very thing that would let you tell them apart was
+never created.</p>
+<p><strong>One self-contained request per reviewable unit.</strong>
+Good: <em>"Take chapter 4 alone. Argue its central claim in full, with
+every supporting reference, in `ch4-argument.md."</em> (repeated per
+chapter). Bad: <em>"Write out the complete, exhaustive argument for the
+whole book, with full supporting detail for every chapter, in one
+file."</em> — "exhaustive" applied to a large scope in a single pass all
+but guarantees thin sections get padded with plausible-sounding but
+unverified specifics to match the requested exhaustiveness, and the
+result ends up too large for anyone to actually check end to end. (This
+is Section 6.3's technique stated as a rule: prefer several small,
+checkable requests over one large one whenever the material allows
+it.)</p>
+<p><strong>Firm terminology and framing rules, stated once, up
+front.</strong> Good: <em>"Throughout, refer to this pattern as
+'coercive control,' never 'quarreling' or 'conflict' — this is a fixed
+choice, not a style preference to vary."</em> Bad: leaving terminology
+unstated and only correcting it after the fact, document by document —
+each new AI run reintroduces the same drift from scratch, since the AI
+has no memory of a correction made last time unless it is written into
+the instruction itself.</p>
+<p><strong>A required self-critique section, built into the task, not
+bolted on after.</strong> Good: <em>"After writing the paper, add a
+final section listing every claim in it that rests only on this paper's
+own reasoning, not on an outside source, and label it as such."</em>
+Bad: asking for this only occasionally, as an afterthought, on documents
+that "seem important" — the documents most likely to contain unlabeled
+speculative claims are exactly the ones nobody thought to flag as
+important enough to double-check.</p>
+<p>The common thread: a good request is bounded, specifies its own
+output shape, is explicit about what must be labeled (assumptions,
+uncertain claims, terminology), and is sized so a human can actually
+verify the whole answer. A bad request substitutes an adjective
+("thorough," "exhaustive," "make sure") for an actual constraint, which
+reads as more rigorous but produces a result that is <em>harder</em>,
+not easier, to verify.</p>
+<h2
+id="8-recognizing-flawed-ai-answers-and-feeding-that-back-into-better-prompts">8.
+Recognizing flawed AI answers and feeding that back into better
+prompts</h2>
+<p><em>🟢 Best practice</em></p>
+<p>Section 7 is about how to phrase a request well the first time. This
+section is about what to do when, despite that, the answer still isn't
+right — which will keep happening, because it follows directly from
+Section 2: the model is always producing its most plausible-sounding
+continuation, and "plausible" and "correct" are not the same thing. The
+skill worth building is a habit of <strong>recognize → correct now →
+encode permanently</strong>, so the same flaw doesn't have to be caught
+fresh every time it recurs.</p>
+<h3
+id="recurring-categories-of-flaw-and-what-to-do-about-each">Recurring
+categories of flaw, and what to do about each</h3>
+<ul>
+<li><strong>Scope creep</strong> — the answer draws on or refers to
+material you did not intend as input for this task, and you can't
+immediately tell where it came from. <em>Correct now:</em> ask directly
+which specific input licensed the claim, and have it retract anything
+that didn't come from an intended source. <em>Encode permanently:</em>
+tighten the source list in the relevant instruction file (Section 6.2)
+or in this specific request (Section 7) so the same boundary is explicit
+next time, not just corrected this once.</li>
+<li><strong>A parallel or pattern claimed too eagerly</strong> — the AI
+draws a comparison between two things that only partly holds, treating
+them as equivalent when a specific element actually differs. <em>Correct
+now:</em> name the exact element that breaks the parallel, and ask for a
+redo without yet applying it anywhere (Section 6.6). <em>Encode
+permanently:</em> make it a standing instruction, wherever comparisons
+are being drawn, to state both the similarities <em>and</em> the
+specific respects in which the comparison does not hold — every time,
+not just after you catch one that didn't.</li>
+<li><strong>A genuinely ambiguous question collapses into one
+falsely-confident answer</strong> — where the sources or reasoned
+inference actually support two or more live readings, the model
+converges on a single one anyway, because a confident single answer is a
+more "plausible" continuation than a hedge (Section 2). <em>Correct
+now:</em> explicitly ask for the alternative readings and what each
+would imply, rather than accepting the first synthesis. <em>Encode
+permanently:</em> add "if more than one reading is defensible, present
+them as separate options rather than choosing one" to the recurring
+instruction where this has happened before.</li>
+<li><strong>A deliberately careful, hedged claim drafts as more sweeping
+than intended</strong> — an argument meant as "this challenges the
+standard view" comes out reading like "this proves X" once it becomes
+prose. <em>Correct now:</em> fix the specific overclaim. <em>Encode
+permanently:</em> state up front, before drafting, a short list of what
+the argument is explicitly <em>not</em> claiming — the same technique
+Section 7 recommends for terminology, applied to argument strength
+instead of vocabulary.</li>
+</ul>
+<h3 id="turning-a-one-off-correction-into-a-lasting-fix">Turning a
+one-off correction into a lasting fix</h3>
+<p>Each time you catch one of these, ask: <em>would this same mistake
+recur on the next similar request?</em> If yes, the fix belongs in a
+reusable instruction file (Section 6.2) or a standing framing rule
+(Section 7), not only in this one conversation's memory. A short running
+note — even a simple <code>prompting_notes.md</code> listing "lessons
+learned" per recurring task type — keeps a hard-won correction from
+having to be rediscovered from scratch by whoever (including your own
+future self) next runs a similar request on this or another topic.</p>
+<h2 id="9-using-more-than-one-ai-to-cover-each-others-blind-spots">9.
+Using more than one AI to cover each other's blind spots</h2>
+<p><em>🟢 Best practice</em></p>
+<p>Different AI systems (for example Claude, ChatGPT/GPT, or Gemini) are
+trained on different data mixes and tuned by different teams, so their
+errors are not perfectly correlated. A fabricated citation or a
+flattened nuance produced by one model is often <em>not</em> reproduced
+by another, simply because it isn't the same statistical artifact
+recurring. This makes a second, independent system a cheap additional
+filter — not a replacement for the fact-checking discipline in Section
+3, but a useful check before you spend real verification time.</p>
+<ul>
+<li><strong>Independent second opinion on a specific claim or
+citation.</strong> Ask a second AI system the same precise factual
+question, independently, without showing it the first system's answer
+(showing it the first answer risks it simply agreeing with a flawed
+premise rather than checking it fresh). Agreement across two
+independently-trained systems is still not proof — both can share the
+same gap if neither was trained on an obscure primary source — but
+disagreement is a strong, cheap signal that something needs a real,
+by-hand check.</li>
+<li><strong>Adversarial review across systems, not within one.</strong>
+Have one system draft an argument, then ask a <em>different</em> system
+to critique it (using the structured-critique files from Section 6.1),
+rather than asking the same system that wrote it to critique itself — a
+model tends to be more lenient toward a continuation that reads like its
+own style, so critique from a genuinely different model doesn't share
+that particular blind spot.</li>
+<li><strong>Different systems for different jobs.</strong> A model with
+strong long-context handling may suit cross-referencing one very long
+document consistently; a faster, lighter model may be entirely
+sufficient for high-volume mechanical extraction where each individual
+answer is small and cheap to check; the strongest available
+"reasoning"-oriented model is worth reserving for the hardest
+interpretive synthesis (see Section 10 on matching model cost to task
+difficulty).</li>
+<li><strong>Record which system answered what.</strong> Extend
+<code>question.md</code>/<code>answer.md</code> (Section 14) with the
+model name and version used. This makes it possible to later ask "does a
+newer or different model still make this same error?" and stops a
+correction found while using one system from quietly getting lost when
+you switch to another for a later request on the same topic.</li>
+</ul>
+<h2 id="10-cost-awareness-using-ai-economically">10. Cost awareness:
+using AI economically</h2>
+<p><em>🟢 Best practice</em></p>
+<p>Even with a flat-fee subscription, AI usage is not free in an
+unlimited sense, and it is worth understanding what you are actually
+spending before a deadline forces you to find out the hard way.</p>
+<ul>
+<li><strong>A subscription is usually still a quota, not unlimited
+access.</strong> Many AI subscription plans meter your usage internally
+against a weekly or session-based allowance even though you are not
+billed per question. A long run of large, context-heavy requests can
+exhaust that allowance and temporarily drop you to a slower tier or lock
+you out — worth knowing your own plan's actual limits (check its
+documentation directly) before you are relying on it under time
+pressure, not while you are.</li>
+<li><strong>If you are billed by usage (API/token pricing) instead of a
+flat subscription, cost scales with both directions:</strong> what you
+send (all the source material and context included in the request) and
+what comes back (a long generated chapter costs far more than a short,
+targeted answer). An "exhaustive," maximal-context request — already
+flagged in Section 7 as a <em>bad</em> prompting pattern for
+verifiability — is also simply the most expensive way to ask.</li>
+<li><strong>A usage indicator in your editor or subscription dashboard
+measures a specific thing</strong> — check what, rather than assuming a
+displayed "cost" or "usage today" number means an extra charge on top of
+a flat subscription. The two can coexist (a subscription with an
+internal, non-billed usage meter shown for your own awareness) —
+confusing them either causes needless worry or, in the opposite
+direction, a genuine surprise bill if your plan actually is metered.
+When in doubt, check your specific plan's documentation rather than
+guessing from the number alone.</li>
+</ul>
+<p><strong>Practical habits:</strong></p>
+<ul>
+<li>Don't include more source material in a request than the task
+actually needs — a bounded source list (Section 7) is both cheaper and
+more checkable.</li>
+<li>Reserve your most capable model tier for genuinely hard interpretive
+or synthesis work; use a faster/cheaper tier for high-volume mechanical
+tasks (extracting a list, reformatting, converting a file) where a
+lighter model performs just as well.</li>
+<li>Split a large task into several small, targeted requests (Section
+6.3), not only because the result is more checkable, but because a wrong
+or wasted large request costs far more than a wrong small one.</li>
+<li>If several people share a plan or a budget, keep a rough sense of
+which topics or weeks consume the most usage — it surfaces a
+badly-scoped or runaway request pattern (Section 7's "bad prompt"
+patterns are often also the expensive ones) before it becomes a
+recurring cost problem rather than a one-time surprise.</li>
+</ul>
+<h2 id="11-legal-and-institutional-considerations">11. Legal and
+institutional considerations</h2>
+<p><em>🔴 Required</em></p>
+<p>None of this manual overrides law, university policy, or an AI
+provider's own terms — it's a research-hygiene process, not a legal
+opinion. Each subsection below is grounded in a real, current
+(2025-2026) development, cited at the end, but still needs to be checked
+against the actual relevant authority (your program's regulations, your
+data protection officer, a lawyer if it's genuinely material) — treat
+citations as a starting point for verification (Section 3's discipline
+applies to this section too), not as this manual having done that
+verification for you.</p>
+<h3 id="111-publisher-and-institutional-ai-disclosure-requirements">11.1
+Publisher and institutional AI-disclosure requirements</h3>
+<p>Major academic publishers — Elsevier, Springer Nature, Wiley, Taylor
+&amp; Francis, SAGE — now require disclosure of generative AI use in
+manuscripts and explicitly prohibit listing AI as an author, since
+authorship requires an accountability (consenting to ethical review,
+approving the final version, being answerable for errors) that an AI
+cannot bear. Elsevier specifically requires a "Declaration of Generative
+AI and AI-assisted technologies in the writing process" placed
+immediately above the references, disclosed in <em>both</em> the
+submission form and the manuscript text. University policy is moving the
+same direction: the 2025-2026 trend is away from blanket bans and toward
+"AI may be used only with disclosure and within instructor-defined
+limits," distinguishing <em>assistive</em> use (grammar/proofreading,
+often undisclosed) from <em>substantive</em> use (generating or
+interpreting content, analysis, or argument, which must be disclosed).
+Caltech's policy, for instance, requires confirming AI is permitted for
+a given piece of work <em>before</em> using it, and treats undisclosed
+AI text in a thesis as an integrity violation, not a style issue.</p>
+<p><strong>Check your specific program's and target journal's current
+policy before applying this workflow to anything graded or
+submitted</strong> — this manual cannot override either, and both are
+still changing year to year.</p>
+<p><em>Automatable:</em> generating a disclosure statement from the
+repo's own <code>ai-requests/</code> audit trail (<code>CLAUDE.md</code>
+step 13) is a strict superset of what any of the formats above need,
+since it has the complete record — a human then trims it to whatever
+specific format the target journal or program currently requires.
+<em>Not automatable:</em> which specific disclosure format a given
+journal or program requires, or whether AI is even permitted for a given
+assessment — check the current policy directly.</p>
+<h3 id="112-gdpr-and-personal-data-in-ai-prompts">11.2 GDPR and personal
+data in AI prompts</h3>
+<p>EU regulators moved fast on this in 2025: the European Data
+Protection Board adopted an opinion addressing when an AI model can be
+considered anonymous (assessed case-by-case — a model must be very
+unlikely to let someone extract personal data used to train it, directly
+or indirectly, via queries) and issued guidelines on anonymisation and
+web-scraping for generative AI; the European Data Protection Supervisor
+separately issued revised generative-AI guidance in October 2025. None
+of this changes the department's basic rule: real pastoral, counseling,
+or case material involving identifiable living people is personal data,
+and in the EU falls under GDPR the moment it's typed into any AI prompt.
+Treat pseudonymization as a firm rule, not a per-instance judgment call
+— strip names, locations, and dates specific enough to narrow down who
+someone is, <em>before</em> the material reaches a prompt, the same way
+you would before sharing it in any other non-confidential channel.</p>
+<p><em>Automatable:</em> <code>CLAUDE.md</code> step 11's pattern check
+— flagging text that looks like it names a real, identifiable person
+before it's archived — as a best-effort nudge to double-check, not a
+determination. <em>Not automatable:</em> whether a specific
+anonymization is actually adequate under current regulatory guidance
+(the EDPB's own guidelines note this is assessed case-by-case) — ask
+your institution's data protection contact.</p>
+<h3 id="113-copyright-status-of-ai-assisted-work">11.3 Copyright status
+of AI-assisted work</h3>
+<p>The US Copyright Office's Part 2 report (published January 29, 2025)
+concluded: purely AI-generated output, without meaningful human
+authorship, is not copyrightable in the US; a prompt alone does not give
+enough human control to establish authorship; but a human's creative
+selection, arrangement, or modification of AI output <em>can</em> itself
+be copyrightable, assessed case by case. (A separate Part 3, from May
+2025, addresses AI <em>training</em> on copyrighted material — not
+directly relevant to who owns the output.) The position specifically on
+output ownership still differs by jurisdiction and continues to develop
+elsewhere.</p>
+<p><strong>What this means in practice:</strong> a paper that is mostly
+AI-drafted prose with light human editing sits on genuinely shaky ground
+for exclusive US copyright; the department's own interpretive argument —
+the human contribution Section 5 describes as irreplaceable — is both
+the part most clearly protectable and, usefully, the part the audit
+trail can help demonstrate was substantively human-authored if that's
+ever actually disputed.</p>
+<p><em>Automatable:</em> none of the legal determination itself — but
+the <code>ai-requests/</code> log is exactly the kind of evidence (what
+was AI-drafted, what was a human addition or edit) such a determination
+would need to examine. <em>Not automatable:</em> the legal conclusion —
+a case-by-case call under guidance that is still evolving.</p>
+<h3 id="114-ai-provider-terms-training-data-and-retention">11.4 AI
+provider terms: training data and retention</h3>
+<p>Concretely, for Anthropic's Claude, as of mid-2026: <strong>consumer
+accounts</strong> (Free, Pro, Team, under the Consumer Terms) default,
+since an August 2025 change, to allowing conversations to be used for
+model training, with data retention extended to five years for accounts
+that leave this enabled (30 days if you opt out). Opt out under Account
+Settings → Privacy → "Help improve Claude." <strong>Commercial-tier
+accounts</strong> — Claude for Work, Claude Enterprise, Claude for
+Education, Claude for Government, and API/Bedrock access — are covered
+by separate Commercial Terms that prohibit training on your inputs by
+default, with no toggle needed. One caveat worth knowing either way:
+even opted-out content can still be used if it's flagged for a safety
+review.</p>
+<p><strong>Recommendation for this department:</strong> use Claude for
+Education or a similar commercial-tier account for anything touching
+unpublished research or any of the personal-data categories in 11.2,
+rather than a personal consumer account; if only a consumer account is
+available, turn the training toggle off before starting real work, and
+note this isn't retroactive for anything typed before the toggle was
+changed.</p>
+<p><em>Automatable:</em> none directly — this is an account-level
+setting outside what a coding assistant can see or change.
+<code>CLAUDE.md</code> can only remind, once, at repository setup.
+<em>Not automatable:</em> actually setting the toggle, or choosing the
+right account tier — a one-time human action.</p>
+<h3 id="115-defamation-and-false-statement-risk-about-real-people">11.5
+Defamation and false-statement risk about real people</h3>
+<p>Real, live cases test this directly. In <em>Walters v. OpenAI</em>
+(Georgia state court, May 2025), OpenAI won summary judgment on a claim
+that ChatGPT had falsely told a user a radio host embezzled funds — the
+court reasoned that a reasonable user already knows chatbots can
+fabricate, so the output wasn't understood as a factual assertion. In
+the ongoing <em>Starbuck v. Google</em> (Delaware, filed October 2025)
+and the settled <em>Starbuck v. Meta</em> (August 2025), plaintiffs
+allege chatbots fabricated serious accusations — assault, extremism —
+attributed to fictitious sources. So far, courts are mostly protecting
+the AI companies under traditional defamation frameworks, largely on the
+strength of disclaimers and the difficulty of proving harm.</p>
+<p><strong>The catch for this department specifically: that protection
+belongs to the AI provider, not to whoever republishes the
+claim.</strong> If a hallucinated statement about a real, identifiable
+person — a named scholar, pastor, or institution — makes it from
+<code>ai-requests/.../answer.md</code> into a published paper or sermon
+under a human author's name, the "the chatbot said it, not me, and
+everyone knows chatbots can be wrong" defense that has worked for OpenAI
+and Google in court does not obviously extend to a human author who
+repeated it as settled fact in their own published work. This is exactly
+why Section 3's fact-checking discipline exists, applied here for a
+reason with real legal teeth and not only scholarly accuracy.</p>
+<p><em>Automatable:</em> <code>CLAUDE.md</code> step 12's
+identifiability flag — a pattern check for unusually specific references
+to real people or institutions before they're drafted into illustrative
+or composite material. <em>Not automatable:</em> whether a specific
+statement about a specific real, named person is actually true — Section
+3, no shortcut.</p>
+<h3
+id="116-the-psychological-dimension-a-full-permanent-record-of-your-own-thinking">11.6
+The psychological dimension: a full, permanent record of your own
+thinking</h3>
+<p>This workflow doesn't just archive facts — it archives every question
+you asked, every proposal you rejected, every hypothesis that turned out
+to be wrong, forever, in a log anyone with access can read start to
+finish. That is a different kind of exposure than a normal draft, and it
+is reasonable to feel uneasy about it, not a sign of having something to
+hide. Research on monitored work environments backs this up directly:
+excessive visibility into someone's in-progress thinking produces a
+measurable <em>chilling effect</em> — people self-censor, avoid asking
+questions that might look naive, and stop admitting knowledge gaps once
+they know the record is being read by someone with power over them (one
+survey found roughly 60% of students uncomfortable expressing honest
+opinions under digital surveillance; monitored employees report
+substantially higher intent to leave than unmonitored ones). GDPR's own
+employee-monitoring principles point the same way: monitoring must be
+proportionate to a real need, disclosed in advance, and the monitored
+person retains rights to see and, where no longer needed, have erased
+what's held on them — a real German enforcement action (H&amp;M, a €35
+million fine) shows regulators take this seriously, not as a theoretical
+concern. There is a genuine tension here worth naming directly: this
+manual's Section 16 rule against ever editing an archived
+<code>answer.md</code> is in some tension with a data subject's usual
+right to have something erased — the resolution is that the <em>research
+content</em> (a wrong hypothesis, a rejected proposal) is not personal
+data about a third party and stays on record as the whole point of the
+audit trail; genuinely personal content that leaked into an exchange by
+accident (Section 11.2) is the narrow exception where removing it is
+appropriate, and should be treated as a rare correction, not a routine
+cleanup.</p>
+<p><strong>Concrete steps to actually settle this, not just acknowledge
+it:</strong></p>
+<ul>
+<li><strong>The repository is the researcher's own</strong> (Section 12)
+— they decide who gets read access, and when, not the department by
+default. Access should be granted deliberately (an advisor added for a
+specific supervision meeting, an examiner added at submission), not
+standing and continuous. See the separate IT access-control note below,
+and Section 13 for how supervision feedback itself works within that
+constraint.</li>
+<li><strong>A stated, written norm that the log is for tracing claims,
+not judging the person.</strong> Advisors and examiners should be told
+explicitly, in writing, to evaluate the final paper and the diligence of
+the fact-checks — not to penalize a student for a naive early question
+or a rejected hypothesis sitting in the history. This is the same
+"blameless" norm software teams use for incident post-mortems: the
+record exists so mistakes are visible and fixable, not so the person who
+made them is penalized for having made them.</li>
+<li><strong>Discrimination risk is real and specific, not
+hypothetical</strong>: a raw question history can incidentally reveal
+things — a disability accommodation pattern, a non-native speaker's
+phrasing, a personal or faith struggle behind a research question — that
+have nothing to do with the quality of the work and everything to do
+with who's allowed to see the record and why. Scope access tightly (see
+below) and keep the written evaluation norm above in place specifically
+<em>because</em> of this risk, not just the general discomfort of being
+watched.</li>
+<li><strong>This is proportionate, not absolute, transparency.</strong>
+Nothing in this manual requires broadcasting the log beyond the people
+who need it for supervision or examination — private-by-default (Section
+12, and the IT note below) is the actual default, not an
+afterthought.</li>
+</ul>
+<h3
+id="117-what-can-actually-be-enforced-by-scripting-versus-ai-judgment-versus-only-a-human">11.7
+What can actually be enforced by scripting, versus AI judgment, versus
+only a human</h3>
+<p>Not everything above is the same kind of check. It's worth being
+precise about which category each falls into, since treating a fuzzy
+judgment call as if it were a hard guarantee is itself a kind of
+overclaiming this manual argues against elsewhere (Section 7):</p>
+<table>
+<thead>
+<tr>
+<th>Check</th>
+<th>Category</th>
+<th>Where</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>An <code>answer.md</code> was never edited after its proposal
+commit</td>
+<td><strong>Scriptable, deterministic</strong> — pure git history</td>
+<td><code>scripts/check-repo-invariants.sh</code> in the template</td>
+</tr>
+<tr>
+<td>A proposal and its apply are always two separate commits</td>
+<td><strong>Scriptable, deterministic</strong> — pure git history</td>
+<td>same script</td>
+</tr>
+<tr>
+<td>The above two, checked automatically after every commit, with no one
+needing to remember to run it</td>
+<td><strong>Harness-enforced, deterministic</strong> — runs regardless
+of AI diligence</td>
+<td><code>.claude/settings.json</code> hook (Section 18)</td>
+</tr>
+<tr>
+<td>A disclosure statement reflects the actual <code>ai-requests/</code>
+record</td>
+<td><strong>Scriptable, mechanical assembly</strong> — but the
+<em>choice</em> of what a target journal needs is not</td>
+<td><code>CLAUDE.md</code> step 13</td>
+</tr>
+<tr>
+<td>Text plausibly names a real, identifiable person</td>
+<td><strong>AI pattern-matching, best-effort</strong> — flags, never
+decides</td>
+<td><code>CLAUDE.md</code> steps 11-12</td>
+</tr>
+<tr>
+<td>An anonymization is legally adequate</td>
+<td><strong>Human/legal judgment only</strong></td>
+<td>data protection contact</td>
+</tr>
+<tr>
+<td>A specific factual claim is true</td>
+<td><strong>Human judgment, using real sources</strong></td>
+<td>Section 3, TODO.md</td>
+</tr>
+<tr>
+<td>Which disclosure format/policy currently applies</td>
+<td><strong>Human judgment</strong> — check the current source</td>
+<td>Sections 11.1, 11.4</td>
+</tr>
+</tbody>
+</table>
+<p>The template includes <code>scripts/check-repo-invariants.sh</code>,
+which implements the two fully-deterministic checks in the table above
+and can be run by hand or wired into a pre-push hook — see the script's
+own comments. It deliberately does not attempt anything from the bottom
+three rows; a script that claimed to check GDPR adequacy or factual
+truth would be exactly the kind of false confidence Section 3 warns
+against, just implemented as code instead of as a prompt.</p>
+<p><strong>Sources:</strong> <a
+href="https://www.enago.com/responsible-ai-movement/resources/publisher-ai-policies-disclosure-rules-authors">Publisher
+AI Policies and Disclosure Rules</a> · <a
+href="https://www.elsevier.com/about/policies-and-standards/generative-ai-policies-for-journals">Generative
+AI policies for journals (Elsevier)</a> · <a
+href="https://manusights.com/blog/journal-ai-policies-2026">Journal AI
+Policies 2026</a> · <a
+href="https://www.thesify.ai/blog/gen-ai-policies-update-2025">Generative
+AI Policies at the World's Top Universities: October 2025 Update</a> ·
+<a
+href="https://www.edps.europa.eu/press-publications/press-news/press-releases/2025/edps-unveils-revised-guidance-generative-ai-strengthening-data-protection-rapidly-changing-digital-era_en">EDPS
+Guidance on Generative AI (Oct 2025)</a> · <a
+href="https://www.edpb.europa.eu/news/edpb-sheds-light-on-anonymisation-and-web-scraping-for-generative-ai-and-adopts-final-version_en">EDPB
+anonymisation/web-scraping guidelines</a> · <a
+href="https://www.copyright.gov/ai/Copyright-and-Artificial-Intelligence-Part-2-Copyrightability-Report.pdf">US
+Copyright Office, Copyright and Artificial Intelligence, Part 2:
+Copyrightability</a> · <a
+href="https://www.anthropic.com/news/updates-to-our-consumer-terms">Anthropic:
+Updates to Consumer Terms and Privacy Policy</a> · <a
+href="https://techcrunch.com/2025/08/28/anthropic-users-face-a-new-choice-opt-out-or-share-your-data-for-ai-training/">Anthropic
+users face a new choice (TechCrunch)</a> · <a
+href="https://www.beneschlaw.com/insight/when-chatgpt-lies-what-the-first-wave-of-ai-defamation-cases-means-for-plaintiffs/">When
+ChatGPT Lies: the first wave of AI defamation cases</a> · <a
+href="https://thedailyrecord.com/2025/11/12/ai-defamation-lawsuits-libel-law/">Courts
+test new frontier of defamation law as AI enters the mix</a> · <a
+href="https://apploye.com/blog/employee-monitoring-negative-effects/">Negative
+Effects of Employee Monitoring</a> · <a
+href="https://www.softwareseni.com/the-psychological-cost-of-workplace-surveillance-on-developer-teams-and-company-culture/">The
+Psychological Cost of Workplace Surveillance</a></p>
+<h2 id="12-configuration-management-setup-repositories-and-folders">12.
+Configuration Management setup: repositories and folders</h2>
+<p><em>🔴 Required</em></p>
+<p>We use git, the same tool software engineers use to track and audit
+changes to code, to track and audit research and writing. Two rules:</p>
+<ol type="1">
+<li><p><strong>Everyone gets their own git repository space.</strong>
+Each member of the department (faculty and students) works from their
+own git identity (their own commits, their own name/email in
+<code>git config</code>) and keeps their own collection of repositories,
+e.g. under a personal folder such as
+<code>~/research/&lt;your-name&gt;/</code>.</p></li>
+<li><p><strong>Each individual research topic gets its own
+repository.</strong> Do not lump unrelated papers into one giant
+repository. A repository is the unit of history for one topic — one
+seminar paper, one thesis chapter, one article draft. This keeps
+<code>git log</code> for a topic meaningful (it only ever shows work on
+that topic) and keeps repositories a manageable, reviewable size.
+(Section 13 covers the exception: a paper genuinely co-authored by more
+than one person.)</p>
+<pre><code>~/research/&lt;your-name&gt;/
+  revelation-dating/          &lt;- one git repo, one topic
+  pauline-authorship-eph/     &lt;- another git repo, another topic
+  ecclesiology-1clement/      &lt;- another git repo, another topic</code></pre></li>
+</ol>
+<p>Each topic repository has this shape (see the ready-to-copy version
+in <a
+href="templates/new-topic-repo/"><code>templates/new-topic-repo/</code></a>):</p>
+<pre><code>&lt;topic-repo&gt;/
+  README.md            &lt;- what the topic/research question is, current status
+  CLAUDE.md            &lt;- maintenance instructions for the AI assistant (Section 14)
+  DEPARTMENT-RULES.md  &lt;- optional: department/program-specific rules (Section 18)
+  TODO.md              &lt;- open fact-checks and open questions (Section 14)
+  paper.md              &lt;- the actual paper/notes being written
+  sources.md           &lt;- bibliography, growing as sources are verified
+  ai-requests/
+    0001-&lt;short-slug&gt;/
+      question.md      &lt;- exact prompt/question given to the AI
+      answer.md         &lt;- the AI&#39;s full answer, verbatim
+    0002-&lt;short-slug&gt;/
+      ...
+  instructions/         &lt;- optional: reusable task instructions (Section 6.2)
+    instruction_&lt;task&gt;.md
+  scripts/
+    check-repo-invariants.sh  &lt;- mechanical structure checks (Section 11.7)
+  .claude/
+    settings.json       &lt;- harness-enforced checks, e.g. auto-running the
+                            script above after every commit (Section 18)
+    commands/
+      update_paper.md   &lt;- /update_paper: checks TODO.md, wrong facts,
+                            contradictions, weak arguments (Section 6.1)</code></pre>
+<p>Access to this repository (who can read it, and when) is a separate,
+deliberate decision — see <a
+href="access-control-for-it.md"><code>access-control-for-it.md</code></a>
+for the department's IT-facing guidance on keeping each person's
+repository private by default.</p>
+<p><code>ai-requests/</code> is the audit trail: every AI interaction
+that influenced the paper is a numbered, dated folder containing the
+exact question and the exact answer, so anyone can later see precisely
+what was asked and what the model said, independent of how it was
+paraphrased into the paper.</p>
+<h2
+id="13-collaborative-work-co-authorship-and-supervision-feedback">13.
+Collaborative work: co-authorship and supervision feedback</h2>
+<p><em>🔴 Required (when applicable)</em></p>
+<p>Section 12's one-person-per-repository default covers most of this
+department's work, but two genuinely collaborative situations need their
+own guidance: a paper written jointly by more than one person, and the
+very common case of a supervisor reviewing a student's progress.</p>
+<h3
+id="131-co-authorship-more-than-one-person-writing-the-same-repository">13.1
+Co-authorship: more than one person writing the same repository</h3>
+<p>When a paper genuinely has multiple human authors (two professors
+co-writing an article, a student and supervisor co-authoring), the
+repository is jointly owned rather than following the one-person default
+— but the rest of the process doesn't change:</p>
+<ul>
+<li>Each co-author uses their own git identity (their own name/email in
+git config, per Section 12) — never a shared generic account — so
+<code>git log</code> still shows who actually asked and applied what,
+the same accountability Section 1 asks for within a single-author
+repository.</li>
+<li>The propose-then-confirm gate (Section 6.6) still applies per
+person: whichever co-author's research direction an AI answer would
+affect is the one who has to say yes before it's applied, not whoever
+happens to be at the keyboard.</li>
+<li>Coordinate who is actively writing to avoid stepping on each other
+mid-session (a quick message beats a merge conflict); for anything
+beyond light coordination, use a normal git branch per co-author and
+merge regularly rather than working in the same file at the same
+moment.</li>
+</ul>
+<h3 id="132-supervision-a-professor-reviewing-a-students-progress">13.2
+Supervision: a professor reviewing a student's progress</h3>
+<p>This is the concrete case Section 11.6 and
+<code>access-control-for-it.md</code> were written for. Putting the
+pieces together:</p>
+<ol type="1">
+<li><strong>Access is scoped and time-boxed</strong>, granted with the
+notice-of-access statement, exactly as
+<code>access-control-for-it.md</code> describes — not standing,
+continuous read access to every repository a student will ever
+create.</li>
+<li><strong>Review at defined checkpoints, not continuously.</strong>
+Reviewing every commit as it happens recreates the exact chilling effect
+Section 11.6 warns about — a student who knows every exploratory
+question is being watched live will stop asking naive-sounding ones,
+which is precisely the opposite of what supervision is for. Review at a
+normal cadence instead: the end of a chapter, a scheduled supervision
+meeting, a submission checkpoint.</li>
+<li><strong>Feedback goes through the same discipline research claims
+do.</strong> A supervisor's comment is itself a claim ("this argument is
+weak," "check this against Beale") that the student should be free to
+accept, push back on, or discuss — not a silent edit to the student's
+own files. Two practical options, in order of preference:
+<ul>
+<li>If the git host supports comments/issues for read-only collaborators
+(GitHub, GitLab, and most hosted platforms do), use that — the
+supervisor never needs write access to leave feedback.</li>
+<li>Otherwise, keep a <code>FEEDBACK.md</code> in the repository
+(parallel to <code>TODO.md</code>): the supervisor's comments, given
+verbally or in writing, get recorded there by the student verbatim (same
+"don't silently edit the record" discipline as <code>answer.md</code>,
+Section 16), dated, and referencing the specific commit or section
+they're about. The student adds their own response next to each item as
+they address it — accepted, pushed back on with reasoning, or open for
+the next meeting.</li>
+</ul></li>
+<li><strong>A committee (more than one reviewer) is just this procedure
+repeated once per reviewer</strong> — each examiner gets their own
+scoped access grant and their own notice-of-access; there is no single
+shared "faculty" access role
+(<code>access-control-for-it.md</code>).</li>
+</ol>
+<p><strong>Why this doesn't undermine Section 11.6's privacy
+concerns:</strong> scoped, checkpoint-based, disclosed access is exactly
+what settles that concern rather than reopening it — the student knows
+in advance who can see what, when, and for what stated purpose, and the
+"evaluate the work, not the person" norm still applies to what a
+supervisor does with that access once granted.</p>
+<h2 id="14-the-request--document--commit--fact-check-workflow">14. The
+request → document → commit → fact-check workflow</h2>
+<p><em>🔴 Required</em></p>
+<p>This is the core discipline, and it is deliberately light per step —
+the weight comes from doing it every time, not from any single step
+being onerous. If your AI assistant supports project-level instructions
+(e.g. Claude Code reading a <code>CLAUDE.md</code>), the template's
+<code>CLAUDE.md</code> (Section 17) performs essentially all of this
+automatically; what follows is what it is doing, and what's still
+genuinely yours to decide.</p>
+<div class="diagram">
+<svg viewBox="0 0 900 560" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" color="var(--fg, #1b1f23)">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="currentColor"/>
+    </marker>
+  </defs>
+  <style>
+    .box { fill: none; stroke: currentColor; stroke-width: 1.6; }
+    .box-a { fill: color-mix(in srgb, currentColor 10%, transparent); }
+    .box-b { fill: color-mix(in srgb, currentColor 6%, transparent); }
+    .lbl { font-size: 15px; fill: currentColor; }
+    .lbl-b { font-size: 12.5px; fill: currentColor; opacity: .85; }
+    .step { font-size: 12px; fill: currentColor; opacity: .7; }
+    .edge { stroke: currentColor; stroke-width: 1.6; fill: none; marker-end: url(#arrow); }
+    .diamond { fill: color-mix(in srgb, currentColor 10%, transparent); stroke: currentColor; stroke-width: 1.6; }
+  </style>
+
+  <!-- Ask -->
+
+  <rect x="330" y="10" width="240" height="46" rx="8" class="box box-a"/>
+  <text x="450" y="38" text-anchor="middle" class="lbl">1. Ask the AI a question</text>
+
+  <line x1="450" y1="56" x2="450" y2="90" class="edge"/>
+
+  <!-- Step A: proposal -->
+
+  <rect x="260" y="90" width="380" height="90" rx="8" class="box box-a"/>
+  <text x="450" y="114" text-anchor="middle" class="lbl">Step A — Proposal commit</text>
+  <text x="450" y="136" text-anchor="middle" class="lbl-b">question.md + answer.md archived verbatim</text>
+  <text x="450" y="155" text-anchor="middle" class="step">committed immediately — nothing decided yet</text>
+
+  <line x1="450" y1="180" x2="450" y2="214" class="edge"/>
+
+  <!-- Decision diamond -->
+
+  <polygon points="450,214 560,264 450,314 340,264" class="diamond"/>
+  <text x="450" y="258" text-anchor="middle" class="lbl">Apply it?</text>
+  <text x="450" y="278" text-anchor="middle" class="step">(explicit yes / no / not now)</text>
+
+  <!-- No branch -->
+
+  <line x1="340" y1="264" x2="120" y2="264" class="edge"/>
+  <text x="230" y="252" text-anchor="middle" class="step">no / not now</text>
+  <rect x="20" y="240" width="200" height="50" rx="8" class="box box-b"/>
+  <text x="120" y="270" text-anchor="middle" class="lbl-b">Done — proposal stands</text>
+
+  <!-- Yes branch -->
+
+  <line x1="450" y1="314" x2="450" y2="350" class="edge"/>
+  <text x="470" y="335" class="step">yes</text>
+
+  <!-- Step B: apply -->
+
+  <rect x="240" y="350" width="420" height="110" rx="8" class="box box-a"/>
+  <text x="450" y="374" text-anchor="middle" class="lbl">Step B — Apply commit</text>
+  <text x="450" y="396" text-anchor="middle" class="lbl-b">paper.md / sources.md updated; every claim</text>
+  <text x="450" y="414" text-anchor="middle" class="lbl-b">defaults to NOT YET CHECKED in TODO.md</text>
+  <text x="450" y="435" text-anchor="middle" class="step">one optional question: "anything to add?" — not a checklist</text>
+
+  <line x1="450" y1="460" x2="450" y2="494" class="edge"/>
+
+  <!-- Fact-check -->
+
+  <rect x="240" y="494" width="420" height="58" rx="8" class="box box-a"/>
+  <text x="450" y="518" text-anchor="middle" class="lbl">Later — Fact-check commit(s)</text>
+  <text x="450" y="538" text-anchor="middle" class="lbl-b">checks off TODO.md items, whenever they actually get checked</text>
+</svg>
+
+<p class="step" style="text-align:center;opacity:.7;font-size:.85rem;margin-top:.5rem">The propose → apply → fact-check cycle (Section 13).</p>
+</div>
+
+<p><strong>Step A — the proposal (archived and committed immediately, no
+decision needed yet):</strong></p>
+<ol type="1">
+<li><strong>Ask.</strong> Put your question to the AI assistant (or run
+a reusable instruction file per Section 6.2). Skip everything below for
+exchanges that never touch the paper — see Section 1.</li>
+<li><strong>Save the exchange to disk.</strong>
+<code>ai-requests/NNNN-short-slug/question.md</code> (the exact
+question) and <code>answer.md</code> (the AI's full answer, verbatim —
+not trimmed).</li>
+<li><strong>Commit this on its own</strong>, right away — e.g. "Archive
+AI answer: <slug>." Nothing about the paper changed, so there's nothing
+to weigh first; this is purely the record that the question was asked.
+Call this the <strong>proposal commit</strong> and note its hash.</li>
+</ol>
+<p><strong>Step B — applying it, only once you've actually decided to
+use it:</strong></p>
+<ol start="4" type="1">
+<li><strong>Use the answer</strong> to update <code>paper.md</code> /
+<code>sources.md</code> / wherever it belongs — but only after you've
+explicitly said yes (Section 6.6). "Not now" or "no" is a perfectly good
+outcome and needs no further action; the proposal commit already
+preserved the record.</li>
+<li><strong>Default every extracted factual claim to NOT YET CHECKED in
+<code>TODO.md</code></strong>, referencing the proposal commit's hash.
+This is automatic and needs no input from you — per Section 6.5, add a
+confidence tier only for claims central to the paper's argument.</li>
+<li><strong>You get asked exactly one light, optional question</strong>
+— not a checklist: "anything to add — a source you already know, a
+caveat, related work?" Answer if you have something; if not, move on.
+This is where <em>your</em> fact-checking (Section 3) enters the record
+when you already have it — it's an invitation for outside contribution,
+not a gate you must clear.</li>
+<li><strong>Commit the apply step separately from the proposal
+commit</strong>, referencing its hash, using the template in Section
+15.</li>
+<li><strong>When you later close a TODO item</strong> (at whatever point
+you actually get around to checking it), check it off in
+<code>TODO.md</code> in its own small commit, noting what was checked,
+against what, and with what result, referencing the original proposal
+commit.</li>
+</ol>
+<p>The result is a <code>git log</code> for the topic that is
+simultaneously a research diary, an AI-usage audit trail, and a running
+record of what has and has not been independently verified — built
+almost entirely as a byproduct of asking questions the way you already
+would, not as separate overhead.</p>
+<h3
+id="when-your-own-hand-editing-and-an-ai-apply-step-touch-the-same-file">When
+your own hand-editing and an AI apply-step touch the same file</h3>
+<p><code>paper.md</code> doesn't belong exclusively to Step B — you will
+often be directly editing it yourself (in your own editor, by hand) in
+between, or even during, AI-assisted work. That creates a real, specific
+way for the two to interfere: an AI apply-step (Step B, item 4)
+typically works from whatever it last read of <code>paper.md</code>, so
+if you've hand-edited a passage since then and the AI applies a change
+to that same area without knowing about your edit, one of two bad things
+happens — your hand-edit gets silently overwritten, or the apply-commit
+produces a confusing merge of two different edits to the same
+sentence.</p>
+<ul>
+<li><strong>Commit your own hand-edits before asking the AI to apply
+anything new</strong>, the same "one cause per commit" discipline
+Section 6.6 already asks of proposal/apply — a plain, ordinary commit
+(no special template needed; it's not an AI-request cycle, see Section
+1) that's just your own writing. This keeps <code>git log</code>
+accurate about who changed what, and gives the AI a current, correct
+file to work from on the next request.</li>
+<li><strong>If you're mid-edit and want the AI's help right now, say so
+explicitly</strong> — "I'm currently rewriting the second paragraph of
+section 2, here's where it stands, take that into account" — rather than
+letting the AI work from a mental model of the file that's already out
+of date. This is the same "don't leave it implicit" principle Section 7
+asks of any request, applied to the state of the file itself, not just
+the question.</li>
+<li><strong>After an AI apply-commit, re-read the affected section
+before you keep hand-editing it</strong> — wording may have shifted
+under a passage you were about to continue, and catching that by reading
+beats catching it by fighting a confusing diff later.</li>
+<li><strong>If a collision already happened, nothing is actually
+lost</strong> — this is one of the concrete payoffs of the whole process
+being git-backed rather than a live shared document.
+<code>git diff &lt;commit-before-apply&gt; &lt;commit-after-apply&gt; -- paper.md</code>
+shows exactly what the apply-commit changed;
+<code>git show &lt;hash&gt;:paper.md</code> recovers the full file as it
+stood at any earlier commit, including your hand-edit if the
+apply-commit overwrote it. Recover the lost text from there and reapply
+it, then commit that recovery on its own.</li>
+<li><strong>For genuinely simultaneous editing by more than one
+person</strong>, this is the same problem Section 13.1 (co-authorship)
+already covers — coordinate directly, or use a git branch per person and
+merge deliberately, rather than relying on commit ordering alone to sort
+it out.</li>
+</ul>
+<h2 id="15-commit-message-template">15. Commit message template</h2>
+<p><em>🔴 Required</em></p>
+<p>Two small, distinct message shapes, matching the two commits in
+Section 14.</p>
+<p><strong>The proposal commit (Step A)</strong> — needs almost nothing,
+since nothing about the paper changed yet:</p>
+<pre><code>Archive AI answer: &lt;short-slug&gt;
+
+AI question: &lt;one-line restatement of what was asked; full text in
+  ai-requests/NNNN-.../question.md&gt;
+AI answer summary: &lt;1-3 sentences on what the AI answered&gt;</code></pre>
+<p><strong>The apply commit (Step B)</strong> — this is the one with
+fact-check content (see the plain-text copy in <a
+href="templates/commit-message-template.txt"><code>templates/commit-message-template.txt</code></a>):</p>
+<pre><code>&lt;short summary of what changed, imperative mood, ~50 chars&gt;
+
+Applies proposal from commit &lt;hash of the Step A commit&gt;.
+
+Fact-check status:
+  - &lt;claim 1&gt; — NOT YET CHECKED, added to TODO.md (the default)
+  - &lt;claim 2&gt; — CHECKED against &lt;source&gt;, confirmed / corrected to &lt;...&gt;
+    [optionally: attestation = Strongly attested / Moderately attested /
+    Proposed, plausible — see Section 6.5]
+
+Additional considerations:
+  - &lt;whatever you volunteered when asked in Step B, plus anything the AI
+    noticed itself: a competing scholarly view, a caveat, follow-up this
+    suggests&gt;</code></pre>
+<p>Keep both sections in the apply commit even when short ("none
+outstanding" / "n/a") — their presence is what makes the commit log
+auditable; a missing section reads as an oversight, not as "there was
+nothing to say." Neither section requires you to have actually checked
+anything before committing — "NOT YET CHECKED" for every claim is a
+completely normal, expected commit.</p>
+<h2 id="16-file-and-folder-naming-conventions">16. File and folder
+naming conventions</h2>
+<p><em>🔴 Required</em></p>
+<ul>
+<li>Topic repository names: <code>kebab-case</code>, short, descriptive
+(<code>revelation-dating</code>, not
+<code>Revelation_Research_FINAL2</code>).</li>
+<li><code>ai-requests/</code> subfolders: zero-padded sequence number +
+short slug, <code>0001-date-of-revelation-external-attestation</code>.
+The number gives a stable chronological order independent of git's own
+history, which matters once branches or rebases are involved.</li>
+<li>Reusable instruction files (Section 6.2):
+<code>instructions/instruction_&lt;task&gt;.md</code>, named after the
+task, not the date or the paper — <code>instruction_find_gaps.md</code>,
+not <code>instruction_july.md</code>, since the same instruction is
+meant to be reused across dates and even across topic repositories.</li>
+<li>Never delete or edit a saved <code>answer.md</code> after the fact.
+If the AI was wrong, that is exactly what makes the archived answer
+valuable — it documents the error and, combined with your
+<code>TODO.md</code>/<code>sources.md</code> correction, becomes part of
+the record of how the mistake was caught.</li>
+</ul>
+<h2 id="17-using-the-template">17. Using the template</h2>
+<p><em>🔴 Required</em></p>
+<p>Copy <a
+href="templates/new-topic-repo/"><code>templates/new-topic-repo/</code></a>
+to start a new topic:</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> <span class="at">-r</span> templates/new-topic-repo ~/research/<span class="op">&lt;</span>your-name<span class="op">&gt;</span>/<span class="op">&lt;</span>new-topic-slug<span class="op">&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/research/<span class="op">&lt;</span>your-name<span class="op">&gt;</span>/<span class="op">&lt;</span>new-topic-slug<span class="op">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add .</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Initialize &lt;topic&gt; research repository&quot;</span></span></code></pre></div>
+<p>New to git, Markdown, or turning a draft into a properly-cited PDF?
+See <a
+href="tutorial-git-markdown-pdf.md"><code>tutorial-git-markdown-pdf.md</code></a>
+before or alongside your first topic repository — it covers all three
+from scratch.</p>
+<p>The template includes:</p>
+<ul>
+<li>A <code>CLAUDE.md</code> with maintenance instructions so that a
+Claude Code (or compatible) assistant working in the new repository
+already knows to archive every question/answer, prompt you for
+fact-check status, and commit per Section 15 without being told each
+time — see <a
+href="templates/new-topic-repo/CLAUDE.md"><code>templates/new-topic-repo/CLAUDE.md</code></a>.</li>
+<li>A <code>DEPARTMENT-RULES.md</code> for any local rules your program
+adds on top of this manual's defaults — see Section 18.</li>
+<li>A <code>.claude/settings.json</code> with a working example of a
+harness-enforced check (Section 11.7, Section 18) — no per-repository
+setup needed beyond copying the template.</li>
+</ul>
+<p>Then follow the workflow in Section 14 for every subsequent
+AI-assisted step.</p>
+<h2 id="18-introducing-department--or-program-specific-rules">18.
+Introducing department- or program-specific rules</h2>
+<p><em>🔴 Required (when applicable)</em></p>
+<p>The template and this manual describe one default process. A specific
+department, program, or even a single course may need to add its own
+rules on top — a required citation style, a language requirement, a
+stricter fact-checking bar for thesis work, a per-assignment
+AI-permission tag.
+<code>templates/new-topic-repo/DEPARTMENT-RULES.md</code> is where these
+live.</p>
+<h3 id="how-it-works">How it works</h3>
+<ul>
+<li><strong>An administrator fills in <code>DEPARTMENT-RULES.md</code>
+once, in the template itself</strong>, before it's distributed further.
+Every new topic repository created via
+<code>cp -r templates/new-topic-repo ...</code> (Section 17) inherits
+whatever the file says <em>at the moment it's copied</em> — there is no
+separate installation step.</li>
+<li><strong>A department rule can only add or tighten a constraint,
+never loosen one of the defaults in the main manual or
+<code>CLAUDE.md</code>.</strong> If a local rule reads like it's trying
+to skip fact-check logging or the archive step, the AI is instructed
+(<code>CLAUDE.md</code> Step 0) to flag that specific line and ask
+before proceeding, not silently honor it.</li>
+<li><strong>Existing repositories keep the rules they were created
+with</strong>, even after the template's
+<code>DEPARTMENT-RULES.md</code> changes later. This is deliberate, not
+a gap: a visibly-stale rule you can go check is safer than one that
+silently changed underneath a piece of work already in progress — the
+same principle behind never editing an archived <code>answer.md</code>
+(Section 16).</li>
+</ul>
+<h3 id="writing-a-rule-the-ai-can-actually-act-on">Writing a rule the AI
+can actually act on</h3>
+<p>The same discipline Section 7 asks of research questions applies to
+writing rules: bounded and checkable, not a vague appeal to
+judgment.</p>
+<ul>
+<li>Good: <em>"All citations must use SBL style, not Chicago or
+MLA."</em> — checkable against a named standard.</li>
+<li>Bad: <em>"Cite properly."</em> — properly by whose standard?</li>
+<li>Good: <em>"For any assignment marked <code>[no-AI]</code>, do not
+use this workflow at all."</em></li>
+<li>Bad: <em>"Use good judgment about when AI is appropriate."</em> —
+this pushes a call onto the AI that only the instructor can actually
+make; if a rule genuinely needs human judgment, say so explicitly rather
+than phrasing it as an instruction the AI can just follow.</li>
+</ul>
+<p>See <code>templates/new-topic-repo/DEPARTMENT-RULES.md</code> for a
+fully worked example (citation style, language requirements,
+per-assignment AI-permission tags, a stricter thesis fact-checking bar,
+and required disclosure text) — replace it entirely rather than editing
+around it when adopting the template.</p>
+<h3
+id="making-a-mechanical-rule-actually-automatic-not-just-written-down">Making
+a mechanical rule actually automatic, not just written down</h3>
+<p>Some rules are simple enough to enforce with the harness itself
+rather than relying on the AI to remember them every time. The
+template's <code>.claude/settings.json</code> includes a working
+example: a hook that automatically re-runs
+<code>scripts/check-repo-invariants.sh</code> (Section 11.7) after every
+commit containing "git commit," surfacing a warning immediately if the
+proposal/apply separation or the never-edit-<code>answer.md</code> rule
+was violated — without anyone having to remember to check. This is the
+strongest of the three enforcement tiers from Section 11.7's table:
+stronger than an AI instruction (which depends on the AI remembering),
+because the harness runs it regardless. Use
+<code>.claude/settings.json</code> for rules that reduce to a simple,
+deterministic check over files or git history; keep prose rules in
+<code>DEPARTMENT-RULES.md</code> for anything that needs actual judgment
+(a citation style, a permission tag) to interpret.</p>
+<h3
+id="should-update_paper-also-run-automatically-after-every-commit-deliberately-no">Should
+<code>/update_paper</code> also run automatically after every commit?
+Deliberately, no.</h3>
+<p>It's tempting to wire <code>/update_paper</code> (Section 6.1) into
+the same after-every-commit hook as
+<code>scripts/check-repo-invariants.sh</code>, so the adversarial-reader
+pass runs as an automatic aftermath of each apply-step with no one
+needing to remember to invoke it. This is possible — the underlying hook
+mechanism supports triggering an AI pass, not just a shell script, on
+the same <code>PostToolUse</code>/"contains git commit" trigger already
+in place — but it isn't what this template does by default, for a reason
+worth stating rather than leaving implicit:</p>
+<ul>
+<li><strong><code>check-repo-invariants.sh</code> runs in a fraction of
+a second</strong>, because it's a deterministic script over git history.
+<code>/update_paper</code> is a full AI reasoning pass over the entire
+current state of <code>paper.md</code>, <code>sources.md</code>, and
+<code>TODO.md</code> — it takes real, noticeable time, and that time
+lands as a delay in the middle of whatever conversation triggered the
+commit. Section 1's "meant to run in the background, not slow you down"
+is a real constraint here, not a nicety: a check that visibly stalls
+every single commit is exactly the kind of friction that gets disabled
+the first time it's inconvenient.</li>
+<li><strong>Cost scales with frequency</strong> (Section 10) — a
+full-paper review after every small apply-commit is a much larger, more
+frequent expense than running the same review deliberately, at a natural
+checkpoint, once enough new material has actually accumulated to be
+worth re-checking.</li>
+<li><strong>Most individual commits are small.</strong> A full
+adversarial pass makes more sense triggered by "a meaningful chunk of
+writing has happened" than by "any commit happened," and git commit
+boundaries don't reliably track that.</li>
+</ul>
+<p><strong>The recommended default: run <code>/update_paper</code>
+manually, at the same checkpoints Section 13.2 already recommends for
+supervision review</strong> — the end of a writing session, before a
+supervision meeting, before a submission. If a department wants it
+automatic anyway, despite the tradeoff above, the mechanism is an
+<code>agent</code>-type hook on the same
+<code>PostToolUse</code>/<code>Bash</code> event already used for the
+invariant check, invoking <code>/update_paper</code>'s instructions
+directly rather than a shell command; this has not been built into the
+template or verified end-to-end the way
+<code>check-repo-invariants.sh</code>'s hook has, so treat it as a
+documented possibility to configure deliberately, not a tested default
+to expect out of the box.</p>
+<h2 id="19-worked-example">19. Worked example</h2>
+<p><em>🔵 Context</em></p>
+<p><a href="example/"><code>example/</code></a> contains a small, real,
+git-initialized repository that applies this entire process to an actual
+(deliberately small) research question: <em>when was the Book of
+Revelation written — the 60s AD or the 90s AD?</em> It has real commits,
+a real <code>TODO.md</code> with an item left open on purpose, and an
+answer that turns out to need a correction, so you can see the
+fact-check step actually catching something. Read its
+<code>README.md</code> first, then run <code>git log -p</code> inside it
+to see the full history.</p>
+<h2 id="20-quick-checklist">20. Quick checklist</h2>
+<p><em>🔴 Required</em></p>
+<p>For a question worth archiving at all (Section 1 — skip pure
+exploration):</p>
+<ul class="task-list">
+<li><label><input type="checkbox" />Question and full answer saved
+verbatim under <code>ai-requests/NNNN-.../</code>, committed on its own
+as the proposal commit (Section 14, Step A)</label></li>
+<li><label><input type="checkbox" />Paper/sources/notes only updated
+after explicit yes/no (Section 6.6), as a separate apply commit
+referencing the proposal commit's hash</label></li>
+<li><label><input type="checkbox" />Every factual claim defaulted to NOT
+YET CHECKED in <code>TODO.md</code> unless you volunteered a check when
+asked the one optional question (Section 14, Step B)</label></li>
+<li><label><input type="checkbox" />Apply commit message follows the
+template in Section 15</label></li>
+<li><label><input type="checkbox" />Proposal and apply are two separate
+commits — never merged into one</label></li>
+</ul>
+</div>
+</body>
+</html>

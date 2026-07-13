@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Template: new topic repository</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="page">
+<p class="crumbs"><a href="../../README.html">&larr; back to the department manual</a></p>
+<h1><Topic title></h1>
+<p><strong>Research question:</strong>
+<one or two sentences stating exactly what this
+repository is trying to answer></p>
+<p><strong>Status:</strong> &lt;e.g. "drafting", "fact-checking pending
+items in TODO.md", "ready for supervisor review"&gt;</p>
+<h2 id="contents">Contents</h2>
+<ul>
+<li><code>paper.md</code> — the paper/notes being written for this
+topic.</li>
+<li><code>sources.md</code> — bibliography, updated as sources are found
+and verified.</li>
+<li><code>TODO.md</code> — open fact-checks and open questions. See <a
+href="../../README.md">../../README.md</a> Section 14 for the workflow
+this supports.</li>
+<li><code>ai-requests/</code> — one numbered folder per AI question
+asked in service of this paper, each containing the verbatim
+<code>question.md</code> and <code>answer.md</code>.</li>
+<li><code>CLAUDE.md</code> — tells the AI assistant how to maintain this
+repo automatically.</li>
+<li><code>DEPARTMENT-RULES.md</code> — optional local rules your program
+adds on top of the manual's defaults (Section 18).</li>
+<li><code>.claude/settings.json</code> — a harness-enforced check that
+runs automatically after every commit (Section 11.7, Section 18).</li>
+<li><code>.claude/commands/update_paper.md</code> — run as
+<code>/update_paper</code>: checks <code>TODO.md</code> for open items
+and scans <code>paper.md</code> for wrong facts, contradictions, weak
+arguments, and misplaced citations (Section 6.1).</li>
+</ul>
+<h2 id="convenience-command-update_paper">Convenience command:
+<code>/update_paper</code></h2>
+<p>Run <code>/update_paper</code> any time you want a checking pass
+without re-typing the Section 6.1 instructions by hand. It reads
+<code>paper.md</code> against <code>sources.md</code> and
+<code>TODO.md</code>, writes findings to <code>wrong_facts.md</code> /
+<code>contradict.md</code>, and reports a summary — it never edits
+<code>paper.md</code> itself; applying any fix it finds is still its own
+separate, confirmed AI-request cycle.</p>
+<h2 id="workflow-reminder">Workflow reminder</h2>
+<p>Every AI-assisted change to this repository follows the process in
+the department manual: <code>../../README.md</code>, Section 14. In
+short, two lightweight steps, each its own commit: <strong>(A)</strong>
+ask → archive the verbatim question+answer under
+<code>ai-requests/</code> → commit immediately (nothing about the paper
+changed yet, so nothing to decide first) — this is the <em>proposal</em>
+commit. <strong>(B)</strong> only once you've actually decided to use
+it: apply it to the paper/sources → default every claim to NOT YET
+CHECKED in <code>TODO.md</code> → answer one optional "anything to add?"
+prompt if you have something → commit separately, referencing the
+proposal commit (message per
+<code>../commit-message-template.txt</code>). Skip both steps entirely
+for exploratory questions that never touch the paper (Section 1).</p>
+</div>
+</body>
+</html>

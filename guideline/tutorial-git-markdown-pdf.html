@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tutorial: Git, Markdown, and Producing a Properly-Cited
+PDF</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<div class="page">
+<p class="crumbs"><a href="README.html">&larr; back to the department manual</a></p>
+<nav class="toc" role="doc-toc">
+<p>Contents</p>
+<ul>
+<li><a href="#tutorial-git-markdown-and-producing-a-properly-cited-pdf"
+id="toc-tutorial-git-markdown-and-producing-a-properly-cited-pdf">Tutorial:
+Git, Markdown, and Producing a Properly-Cited PDF</a>
+<ul>
+<li><a href="#part-1-git-from-scratch"
+id="toc-part-1-git-from-scratch">Part 1: Git, from scratch</a></li>
+<li><a href="#part-2-markdown-from-scratch"
+id="toc-part-2-markdown-from-scratch">Part 2: Markdown, from
+scratch</a></li>
+<li><a href="#part-3-converting-a-draft-into-a-properly-cited-pdf"
+id="toc-part-3-converting-a-draft-into-a-properly-cited-pdf">Part 3:
+Converting a draft into a properly-cited PDF</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="tutorial-git-markdown-and-producing-a-properly-cited-pdf">Tutorial:
+Git, Markdown, and Producing a Properly-Cited PDF</h1>
+<p>This is a from-scratch tutorial for anyone who hasn't used git or
+Markdown before. If you already know both, skip to <a
+href="#part-3-converting-a-draft-into-a-properly-cited-pdf">Part 3</a>
+for the citation/PDF pipeline. Everything here is what the department
+manual (<code>README.md</code>) assumes you already know — this fills
+that gap.</p>
+<h2 id="part-1-git-from-scratch">Part 1: Git, from scratch</h2>
+<h3 id="what-git-actually-is">What git actually is</h3>
+<p>Git tracks changes to a folder of files over time, as a series of
+snapshots called <strong>commits</strong>. Each commit records exactly
+what changed, when, and (if you write a good message) why.
+<code>README.md</code> Section 1 explains why this department uses it
+for research, not just code — the short version is that a commit is a
+permanent, timestamped fact about your project's history that a plain
+folder of files can't give you.</p>
+<h3 id="install-it">Install it</h3>
+<p>On Windows, install <a href="https://git-scm.com/download/win">Git
+for Windows</a>, which also gives you <strong>Git Bash</strong>, a
+terminal you can run the commands below in. On macOS, <code>git</code>
+is usually already available (or installed via Xcode's command line
+tools); on Linux, install via your package manager (e.g.
+<code>sudo apt install git</code>).</p>
+<h3 id="the-vocabulary-you-actually-need">The vocabulary you actually
+need</h3>
+<ul>
+<li><strong>Repository ("repo")</strong> — a folder git is tracking.
+Created with <code>git init</code>.</li>
+<li><strong>Working directory</strong> — the actual files on disk, as
+you're editing them right now.</li>
+<li><strong>Staging</strong> — telling git <em>which</em> changes you
+want in the <em>next</em> commit (<code>git add &lt;file&gt;</code>).
+You can edit five files and only stage/commit two.</li>
+<li><strong>Commit</strong> — a saved snapshot of whatever is staged,
+with a message (<code>git commit -m "message"</code>).</li>
+<li><strong>Log</strong> — the list of all commits
+(<code>git log</code>).</li>
+</ul>
+<h3 id="the-exact-commands-this-workflow-uses">The exact commands this
+workflow uses</h3>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># once, when starting a brand-new repository</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.name <span class="st">&quot;Your Name&quot;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.email <span class="st">&quot;you@example.edu&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># the normal cycle, repeated constantly</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status              <span class="co"># what&#39;s changed since the last commit?</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add <span class="op">&lt;</span>file<span class="op">&gt;</span>          <span class="co"># stage a specific file (or `git add .` for everything changed)</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;message&quot;</span> <span class="co"># save a snapshot of what&#39;s staged</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># looking at history</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span>        <span class="co"># one line per commit, newest first</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> show <span class="op">&lt;</span>commit-hash<span class="op">&gt;</span>   <span class="co"># exactly what one commit changed</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff                 <span class="co"># what&#39;s changed but not yet staged</span></span></code></pre></div>
+<p>That's genuinely most of it. <code>README.md</code> Section 14 layers
+a specific <em>pattern</em> on top of these same six commands (a
+"proposal" commit, then an "apply" commit) — nothing about the
+underlying commands changes.</p>
+<h3 id="a-five-minute-worked-example">A five-minute worked example</h3>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> my-first-repo <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> my-first-repo</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> init</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.name <span class="st">&quot;Your Name&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config user.email <span class="st">&quot;you@example.edu&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;# My Topic&quot;</span> <span class="op">&gt;</span> notes.md</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status               <span class="co"># notes.md shows as untracked</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notes.md</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Start notes&quot;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;A new finding.&quot;</span> <span class="op">&gt;&gt;</span> notes.md</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> status               <span class="co"># notes.md now shows as modified</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> diff                 <span class="co"># shows the exact line you just added</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add notes.md</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">&quot;Add a finding&quot;</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">--oneline</span>        <span class="co"># shows both commits, newest first</span></span></code></pre></div>
+<h3 id="command-line-vs-a-gui-git-client--what-to-use-when">Command line
+vs. a GUI git client — what to use when</h3>
+<p>Every command above works exactly the same whether you type it
+yourself or click a button in a graphical tool — a GUI is just a
+different way of issuing the same underlying git operations, not a
+different kind of git. Both belong in your toolkit for different
+moments:</p>
+<ul>
+<li><strong>The command line (Git Bash, Terminal) is worth actually
+learning</strong>, even if you end up using a GUI day to day, for two
+reasons specific to this workflow: it's exactly what your AI assistant
+is running on your behalf (<code>README.md</code> Section 14's
+<code>CLAUDE.md</code> automation is just these same commands, issued
+for you), so understanding it means you understand what just happened to
+your repository; and it's the only option for anything scripted —
+<code>scripts/check-repo-invariants.sh</code> and the
+<code>.claude/settings.json</code> hook (Section 18) are shell commands,
+not something a GUI can substitute for.</li>
+<li><strong>A GUI client is often genuinely easier for specific
+tasks</strong>: reviewing a diff before you confirm an AI apply-commit
+(Section 6.6) — seeing old and new text side by side is easier to read
+at a glance than a terminal's <code>+</code>/<code>-</code> lines,
+especially for a long paragraph; browsing <code>git log</code> visually,
+particularly when recovering from the hand-edit/AI-apply collision
+Section 14 describes (comparing two versions of <code>paper.md</code> is
+more legible in a visual diff view); and staging only <em>part</em> of a
+changed file, which most GUIs make easier than the command line's
+<code>git add -p</code>. If you're using VS Code, its built-in
+<strong>Source Control</strong> panel (the branching icon in the left
+sidebar) covers all of this without installing anything extra — stage,
+commit, and view diffs directly next to the file you're editing.
+Dedicated clients (GitHub Desktop, GitKraken, Sourcetree) work the same
+way if you prefer a separate application.</li>
+<li><strong>Neither is "more correct."</strong> Use the command line
+when you want to understand or script something precisely; reach for a
+GUI when you want to <em>see</em> something clearly (a diff, a history,
+a conflict) before acting on it. Most people end up using both, on
+different days, for exactly these reasons.</li>
+</ul>
+<h3 id="common-beginner-mistakes">Common beginner mistakes</h3>
+<ul>
+<li><strong>Forgetting <code>git add</code> before
+<code>git commit</code></strong> — git commits only what's staged; if
+you edit a file and commit without adding it first, git will say there's
+nothing to commit (or, worse, commit an old version if something else
+was already staged). <code>git status</code> before every commit tells
+you exactly what will and won't be included.</li>
+<li><strong>Not setting <code>user.name</code>/<code>user.email</code>
+first</strong> — git will refuse to commit, or (on some setups) commit
+under a placeholder identity. Do this once per machine
+(<code>git config --global user.name "..."</code> sets it for every
+repository, not just one).</li>
+<li><strong>Running git commands in the wrong folder</strong> — git only
+sees the repository you're currently inside (or a subfolder of it).
+<code>git status</code> is also the quickest way to confirm you're where
+you think you are — it errors clearly ("not a git repository") if you're
+not.</li>
+</ul>
+<p>In this department's actual workflow, an AI assistant following
+<code>CLAUDE.md</code> runs steps like
+<code>git add</code>/<code>git commit</code> for you automatically
+(<code>README.md</code> Sections 14 and 17) — this section exists so you
+understand <em>what</em> it's doing on your behalf, not because you'll
+usually type these by hand.</p>
+<h2 id="part-2-markdown-from-scratch">Part 2: Markdown, from
+scratch</h2>
+<p>Markdown is plain text with a small set of symbols that mean
+something when rendered. You can always read the raw file even without
+rendering it — that's the whole point (and why it works so well with
+git: a git diff of a Markdown file is just readable text, unlike a Word
+document's internal format).</p>
+<table>
+<thead>
+<tr>
+<th>Write this</th>
+<th>Get this</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code># Heading 1</code></td>
+<td>Large heading</td>
+</tr>
+<tr>
+<td><code>## Heading 2</code></td>
+<td>Smaller heading</td>
+</tr>
+<tr>
+<td><code>*italic*</code></td>
+<td><em>italic</em></td>
+</tr>
+<tr>
+<td><code>**bold**</code></td>
+<td><strong>bold</strong></td>
+</tr>
+<tr>
+<td><code>- item</code> (repeated)</td>
+<td>Bullet list</td>
+</tr>
+<tr>
+<td><code>1. item</code> (repeated)</td>
+<td>Numbered list</td>
+</tr>
+<tr>
+<td><code>[link text](https://example.com)</code></td>
+<td>A hyperlink</td>
+</tr>
+<tr>
+<td><code>&gt; a quotation</code></td>
+<td>A blockquote</td>
+</tr>
+<tr>
+<td><code>`inline code`</code></td>
+<td><code>inline code</code></td>
+</tr>
+<tr>
+<td>a line of <code>```</code>, code, then <code>```</code></td>
+<td>A fenced code block</td>
+</tr>
+<tr>
+<td><code>| a | b |</code> header row + <code>|---|---|</code></td>
+<td>A table</td>
+</tr>
+</tbody>
+</table>
+<p>Two extensions matter specifically for the citation/PDF pipeline in
+Part 3 (supported by Pandoc, the tool this department uses to convert
+Markdown — not universally supported by every Markdown renderer, but
+that's fine, since Pandoc is what you'll actually use):</p>
+<ul>
+<li><strong>Footnotes</strong>: <code>text needing a note.[^1]</code> in
+the body, and, anywhere else in the file,
+<code>[^1]: The footnote's actual text.</code></li>
+<li><strong>Citations</strong>: <code>a claim [@citekey]</code> or
+<code>a claim [@citekey, 123]</code> for a specific page — covered fully
+in Part 3.</li>
+</ul>
+<h2 id="part-3-converting-a-draft-into-a-properly-cited-pdf">Part 3:
+Converting a draft into a properly-cited PDF</h2>
+<p>The goal: take <code>paper.md</code>, with inline citations, and
+produce a PDF with <strong>real Chicago-style footnotes</strong> (not
+just parenthetical text) and <strong>clickable bookmarks</strong> (a
+navigable outline in the PDF, and footnote markers that jump to their
+note and back). This was tested end-to-end for this tutorial — the
+mechanism below is verified, not assumed.</p>
+<h3 id="step-1--build-a-bibliography-file">Step 1 — build a bibliography
+file</h3>
+<p>Pandoc reads a separate bibliography file, in either CSL-JSON or
+BibTeX format (it detects which from the file extension). If you use
+Zotero, export your library as either format directly
+(<code>File → Export Library</code>). A minimal hand-written CSL-JSON
+example (<code>sources.json</code>):</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;irenaeus1885&quot;</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;type&quot;</span><span class="fu">:</span> <span class="st">&quot;book&quot;</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;title&quot;</span><span class="fu">:</span> <span class="st">&quot;Against Heresies&quot;</span><span class="fu">,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;author&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span><span class="dt">&quot;family&quot;</span><span class="fu">:</span> <span class="st">&quot;Irenaeus of Lyons&quot;</span><span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;translator&quot;</span><span class="fu">:</span> <span class="ot">[</span><span class="fu">{</span><span class="dt">&quot;given&quot;</span><span class="fu">:</span> <span class="st">&quot;Alexander&quot;</span><span class="fu">,</span> <span class="dt">&quot;family&quot;</span><span class="fu">:</span> <span class="st">&quot;Roberts&quot;</span><span class="fu">}</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">&quot;given&quot;</span><span class="fu">:</span> <span class="st">&quot;James&quot;</span><span class="fu">,</span> <span class="dt">&quot;family&quot;</span><span class="fu">:</span> <span class="st">&quot;Donaldson&quot;</span><span class="fu">}</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;publisher&quot;</span><span class="fu">:</span> <span class="st">&quot;Ante-Nicene Fathers&quot;</span><span class="fu">,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;issued&quot;</span><span class="fu">:</span> <span class="fu">{</span><span class="dt">&quot;date-parts&quot;</span><span class="fu">:</span> <span class="ot">[[</span><span class="dv">1885</span><span class="ot">]]</span><span class="fu">},</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="dt">&quot;volume&quot;</span><span class="fu">:</span> <span class="st">&quot;1&quot;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div>
+<p>The <code>id</code> (<code>irenaeus1885</code>) is what you'll cite
+by.</p>
+<h3 id="step-2--reference-it-and-cite-inline-in-papermd">Step 2 —
+reference it and cite inline in <code>paper.md</code></h3>
+<p>Add a YAML block at the very top of the file, then cite with
+<code>[@id]</code>:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="an">bibliography:</span><span class="co"> sources.json</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>John&#39;s vision is dated by Irenaeus to the end of Domitian&#39;s reign</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@irenaeus1885, 559</span><span class="co">]</span>.</span></code></pre></div>
+<p><code>, 559</code> after the citekey adds a specific page/location
+reference. Cite more than one source at once with
+<code>[@id1; @id2]</code>.</p>
+<h3 id="step-3--get-the-actual-chicago-style-file">Step 3 — get the
+actual Chicago style file</h3>
+<p>Citation <em>style</em> (Chicago vs. MLA vs. SBL — what the
+footnote/bibliography actually looks like) is controlled by a separate
+CSL (Citation Style Language) file, not by anything in your Markdown.
+Get the real one from the <a href="https://www.zotero.org/styles">Zotero
+Style Repository</a> — search "Chicago" and download:</p>
+<ul>
+<li><strong>"Chicago Manual of Style 17th edition (note)"</strong> —
+footnotes only, no separate bibliography page.</li>
+<li><strong>"Chicago Manual of Style 17th edition (full note)"</strong>
+or <strong>"(note, with bibliography)"</strong> — footnotes <em>and</em>
+a bibliography page (the usual choice for a thesis or paper).</li>
+</ul>
+<p>Save the downloaded <code>.csl</code> file in your topic repository
+(e.g. as <code>chicago-fullnote-bibliography.csl</code>) and commit it
+once, like any other repository asset — not as an AI-request cycle, just
+a plain maintenance commit (<code>README.md</code> Section 14's "skip
+the ceremony for anything that isn't a research question" applies here
+too).</p>
+<h3 id="step-4--convert">Step 4 — convert</h3>
+<p>Two routes, depending on what you have installed. Both were verified
+to produce real Chicago-style footnotes (not parenthetical citations)
+from the exact same <code>paper.md</code> and CSL file — which route you
+pick only changes the last step.</p>
+<p><strong>Route A — via Word/LibreOffice (works with what most of this
+department already uses for <code>.docx</code> conversion):</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> paper.md <span class="at">--citeproc</span> <span class="at">--csl</span><span class="op">=</span>chicago-fullnote-bibliography.csl <span class="at">-o</span> paper.docx</span></code></pre></div>
+<p>Open <code>paper.docx</code> in Word or LibreOffice — the citations
+are now real, native Word footnotes (confirmed: <code>--citeproc</code>
+writes them into the docx's actual footnotes part, not as plain text) —
+then <strong>File → Save As / Export → PDF</strong>. Word and
+LibreOffice both automatically turn your <code>#</code>/<code>##</code>
+headings into PDF bookmarks (the collapsible outline panel most PDF
+readers show in a sidebar) during this export, with no extra step.</p>
+<p><strong>Route B — direct to PDF in one command (needs a LaTeX
+distribution installed once — <a href="https://miktex.org/">MiKTeX</a>
+on Windows is the standard choice; this route was not re-verified with
+an actual LaTeX install in this session, so treat the command as
+standard/well-documented pandoc usage rather than something tested
+end-to-end here):</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pandoc</span> paper.md <span class="at">--citeproc</span> <span class="at">--csl</span><span class="op">=</span>chicago-fullnote-bibliography.csl <span class="dt">\</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--toc</span> <span class="at">--pdf-engine</span><span class="op">=</span>xelatex <span class="at">-o</span> paper.pdf</span></code></pre></div>
+<p><code>--toc</code> generates the table of contents <em>and</em> the
+PDF's bookmark panel from your headings in one step; the LaTeX engine
+(<code>xelatex</code>) handles real footnotes and citation formatting
+directly.</p>
+<h3 id="step-5--verify-the-result-yourself">Step 5 — verify the result
+yourself</h3>
+<p>Don't take either route's output on faith — this is the same
+verification habit <code>README.md</code> Section 3 asks of every AI
+claim, applied to your own tooling:</p>
+<ul>
+<li>Click a footnote marker: it should jump to the note at the
+bottom/end, and the note should have its own link back up to where you
+clicked from.</li>
+<li>Open the PDF's bookmark/outline panel (usually a sidebar icon in
+your PDF viewer) and confirm your headings appear there, nested
+correctly.</li>
+<li>Check one citation against <code>sources.json</code>/your
+<code>.bib</code> file by eye — does the rendered footnote actually
+match the entry you expect?</li>
+</ul>
+<h3
+id="fixing-citationfootnote-placement--by-hand-and-by-directing-the-ai">Fixing
+citation/footnote placement — by hand, and by directing the AI</h3>
+<p>A very common problem, whether you or an AI drafted the paragraph:
+several distinct claims in a row, but the citations all get bundled at
+the very end, so a reader can't tell which source actually backs which
+sentence.</p>
+<p><strong>Before (wrong — three separate claims, one citation dump at
+the end):</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Irenaeus dates John&#39;s vision to the end of Domitian&#39;s reign. Clement of</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Alexandria&#39;s account in *Quis Dives Salvetur* 42 is sometimes read as</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>supporting a similar dating, though less directly. Internal evidence such</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>as Revelation 17:10 is read by some scholars as pointing instead to the</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>60s AD <span class="co">[</span><span class="ot">@irenaeus1885, 559</span><span class="co">][@clement1857][</span><span class="ot">@thornbury2004</span><span class="co">]</span>.</span></code></pre></div>
+<p><strong>After (fixed — each citation sits right after the sentence it
+supports):</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Irenaeus dates John&#39;s vision to the end of Domitian&#39;s reign</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">@irenaeus1885, 559</span><span class="co">]</span>. Clement of Alexandria&#39;s account in *Quis Dives</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Salvetur* 42 is sometimes read as supporting a similar dating, though less</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>directly <span class="co">[</span><span class="ot">@clement1857</span><span class="co">]</span>. Internal evidence such as Revelation 17:10 is</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>read by some scholars as pointing instead to the 60s AD <span class="co">[</span><span class="ot">@thornbury2004</span><span class="co">]</span>.</span></code></pre></div>
+<p>The fix itself is just moving the <code>[@citekey]</code> marker to
+sit next to the right sentence — unlike old-fashioned manually-numbered
+footnotes, there is no renumbering to do afterward; Pandoc/citeproc
+generates the actual footnote numbers fresh at conversion time from
+wherever the markers currently sit. This is also true for plain
+(non-bibliographic) footnotes written as <code>[^label]</code>: use a
+short descriptive label instead of a number (<code>[^hyksos-note]</code>
+rather than <code>[^7]</code>), and inserting or removing one never
+forces you to relabel the others.</p>
+<p><strong>Asking the AI to place citations correctly the first
+time.</strong> Applying Section 7's "specify what you need, don't leave
+it implicit" advice to citation placement specifically:</p>
+<blockquote>
+<p>Good: <em>"When drafting this section, attach each citation
+immediately to the specific sentence it supports — never bundle multiple
+citations at the end of a paragraph that makes several distinct claims.
+If a sentence makes a claim with no source behind it, don't attach a
+citation to it at all; list it as unsupported in <code>TODO.md</code>
+instead."</em></p>
+<p>Bad: <em>"Add citations for this section."</em> — says nothing about
+per-sentence attachment, so bundling-at-the-end (the default failure
+mode) is left just as likely as doing it correctly.</p>
+</blockquote>
+<p><strong>Recognizing misplacement, and the corrective prompt.</strong>
+Watch for:</p>
+<ul>
+<li>One citation marker covering a paragraph that actually makes several
+distinct claims.</li>
+<li>A citation sitting next to a sentence whose specific content doesn't
+match what that source (check <code>sources.json</code>/your
+bibliography entry) actually says — it exists, just attached to the
+wrong neighboring sentence.</li>
+<li>A sentence with a specific factual claim and no citation anywhere
+near it, while the paragraph as a whole has one dangling at the
+end.</li>
+</ul>
+<p>When you catch this, don't just move the marker yourself and move on
+if the same draft has more of these — send it back with a scoped,
+checkable request, the same "encode the fix, don't just patch this one
+instance" habit from Section 8:</p>
+<blockquote>
+<p><em>"Re-check <code>ch2-draft.md</code>, paragraph 3: three separate
+claims, one citation at the end. For each sentence in that paragraph,
+tell me which specific source (if any) actually supports it, and move
+each citation to sit directly after its own sentence. If a sentence has
+no source, say so explicitly rather than leaving the shared citation in
+place."</em></p>
+</blockquote>
+<h3
+id="cross-references-to-a-specific-heading-elsewhere-in-the-text">Cross-references
+to a specific heading elsewhere in the text</h3>
+<p>Pandoc automatically gives every heading an anchor derived from its
+text (<code>## The Two Traditional Dating Positions</code> becomes
+<code>#the-two-traditional-dating-positions</code>). Link to it from
+anywhere else in the same document with normal Markdown link syntax:</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>See <span class="co">[</span><span class="ot">the discussion above</span><span class="co">](#the-two-traditional-dating-positions)</span> for the</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>external evidence.</span></code></pre></div>
+<p>This becomes a real, clickable internal jump in both the docx and PDF
+output — the same mechanism this very manual's own table of contents
+uses to link to its numbered sections.</p>
+</div>
+</body>
+</html>

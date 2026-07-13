@@ -1,0 +1,22 @@
+--- PROPOSAL COMMIT (commit immediately, nothing about the paper changed yet) ---
+
+Archive AI answer: <short-slug>
+
+AI question: <one-line restatement of what was asked; full text in
+  ai-requests/NNNN-.../question.md>
+AI answer summary: <1-3 sentences on what the AI answered>
+
+--- APPLY COMMIT (only once you've said yes to using it; separate commit) ---
+
+<short summary of what changed, imperative mood, ~50 chars>
+
+Applies proposal from commit <hash of the proposal commit above>.
+
+Fact-check status:
+  - <claim 1> — NOT YET CHECKED, added to TODO.md (the default; fine to leave as-is)
+  - <claim 2> — CHECKED against <source>, confirmed / corrected to <...>
+
+Additional considerations:
+  - <whatever you volunteered when asked the one optional question, plus
+    anything the AI noticed itself: a competing scholarly view, a caveat,
+    follow-up this suggests>

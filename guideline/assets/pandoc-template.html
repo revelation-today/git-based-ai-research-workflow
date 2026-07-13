@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>$title$</title>
+<link rel="stylesheet" href="$cssrelpath$/style.css">
+</head>
+<body>
+<div class="page">
+$if(crumb)$
+<p class="crumbs">$crumb$</p>
+$endif$
+$if(toc)$
+<nav class="toc" role="doc-toc">
+<p>Contents</p>
+$table-of-contents$
+</nav>
+$endif$
+$body$
+</div>
+</body>
+</html>
