@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bash scripts/check-repo-invariants.sh)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "input=$(cat); case \"$input\" in *\"git commit\"*) bash scripts/check-repo-invariants.sh; ec=$?; if [ $ec -ne 0 ]; then echo '{\"systemMessage\": \"Repository structural invariants failed after this commit -- run scripts/check-repo-invariants.sh to see details.\"}'; fi ;; esac",
+            "timeout": 30,
+            "statusMessage": "Checking repository invariants after commit..."
+          }
+        ]
+      }
+    ]
+  }
+}
