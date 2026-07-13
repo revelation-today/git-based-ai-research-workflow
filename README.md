@@ -20,7 +20,7 @@ Run, inside this folder:
 git log -p
 ```
 
-You will see four commits:
+You will see five commits:
 
 1. **Repository initialization** — the empty template structure (including
    `CLAUDE.md`), filled in with this specific research question.
@@ -41,6 +41,12 @@ You will see four commits:
    claim (about Clement of Alexandria) is deliberately left open, to show
    that not every item gets resolved right away — some genuinely need a
    specialist, not just a lookup.
+5. **Repository-maintenance commit** — a later update to `CLAUDE.md` (the
+   best-effort legal/institutional checks in Section 11.7) and the new
+   `scripts/check-repo-invariants.sh`. This isn't an AI-request cycle, so
+   it's its own plain commit rather than a proposal/apply pair — not every
+   commit in a topic repository has to fit that shape, only the ones that
+   stem from an actual AI question.
 
 This is the payoff of the process: nothing about the fabricated citation
 looked different from the real one in the AI's answer. It was caught only

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Worked example: revelation-dating</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div class="page">
+<p class="crumbs"><a href="../README.html">&larr; back to the department manual</a></p>
+<h1 id="example-topic-repository-revelation-dating">Example topic
+repository: <code>revelation-dating</code></h1>
+<p>This folder is a real, git-initialized example of the workflow
+described in the department manual (<code>../README.md</code>), applied
+to a small research question:</p>
+<p><strong>Research question:</strong> What is the evidence for dating
+the Book of Revelation to the reign of Nero (60s AD) versus the reign of
+Domitian (90s AD), and which external witnesses are cited for each?</p>
+<p>This is intentionally a small slice of the topic — enough to show the
+full propose → apply → fact-check cycle (Section 13), including a case
+where fact-checking catches an AI hallucination (a fabricated journal
+article), not a complete treatment of the dating question.</p>
+<div class="diagram">
+<svg viewBox="0 0 820 420" xmlns="http://www.w3.org/2000/svg" font-family="ui-monospace, SFMono-Regular, Consolas, monospace" color="var(--fg, #1b1f23)">
+  <style>
+    .line { stroke: currentColor; stroke-width: 2; opacity: .55; }
+    .dot { fill: currentColor; }
+    .hash { font-size: 13px; fill: currentColor; opacity: .75; }
+    .msg { font-size: 14px; fill: currentColor; }
+    .badge-bg { fill: color-mix(in srgb, currentColor 12%, transparent); stroke: currentColor; stroke-width: 1; }
+    .badge-txt { font-size: 11px; fill: currentColor; }
+  </style>
+
+  <line x1="30" y1="30" x2="30" y2="390" class="line"/>
+
+  <!-- commit 1 -->
+
+  <circle cx="30" cy="30" r="6" class="dot"/>
+  <text x="55" y="26" class="hash">bb4e585</text>
+  <text x="55" y="46" class="msg">Initialize revelation-dating research repository</text>
+  <rect x="55" y="58" width="66" height="20" rx="10" class="badge-bg"/>
+  <text x="88" y="72" text-anchor="middle" class="badge-txt">init</text>
+
+  <!-- commit 2 -->
+
+  <circle cx="30" cy="120" r="6" class="dot"/>
+  <text x="55" y="116" class="hash">779d25b</text>
+  <text x="55" y="136" class="msg">Archive AI answer: dating-debate-overview</text>
+  <rect x="55" y="148" width="90" height="20" rx="10" class="badge-bg"/>
+  <text x="100" y="162" text-anchor="middle" class="badge-txt">proposal</text>
+
+  <!-- commit 3 -->
+
+  <circle cx="30" cy="210" r="6" class="dot"/>
+  <text x="55" y="206" class="hash">09fdca8</text>
+  <text x="55" y="226" class="msg">Draft dating-debate section from AI answer 0001</text>
+  <rect x="55" y="238" width="66" height="20" rx="10" class="badge-bg"/>
+  <text x="88" y="252" text-anchor="middle" class="badge-txt">apply</text>
+
+  <!-- commit 4 -->
+
+  <circle cx="30" cy="300" r="6" class="dot"/>
+  <text x="55" y="296" class="hash">7a7a220</text>
+  <text x="55" y="316" class="msg">Fact-check request 0001: confirm Irenaeus, catch</text>
+  <text x="55" y="334" class="msg">fabricated Thornbury cite</text>
+  <rect x="55" y="346" width="92" height="20" rx="10" class="badge-bg"/>
+  <text x="101" y="360" text-anchor="middle" class="badge-txt">fact-check</text>
+
+  <!-- commit 5 -->
+
+  <circle cx="30" cy="390" r="6" class="dot"/>
+  <text x="55" y="386" class="hash">cd47cc8</text>
+  <text x="55" y="406" class="msg">Add legal-check steps to CLAUDE.md + invariant script</text>
+</svg>
+
+<p class="step" style="text-align:center;opacity:.7;font-size:.85rem;margin-top:.5rem">The actual commit history of this example repository.</p>
+</div>
+
+<h2 id="how-to-read-this-example">How to read this example</h2>
+<p>Run, inside this folder:</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> log <span class="at">-p</span></span></code></pre></div>
+<p>You will see five commits:</p>
+<ol type="1">
+<li><strong>Repository initialization</strong> — the empty template
+structure (including <code>CLAUDE.md</code>), filled in with this
+specific research question.</li>
+<li><strong>Proposal commit</strong> — a question asked about the dating
+debate, with the AI's full answer archived verbatim under
+<code>ai-requests/0001-.../</code>. Nothing about the paper has changed
+yet; this commit is purely the record of what was asked and
+answered.</li>
+<li><strong>Apply commit</strong> — once the answer was reviewed and
+accepted, it's used to draft a section of <code>paper.md</code>. Every
+extracted claim defaults to NOT YET CHECKED in <code>TODO.md</code>,
+referencing the proposal commit's hash — no fact-checking has happened
+yet at this point, and that's a normal, expected commit to make.</li>
+<li><strong>Fact-checking commit</strong> — a later, separate commit
+that actually checks two of the three claims: the patristic witness in
+Irenaeus is confirmed against a citable primary source; a specific
+journal article the AI cited turns out not to exist at all — a textbook
+hallucination — which gets flagged in <code>TODO.md</code> and never
+makes it into <code>sources.md</code>. The third claim (about Clement of
+Alexandria) is deliberately left open, to show that not every item gets
+resolved right away — some genuinely need a specialist, not just a
+lookup.</li>
+<li><strong>Repository-maintenance commit</strong> — a later update to
+<code>CLAUDE.md</code> (the best-effort legal/institutional checks in
+Section 11.7) and the new <code>scripts/check-repo-invariants.sh</code>.
+This isn't an AI-request cycle, so it's its own plain commit rather than
+a proposal/apply pair — not every commit in a topic repository has to
+fit that shape, only the ones that stem from an actual AI question.</li>
+</ol>
+<p>This is the payoff of the process: nothing about the fabricated
+citation looked different from the real one in the AI's answer. It was
+caught only because fact-checking against a real library
+catalog/database was a logged step that happened <em>after</em> the
+paper already reflected the claim — not because the error was somehow
+visible in the text itself, and not because the process demanded it be
+caught before anything was drafted.</p>
+</div>
+</body>
+</html>
