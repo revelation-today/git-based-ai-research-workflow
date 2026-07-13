@@ -8,7 +8,7 @@ to the reign of Nero (60s AD) versus the reign of Domitian (90s AD), and
 which external witnesses are cited for each?
 
 This is intentionally a small slice of the topic — enough to show the full
-propose → apply → fact-check cycle (Section 13), including a case where
+propose → apply → fact-check cycle (Section 14), including a case where
 fact-checking catches an AI hallucination (a fabricated journal article), not
 a complete treatment of the dating question.
 
