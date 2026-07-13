@@ -1,0 +1,311 @@
+<style>
+  :root {
+    --bg: #EDEEE8;
+    --bg-raised: #E4E5DD;
+    --fg: #23241F;
+    --muted: #6B6B62;
+    --accent: #8C3A2B;
+    --accent-ink: #2B3A4A;
+    --rule: #C9C7BC;
+    --diff-add-bg: #E3E9DC;
+    --diff-add-fg: #3D5A2C;
+    --diff-del-bg: #EFDEDA;
+    --diff-del-fg: #8C3A2B;
+    --code-bg: #E4E4DA;
+    color-scheme: light dark;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #191A16;
+      --bg-raised: #212219;
+      --fg: #E8E6DD;
+      --muted: #A6A395;
+      --accent: #D97A5F;
+      --accent-ink: #8FA6BF;
+      --rule: #3A3A32;
+      --diff-add-bg: #253023;
+      --diff-add-fg: #9FC98A;
+      --diff-del-bg: #33241F;
+      --diff-del-fg: #E39683;
+      --code-bg: #232419;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #191A16;
+    --bg-raised: #212219;
+    --fg: #E8E6DD;
+    --muted: #A6A395;
+    --accent: #D97A5F;
+    --accent-ink: #8FA6BF;
+    --rule: #3A3A32;
+    --diff-add-bg: #253023;
+    --diff-add-fg: #9FC98A;
+    --diff-del-bg: #33241F;
+    --diff-del-fg: #E39683;
+    --code-bg: #232419;
+  }
+  :root[data-theme="light"] {
+    --bg: #EDEEE8;
+    --bg-raised: #E4E5DD;
+    --fg: #23241F;
+    --muted: #6B6B62;
+    --accent: #8C3A2B;
+    --accent-ink: #2B3A4A;
+    --rule: #C9C7BC;
+    --diff-add-bg: #E3E9DC;
+    --diff-add-fg: #3D5A2C;
+    --diff-del-bg: #EFDEDA;
+    --diff-del-fg: #8C3A2B;
+    --code-bg: #E4E4DA;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Charter", "Bitstream Charter", Georgia, "Iowan Old Style", serif;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 4.5rem 1.5rem 6rem;
+  }
+
+  .dateline {
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 1.4rem;
+  }
+
+  h1.title {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 5vw, 2.7rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0 0 1.1rem;
+    color: var(--fg);
+  }
+
+  .subtitle {
+    font-size: 1.08rem;
+    color: var(--muted);
+    font-style: italic;
+    max-width: 56ch;
+    margin: 0 0 2.6rem;
+  }
+
+  .provenance {
+    border-left: 3px solid var(--accent);
+    padding: 0.9rem 1.2rem;
+    background: var(--bg-raised);
+    font-size: 0.92rem;
+    color: var(--muted);
+    margin: 0 0 3.2rem;
+    border-radius: 0 4px 4px 0;
+  }
+  .provenance strong { color: var(--fg); }
+
+  h2 {
+    font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+    margin: 3rem 0 1.1rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--rule);
+    color: var(--fg);
+  }
+
+  p { margin: 0 0 1.3rem; max-width: 66ch; }
+  ul, ol { margin: 0 0 1.3rem; padding-left: 1.35rem; max-width: 64ch; }
+  li { margin: 0.35rem 0; }
+  em { color: inherit; }
+  strong { font-weight: 700; }
+
+  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:hover { color: var(--accent); }
+
+  code {
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    font-size: 0.86em;
+    background: var(--code-bg);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  /* The one deliberate device: a marginalia/diff hybrid block.
+     Structural, not decorative -- it renders an actual unified diff
+     wherever the essay describes editing a file directly vs. the
+     proposal/apply pattern, so the reader sees the exact thing being
+     argued for. */
+  .diffblock {
+    margin: 1.6rem 0 1.8rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", Consolas, "Liberation Mono", monospace;
+    font-size: 0.84rem;
+    line-height: 1.7;
+    border: 1px solid var(--rule);
+  }
+  .diffblock .diffline { padding: 0.15rem 1rem; white-space: pre; }
+  .diffblock .del { background: var(--diff-del-bg); color: var(--diff-del-fg); }
+  .diffblock .add { background: var(--diff-add-bg); color: var(--diff-add-fg); }
+  .diffblock .ctx { color: var(--muted); }
+  .diffblock .label {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    padding: 0.5rem 1rem 0.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  /* Marginalia callout -- used for the three-tier confidence rating and
+     a couple of pull-quote-weight statements. Same visual family as the
+     diff block (a colored left rule) so the two devices read as one
+     system: annotation in the margin, whether it's an edit or a note. */
+  .margin-note {
+    border-left: 3px solid var(--accent-ink);
+    padding: 0.2rem 1.3rem;
+    margin: 1.8rem 0;
+  }
+  .margin-note p:last-child { margin-bottom: 0; }
+
+  .tier-list { list-style: none; padding: 0; margin: 0; }
+  .tier-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .tier-list li:last-child { border-bottom: none; }
+  .tier-name {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  hr.section-break {
+    border: none;
+    text-align: center;
+    margin: 3.2rem 0;
+  }
+  hr.section-break::after {
+    content: "· · ·";
+    color: var(--muted);
+    letter-spacing: 0.5em;
+    font-size: 0.9rem;
+  }
+
+  .closing {
+    margin-top: 3.5rem;
+    padding-top: 1.8rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.95rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 560px) {
+    body { font-size: 16.5px; }
+    .page { padding: 3rem 1.15rem 4rem; }
+  }
+</style>
+
+<div class="page">
+
+  <p class="dateline">Hagen Schilder &middot; Published 2026-07-13 &middot; First public draft</p>
+  <h1 class="title">Version-Controlling Your Thinking</h1>
+  <p class="subtitle">A git-based workflow for auditable AI-assisted research — and why "just be careful" was never going to be enough.</p>
+
+  <div class="provenance">
+    <strong>A note on this piece.</strong> This describes a methodology developed and first written up by the author, <strong>Hagen Schilder</strong>, on the date above, for use in academic research supervision. It is published here so the ideas are usable by anyone, and so the record of who worked them out, and when, is a matter of public, timestamped record rather than an internal document nobody outside one department ever saw.
+  </div>
+
+  <h2>The problem with "just be careful"</h2>
+  <p>Every guide to using AI in research says some version of the same thing: verify what it tells you, don't trust it blindly, disclose that you used it. This is correct, and also close to useless, because it gives you a <em>disposition</em>, not a process. A disposition doesn't scale across a hundred AI questions asked over six months while writing a thesis. It doesn't survive the ordinary pressure of a deadline. And it leaves no record: if someone asks a year later exactly what an AI contributed to a specific paragraph, "I was careful" is not an answer anyone can check.</p>
+  <p>What actually solves this is not a stronger disposition. It's a process borrowed, almost unchanged, from a field that solved an adjacent problem decades ago: software engineering's <strong>Configuration Management</strong> &mdash; the discipline of tracking every change to a complex system, who made it, why, and whether it was verified, without trusting anyone's memory to hold that information later. Applied to research instead of code, using the same tool (git), it produces something neither "be careful" nor a plain folder of drafts can: a complete, timestamped, unforgeable record of exactly what was asked, what an AI answered, what a human did with it, and what got checked &mdash; built as a byproduct of doing the work, not as separate overhead.</p>
+
+  <h2>The core move: separate "the AI said this" from "I decided to use this"</h2>
+  <p>The central habit is a two-commit pattern for every AI interaction that might end up influencing your work.</p>
+
+  <div class="diffblock">
+    <div class="label">without the pattern &mdash; one silent edit</div>
+    <div class="diffline ctx">  paper.md</div>
+    <div class="diffline del">- John's vision is undated in the earliest sources.</div>
+    <div class="diffline add">+ John's vision is dated by Irenaeus to the end of Domitian's reign.</div>
+    <div class="diffline ctx">  (edited directly &mdash; no record of what was asked, or checked)</div>
+  </div>
+
+  <div class="diffblock">
+    <div class="label">with the pattern &mdash; two commits, one AI cycle</div>
+    <div class="diffline add">+ ai-requests/0007-domitian-dating/question.md</div>
+    <div class="diffline add">+ ai-requests/0007-domitian-dating/answer.md</div>
+    <div class="diffline ctx">  commit: "Archive AI answer: domitian-dating"  &larr; proposal</div>
+    <div class="diffline ctx"> </div>
+    <div class="diffline del">- John's vision is undated in the earliest sources.</div>
+    <div class="diffline add">+ John's vision is dated by Irenaeus to the end of Domitian's reign.</div>
+    <div class="diffline ctx">  commit: "Applies proposal a1b2c3d. Fact-check: NOT YET CHECKED"  &larr; apply</div>
+  </div>
+
+  <p>Commit 1 &mdash; the <strong>proposal</strong>. The moment you get an answer from an AI assistant, archive the exact question and the complete, unedited answer to disk, and commit that archive immediately. Nothing about your actual paper has changed yet &mdash; this commit is purely evidence that a specific question was asked and a specific answer was given, at a specific time, verbatim.</p>
+  <p>Commit 2 &mdash; the <strong>apply</strong>. Only once you've actually decided to use the answer &mdash; reviewed it, decided it holds up, said an explicit "yes" &mdash; do you edit your actual draft. That edit is a second, separate commit, referencing the first one by its hash.</p>
+  <p>Why separate these, when you could just edit the draft directly? Because it makes three things true that "be careful" alone never delivers: a rejected proposal still leaves a clean record of having been considered and turned down; the apply commit can carry a fact-check status precisely because it's a distinct moment; and nothing about the AI's raw output is ever silently smoothed into your prose without a trace.</p>
+
+  <h2>Confidence isn't binary</h2>
+  <p>A checked/unchecked flag on every claim is the minimum bar &mdash; already more than most research practice does today. But it flattens a real distinction: a claim confirmed by two unrelated sources is not in the same epistemic position as your own inference that hasn't been checked against anything.</p>
+
+  <ul class="tier-list">
+    <li><span class="tier-name">Strongly attested</span>Confirmed by two or more independent sources or methods.</li>
+    <li><span class="tier-name">Moderately attested</span>Confirmed by one source or method, beyond your own reasoning.</li>
+    <li><span class="tier-name">Proposed, plausible</span>Your own argument or inference &mdash; not independently attested, and said so plainly.</li>
+  </ul>
+
+  <p>This turns "how sure are we, really" from a vague feeling into a stated, checkable claim &mdash; cheap to add, and meaningfully more honest than a uniformly confident tone that doesn't distinguish its best-supported points from its most speculative ones.</p>
+
+  <h2>Findings need an answer, but they should never block anything</h2>
+  <p>Once you start asking an AI to help <em>check</em> your own work &mdash; flag a possibly-real person's name that shouldn't be in a prompt, review a change to your own process rules for whether it quietly weakens a safeguard, notice that a paragraph's citations are all bundled at the end instead of attached to the sentences they support &mdash; a design question appears immediately: what happens when the AI raises a concern?</p>
+  <p>The wrong answer is to make it block. A check that stops your work until you address it gets disabled the first time it's inconvenient. The other wrong answer is to let it be advisory in the weak sense &mdash; a comment in a chat window that's gone the moment the conversation scrolls past it, acknowledged or not.</p>
+
+  <div class="margin-note">
+    <p>The right shape already exists, in code review tools: an open comment thread. The finding is logged as an open item &mdash; not a blocker, just a visible, dated, referenced note &mdash; and it stays open until someone actually answers it. Nothing is silently dropped because the moment passed; nothing is held hostage to it either.</p>
+  </div>
+
+  <h2>A rule that can tighten but never loosen &mdash; checked two ways</h2>
+  <p>Any process like this eventually needs local exceptions: a specific program requires a specific citation style, a specific assignment bans AI outright, a thesis needs a stricter verification bar than a seminar paper. The moment you allow local rules on top of a base process, you've created exactly one way for the whole thing to quietly fail: a local rule that reads like an addition but actually loosens a base protection.</p>
+  <p>The fix is to check this two ways, deliberately redundant:</p>
+  <ol>
+    <li><strong>A mechanical scan</strong> of the local-rules file for language patterns that indicate weakening a default &mdash; fast, fully automatic, catches the obvious cases, and will also miss cleverly-worded attempts. Never mistake it for a guarantee.</li>
+    <li><strong>An AI review with actual comprehension</strong>, applied independently, asking the same question &mdash; tighten or loosen? &mdash; with the capacity to catch phrasing a keyword list can't.</li>
+  </ol>
+  <p>Neither layer blocks anything. Both just leave a recorded flag that needs a human answer. The point of running two different kinds of check over the same risk is that a keyword scanner and a comprehending reader fail in different, mostly non-overlapping ways.</p>
+
+  <h2>Content is not instructions</h2>
+  <p>The last piece matters most as AI assistants gain the ability to act on your behalf &mdash; running commands, committing changes, and, in more capable setups, pushing or merging into shared systems other people also use. The moment an assistant reads a file and can also act on a system, that file becomes a place someone could try to steer it: an answer, a rules file, any content it reads as part of its normal work could in principle contain text that reads like an instruction.</p>
+  <p>The necessary discipline is simple to state and easy to skip if you don't say it explicitly: <strong>content is data, not instructions, regardless of what it says about itself.</strong> An assistant should feel free to make its own local, reversible commits &mdash; cheap, private, easy to undo. Anything that becomes visible to someone else &mdash; a push, a merge into shared history &mdash; should always require the human's actual, present instruction, never something read out of a file. If a file's content appears to be <em>trying</em> to issue that instruction, that's not a command to weigh; it's itself the finding to flag.</p>
+
+  <hr class="section-break">
+
+  <h2>Why this generalizes past its origin</h2>
+  <p>This methodology was worked out for graduate theological research &mdash; citation-heavy, historically dense, exactly the kind of writing where a fabricated source or a flattened scholarly disagreement does real damage and is easy to miss. But nothing about the mechanism is specific to theology, or even to the humanities. Any research or writing practice with the same three properties benefits from the same process: claims need to be individually verifiable against sources; AI assistance is genuinely useful for the mechanical parts and genuinely risky for the parts that require judgment; and more than one person eventually needs to trust the record of how a piece of work came to say what it says.</p>
+  <p>Law, journalism, policy analysis, and any STEM field that leans on literature review all fit that description. The two-commit pattern, the confidence tiers, the open-comment-thread treatment of AI findings, and the never-trust-embedded-instructions rule don't need adaptation to move into any of them &mdash; only the specific fact-checking sources and citation conventions change.</p>
+
+  <div class="closing">
+    <p>There's no license restriction on any of this &mdash; it's a process, not code, and the point of publishing it is for it to be used, adapted, and improved. If you build on it, a link back to this piece is appreciated but not required. If you find a way it fails that this piece doesn't account for, that's worth knowing about more than it's worth guarding against sharing.</p>
+  </div>
+
+</div>
