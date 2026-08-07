@@ -1,0 +1,54 @@
+git-based-ai-research-workflow
+Copyright 2026 Hagen Schilder
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+
+WHAT IS LICENSED HOW
+----------------------------------------------------------------------
+This repository holds two kinds of thing, and they are licensed
+differently, because a software licence says nothing useful about a
+document and a Creative Commons licence says nothing useful about linking.
+
+  Prose -- the manual, the tutorial, the IT guidance, and the Markdown
+  and HTML under guideline/ -- is licensed under
+  Creative Commons Attribution 4.0 International (CC BY 4.0):
+
+      https://creativecommons.org/licenses/by/4.0/
+
+  You may share and adapt it, including commercially and including for
+  teaching, provided you give appropriate credit.
+
+  Code and templates -- guideline/build-html.py, the scripts under
+  guideline/templates/ and guideline/example/, and anything under
+  tooling/ -- are licensed under the Apache License 2.0 above.
+
+The manual instructs readers to copy guideline/templates/new-topic-repo
+into their own repositories (Section 17). That is expressly permitted:
+copy it, change it, and use it, with attribution.
+
+
+AUTHORSHIP AND AI ASSISTANCE
+----------------------------------------------------------------------
+This work was produced with substantial AI assistance, under human
+direction, using the workflow it documents. A record of what was asked
+and answered was kept as the work proceeded.
+
+The US Copyright Office (Copyright and Artificial Intelligence, Part 2:
+Copyrightability, January 2025) holds that purely AI-generated material
+is not copyrightable, while a human's creative selection, arrangement and
+modification of such material may be. No claim is made here as to which
+portions fall on which side of that line. The licence above is granted
+over whatever is owned; nothing in it asserts ownership of what is not.
+
+This statement is included deliberately. A manual arguing that AI-assisted
+claims must be traceable and honestly attributed would be a poor advert
+for itself if it were silent about how it was made.
