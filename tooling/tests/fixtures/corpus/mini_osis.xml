@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<osis><osisText><div>
+<chapter osisID="Tst.1">
+<verse osisID="Tst.1.1"><w lemma="7225" morph="HNcfsa">בְּרֵאשִׁית</w><seg type="x-maqqef">־</seg><w lemma="c/776" morph="HTd/Ncbsa">הָאָרֶץ</w><seg type="x-sof-pasuq">׃</seg></verse>
+<verse osisID="Tst.1.2"><w lemma="7965 a" morph="HNcmsa">שָׁלוֹם</w><w lemma="7965 b" morph="HNcmsa">שָׁלוֹם</w></verse>
+</chapter>
+</div></osisText></osis>

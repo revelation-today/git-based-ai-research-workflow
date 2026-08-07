@@ -1,0 +1,13 @@
+# Editor/tool temp files — one was committed by accident in 9c95679.
+*.tmp.*
+__pycache__/
+*.pyc
+.pytest_cache/
+.hypothesis/
+build/
+dist/
+*.egg-info/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
