@@ -1,0 +1,53 @@
+# Dependencies for the theology-scripts tooling library.
+# Versions are those verified working in this environment on 2026-08-07
+# (Python 3.13.14, Windows 11). See output/libraries.md for what each
+# replaces and what was actually executed to confirm it.
+
+# --- already present, listed so the set is reproducible ---
+numpy==2.5.1
+scipy==1.18.0            # permutation_test, false_discovery_control,
+                         # combine_pvalues, bootstrap, hypergeom,
+                         # binomtest, fisher_exact  -- replaces the
+                         # workspace's 37 hand-rolled statistical copies
+scikit-learn==1.9.0      # cohen_kappa_score, TfidfVectorizer, cosine_similarity
+networkx==3.6.1
+matplotlib==3.11.1
+
+# --- installed 2026-08-07 ---
+statsmodels==0.14.6      # multipletests: bonferroni + holm, the scipy gap.
+                         # Its fdr_bh was verified identical to scipy's
+                         # false_discovery_control(method="bh").
+pandas==3.0.5            # groupby, for count.distribution(unit=...)
+pytest==9.1.1            # the verify harness; xfail(strict=True) ~= FAIL verdict
+hypothesis==6.165.2      # property tests for the normalization boundary
+jsonschema==4.26.0       # C-03 data contracts, validated at both ends
+pypandoc==1.17           # wrapper over pandoc 3.10 (system binary)
+python-bidi==0.6.11      # display-order marks at render time only
+pypdf==6.4.0             # PDF text extraction -- see the caveat below
+pypdfium2==5.0.4         # PDF -> image; the ONLY reliable Hebrew render check
+
+# --- installed but NOT USABLE on this machine ---
+# weasyprint            pip install succeeds, import fails: cannot load
+#                       'libgobject-2.0-0'. Needs GTK, which is not present
+#                       on this Windows install. Do not depend on it.
+
+# --- system binaries (not pip) ---
+# pandoc 3.10           already installed
+# typst 0.15.1          installed via `winget install Typst.Typst`.
+#                       This is the working PDF engine. pandoc must be
+#                       given its full path, or the Typst directory added
+#                       to PATH:
+#                       %LOCALAPPDATA%\Microsoft\WinGet\Packages\
+#                         Typst.Typst_*\typst-x86_64-pc-windows-msvc\
+#                       winget adds it to the user PATH; restart the shell
+#                       so the change is visible to new processes.
+#
+# NOTE: pip console scripts (pytest.exe, weasyprint.exe, ...) install to a
+# directory not on PATH. Invoke as `python -m pytest`, not `pytest`.
+
+# --- quality tooling (installed 2026-08-07; see docs/quality-evidence.md) ---
+pytest-cov==7.0.0        # coverage integration
+coverage==7.15.4         # 92% statement coverage measured
+ruff==0.16.1             # static analysis
+mypy==2.3.0              # type checking -- 0 errors
+radon==6.0.1             # complexity A (3.54), maintainability A

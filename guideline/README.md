@@ -1381,6 +1381,26 @@ this has not been built into the template or verified end-to-end the way
 possibility to configure deliberately, not a tested default to expect out
 of the box.
 
+## 18.5 Reference implementation: `tooling/`
+
+*🔵 Context*
+
+[`../tooling/`](../tooling/) holds `thscript`, a Python library built end to
+end through this manual's own process — Sections 14's request/document/
+commit cycle, applied through survey, function list, architecture,
+requirements, diagram, test plan, and test-driven implementation.
+
+It is included as evidence that the process produces something, and — more
+usefully for a manual about not overclaiming — as evidence of what the
+process *catches*. Its `docs/problems.md` records four extent counts that
+were falsified and two headline findings that evaporated when finally
+measured, each with the correction and the reason. Section 3 argues that
+AI output must be checked; `tooling/docs/` is what that checking looks like
+when it is actually done and the results are kept.
+
+Read [`../tooling/README.md`](../tooling/README.md) first. The library is
+Apache-2.0; its documentation is CC BY 4.0.
+
 ## 19. Worked example
 
 *🔵 Context*

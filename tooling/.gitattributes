@@ -1,0 +1,25 @@
+# Test fixtures encode byte-level defects on purpose: BOMs, CRLF, mixed
+# line endings, invisible Cf characters. git's core.autocrlf is `true` on
+# this machine, which rewrites line endings on add and checkout -- and it
+# already destroyed two fixtures in commit ddc5089: mixed_endings.md was
+# stored with zero CRLF, so the "mixed" defect it exists to reproduce was
+# gone from the repository while verify.py still passed against the
+# working tree.
+#
+# That is exactly the failure this repository studies: a check that stays
+# green while the thing it checks has been silently normalised away.
+#
+# -text disables all end-of-line conversion. Do not remove it.
+tests/fixtures/** -text
+
+# Everything else: normalise to LF in the repository, regardless of the
+# local autocrlf setting, so diffs stay readable across machines.
+*.md   text eol=lf
+*.py   text eol=lf
+*.sh   text eol=lf
+*.txt  text eol=lf
+*.json text eol=lf
+*.xml  text eol=lf
+
+# ...except the fixture tree, re-stated after the globs above so it wins.
+tests/fixtures/** -text
