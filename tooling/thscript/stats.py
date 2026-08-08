@@ -29,10 +29,25 @@ import numpy as np
 import scipy.stats as _st
 
 __all__ = [
-    "Result", "family", "p_adjust", "combine", "permutation_test",
-    "monte_carlo_test", "exact_test", "agreement", "bootstrap_ci",
-    "UnadjustedError", "ProvenanceError",
+    "Result", "family", "solo", "p_adjust", "combine",
+    "permutation_test", "monte_carlo_test", "exact_test", "agreement",
+    "bootstrap_ci", "reset_family_tracking", "UnadjustedError",
+    "ProvenanceError",
 ]
+
+#: Every p-value produced in this process, unless explicitly declared
+#: solo or placed in a declared family. W-1: the gate used to engage
+#: only when the caller opted in by calling family(), so producing
+#: twenty p-values in a loop and never declaring anything reproduced
+#: the exact defect the gate exists to prevent. The default is now
+#: guarded and the unguarded path must be asked for.
+_produced: list = []
+
+
+def reset_family_tracking() -> None:
+    """Clear the implicit family. For tests, and for a script that
+    genuinely starts a new analysis in the same process."""
+    _produced.clear()
 
 
 class UnadjustedError(RuntimeError):
@@ -65,6 +80,7 @@ class Result:
     null: np.ndarray | None = None
     adjusted: float | None = None
     _family: _Family | None = None
+    _solo_reason: str | None = None
 
     # -- the gate ---------------------------------------------------------
     def _check(self) -> None:
@@ -77,12 +93,26 @@ class Result:
             raise ProvenanceError(
                 "no corpus fingerprint: this number cannot be tied to the "
                 "data it was computed from")
+        if self.p is None or self.adjusted is not None or self._solo_reason:
+            return
+
         fam = self._family
-        if fam is not None and fam.size > 1 and self.adjusted is None:
+        if fam is not None and fam.size > 1:
             raise UnadjustedError(
-                f"this p-value is one of {fam.size}; call stats.p_adjust() on "
-                "the family before reporting it, or read .unadjusted_p "
-                "deliberately")
+                f"this p-value is one of {fam.size} in a declared family; "
+                "call stats.p_adjust() on the family before reporting it, or "
+                "read .unadjusted_p deliberately")
+
+        # W-1: no declared family, but this process has produced several
+        # p-values. That is the untracked case the gate previously missed.
+        if fam is None and len(_produced) > 1:
+            raise UnadjustedError(
+                f"{len(_produced)} p-values have been produced in this "
+                "process and none has been adjusted. Either group them with "
+                "stats.family(...) and call stats.p_adjust(...), or declare "
+                "this one independent with stats.solo(result, reason=...). "
+                "Reporting several uncorrected p-values as if each stood "
+                "alone is the failure this check exists to prevent.")
 
     def __format__(self, spec: str) -> str:
         self._check()
@@ -125,6 +155,20 @@ def family(results: Sequence[Result]) -> list[Result]:
     return [replace(r, _family=fam) for r in results]
 
 
+def solo(result: Result, *, reason: str) -> Result:
+    """Declare a p-value genuinely independent of the others (W-1).
+
+    Requires a reason, which is recorded and printed. Opting out of the
+    guard should be visible in review and in the output -- not a silent
+    default, and not a bare flag that can be pasted without thought.
+    """
+    if not reason:
+        raise ValueError(
+            "solo() requires a reason: an unexplained opt-out is the same "
+            "as no guard at all")
+    return replace(result, _solo_reason=reason)
+
+
 def p_adjust(results: Sequence[Result], *, method: str = "bh") -> list[Result]:
     """Correct a family for multiple comparisons.
 
@@ -158,6 +202,35 @@ def combine(results: Sequence[Result], *, method: str = "fisher") -> Result:
 
 
 # ------------------------------------------------------------------- testing
+def _register(r: Result) -> Result:
+    """Record a produced p-value so the implicit family can be counted.
+
+    Called by every producing function. This is what makes the W-1 guard
+    engage without the caller opting in.
+    """
+    if r.p is not None:
+        _produced.append(r)
+    return r
+
+
+def _provenance(corpus) -> str:
+    """Resolve a corpus argument to a recorded fingerprint (W-2).
+
+    Accepts a Corpus (whose fingerprint is read), or a string. There is no
+    default: 'unspecified' used to satisfy the provenance check while
+    meaning nothing, which made ProvenanceError unreachable. Absence must
+    now be stated as "none: <reason>" so it is a claim rather than a gap.
+    """
+    fp = getattr(corpus, "fingerprint", None)
+    if callable(fp):
+        return f"{getattr(corpus, 'source', 'corpus')}@{fp()[:12]}"
+    if not isinstance(corpus, str) or not corpus.strip():
+        raise TypeError(
+            "corpus= is required: pass a Corpus, or a string, or state its "
+            'absence explicitly as corpus="none: <reason>"')
+    return corpus
+
+
 def _generator(rng) -> np.random.Generator:
     return rng if isinstance(rng, np.random.Generator) \
         else np.random.default_rng(rng)
@@ -172,7 +245,7 @@ def _warn_if_alpha_unreachable(n: int, alpha: float | None) -> None:
 
 
 def permutation_test(data, *, statistic: Callable, rng, n: int = 20_000,
-                     alternative: str = "greater", corpus: str | None = None,
+                     alternative: str = "greater", corpus,
                      alpha: float | None = None, **kw) -> Result:
     """Two-sample permutation test. ``rng`` is required (S-01).
 
@@ -188,15 +261,15 @@ def permutation_test(data, *, statistic: Callable, rng, n: int = 20_000,
         tuple(np.asarray(d, float) for d in data), statistic,
         n_resamples=n, alternative=alternative, rng=gen, **kw)
     seed = rng if not isinstance(rng, np.random.Generator) else None
-    return Result(value=float(res.statistic), p=float(res.pvalue),
+    return _register(Result(value=float(res.statistic), p=float(res.pvalue),
                   method="permutation", seed=seed, n=n,
-                  corpus=corpus or "unspecified",
-                  null=np.asarray(res.null_distribution))
+                  corpus=_provenance(corpus),
+                  null=np.asarray(res.null_distribution)))
 
 
 def monte_carlo_test(observed, *, draw: Callable, statistic: Callable, rng,
                      n: int = 20_000, alternative: str = "greater",
-                     corpus: str | None = None,
+                     corpus,
                      alpha: float | None = None) -> Result:
     """Test against an arbitrary null supplied by ``draw`` (S-02b).
 
@@ -216,15 +289,15 @@ def monte_carlo_test(observed, *, draw: Callable, statistic: Callable, rng,
         observed, lambda size: draw(gen, size if isinstance(size, int) else size[0]),
         statistic, n_resamples=n, alternative=alternative, vectorized=True)
     seed = rng if not isinstance(rng, np.random.Generator) else None
-    return Result(value=float(np.asarray(res.statistic).item()),
+    return _register(Result(value=float(np.asarray(res.statistic).item()),
                   p=float(np.asarray(res.pvalue).item()),
                   method="monte_carlo", seed=seed, n=n,
-                  corpus=corpus or "unspecified",
-                  null=np.asarray(res.null_distribution))
+                  corpus=_provenance(corpus),
+                  null=np.asarray(res.null_distribution)))
 
 
 def exact_test(kind: str, *, alternative: str = "greater",
-               corpus: str | None = None, **params) -> Result:
+               corpus=None, **params) -> Result:
     """Closed-form test. Prefer this over simulation where it exists (S-04).
 
     ``kind`` ∈ hypergeometric | binomial | fisher-exact. No seed, because
@@ -244,22 +317,22 @@ def exact_test(kind: str, *, alternative: str = "greater",
         value, p = _st.fisher_exact(params["table"], alternative=alternative)
     else:
         raise ValueError(f"unknown exact test {kind!r}")
-    return Result(value=float(value), p=float(p), method=f"exact:{kind}",
-                  seed=None, n=None, corpus=corpus or "unspecified")
+    return _register(Result(value=float(value), p=float(p),
+                            method=f"exact:{kind}", seed=None, n=None,
+                            corpus=_provenance(corpus)))
 
 
-def agreement(a, b, *, method: str = "cohen", corpus: str | None = None,
-              **kw) -> Result:
+def agreement(a, b, *, method: str = "cohen", corpus=None, **kw) -> Result:
     """Inter-rater agreement (S-10)."""
     if method != "cohen":
         raise ValueError(f"unknown method {method!r}")
     from sklearn.metrics import cohen_kappa_score
     return Result(value=float(cohen_kappa_score(a, b, **kw)),
-                  method="agreement:cohen", corpus=corpus or "unspecified")
+                  method="agreement:cohen", corpus=_provenance(corpus))
 
 
 def bootstrap_ci(data, *, statistic: Callable, rng, n: int = 10_000,
-                 level: float = 0.95, corpus: str | None = None) -> Result:
+                 level: float = 0.95, corpus=None) -> Result:
     """Bootstrap confidence interval. ``rng`` required (S-01)."""
     gen = _generator(rng)
     res = _st.bootstrap(data, statistic, n_resamples=n,
@@ -267,5 +340,5 @@ def bootstrap_ci(data, *, statistic: Callable, rng, n: int = 10_000,
     seed = rng if not isinstance(rng, np.random.Generator) else None
     lo, hi = res.confidence_interval
     return Result(value=float((lo + hi) / 2), method="bootstrap", seed=seed,
-                  n=n, corpus=corpus or "unspecified",
+                  n=n, corpus=_provenance(corpus),
                   null=np.array([lo, hi]))

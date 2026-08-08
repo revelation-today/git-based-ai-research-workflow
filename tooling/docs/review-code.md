@@ -9,7 +9,7 @@ Findings are ordered by severity. Each was **reproduced**, not inferred.
 
 ---
 
-## W-1 · The central mechanism is opt-in — *critical*
+## W-1 · The central mechanism is opt-in — *critical* — **FIXED 2026-08-08**
 
 `architecture.md` §3 calls this the design's load-bearing invariant: a
 p-value belonging to a family of N>1 cannot be printed until `p_adjust`
@@ -47,9 +47,22 @@ exists, and does not fire.*
 someone declared N. It should say the guard applies **unless** the caller
 has declared singularity.
 
+> **Fixed 2026-08-08 — option 3 adopted, the default inverted.**
+> `stats` now records every p-value produced in the process. Once more than
+> one exists and none has been adjusted, formatting any of them raises.
+> Opting out is `stats.solo(result, reason=...)` — the reason is
+> **required**, recorded and printed, because an unexplained opt-out is the
+> same as no guard. `stats.reset_family_tracking()` starts a fresh
+> analysis. Exact tests count toward the family too; a p-value is a
+> p-value, and leaving `exact_test` outside would have been a hole in the
+> shape of the original defect.
+>
+> Verified by five tests, all confirmed failing first — including the
+> boundary (a single p-value still prints) and the escape hatch.
+
 ---
 
-## W-2 · Provenance is auto-satisfied with a placeholder — *critical*
+## W-2 · Provenance is auto-satisfied with a placeholder — *critical* — **FIXED 2026-08-08**
 
 ```
 corpus omitted -> 'unspecified' | formats anyway: True
@@ -65,6 +78,11 @@ yields a string that satisfies the check and means nothing. The
 explicit `corpus="none: <reason>"`. Same discipline as `rng`, same
 justification, and it was inconsistent to apply it to one and not the
 other.
+
+> **Fixed 2026-08-08 as proposed.** `corpus=` is required. Passing a
+> `Corpus` reads its fingerprint automatically; absence must be stated as
+> `"none: <reason>"`, which makes it a claim rather than a gap. The
+> `"unspecified"` default is gone, so `ProvenanceError` is reachable.
 
 ---
 
