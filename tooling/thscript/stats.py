@@ -24,6 +24,7 @@ from __future__ import annotations
 import warnings
 from dataclasses import dataclass
 from collections.abc import Callable, Sequence
+from typing import Any
 
 import numpy as np
 import scipy.stats as _st
@@ -128,7 +129,9 @@ class Result:
     #
     # `unadjusted_p` remains the deliberate bypass. That is the point of
     # it: bypassing should be greppable, and `.p` was not.
-    @property
+    @property  # type: ignore[no-redef]  # deliberately shadows the
+    # dataclass field of the same name: reading `.p` must run the gate,
+    # and the field is what makes `Result(p=...)` still work.
     def p(self) -> float | None:
         if self._p is not None:
             self._check()
@@ -193,9 +196,10 @@ def _evolve(r: "Result", **kw) -> "Result":
     adjustment machinery -- the one place that must be able to read a raw
     p-value.
     """
-    base = dict(value=r.value, p=r._p, method=r.method, seed=r.seed,
-                n=r.n, corpus=r.corpus, null=r.null, adjusted=r.adjusted,
-                _family=r._family, _solo_reason=r._solo_reason)
+    base: dict[str, Any] = dict(
+        value=r.value, p=r._p, method=r.method, seed=r.seed,
+        n=r.n, corpus=r.corpus, null=r.null, adjusted=r.adjusted,
+        _family=r._family, _solo_reason=r._solo_reason)
     base.update(kw)
     return Result(**base)
 
