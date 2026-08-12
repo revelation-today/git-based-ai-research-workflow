@@ -12,6 +12,20 @@ import pytest
 from thscript import stats
 
 
+@pytest.fixture(autouse=True)
+def _fresh_analysis():
+    """Each test is a separate analysis.
+
+    stats tracks every p-value produced in the process so the W-1 guard
+    engages without the caller opting in. That is right for a script and
+    wrong for a test suite, where otherwise test 30 would trip on p-values
+    produced by test 2.
+    """
+    stats.reset_family_tracking()
+    yield
+    stats.reset_family_tracking()
+
+
 # ------------------------------------------------------------- TC-17, S-01
 def test_tc17_rng_is_required():
     """scipy will run unseeded. The wrapper must not."""
@@ -21,16 +35,19 @@ def test_tc17_rng_is_required():
 
 def test_tc17b_same_seed_gives_identical_results():
     a, b = [1.0, 2, 3, 4, 5], [2.0, 3, 4, 5, 9]
-    r1 = stats.permutation_test((a, b), statistic=_diff, rng=7, n=500)
-    r2 = stats.permutation_test((a, b), statistic=_diff, rng=7, n=500)
-    assert r1.p == r2.p
+    r1 = stats.permutation_test((a, b), statistic=_diff, rng=7, n=500, corpus="t@0")
+    r2 = stats.permutation_test((a, b), statistic=_diff, rng=7, n=500, corpus="t@0")
+    # `unadjusted_p`, not `.p`: this asserts DETERMINISM, not a finding.
+    # Reading `.p` runs the family gate, and two p-values have been
+    # produced here -- correctly, since nothing has been adjusted.
+    assert r1.unadjusted_p == r2.unadjusted_p
     assert r1.seed == 7
 
 
 def test_tc17c_different_seeds_are_allowed_to_differ():
     a, b = [1.0, 2, 3, 4, 5], [2.0, 3, 4, 5, 9]
-    r1 = stats.permutation_test((a, b), statistic=_diff, rng=1, n=500)
-    r2 = stats.permutation_test((a, b), statistic=_diff, rng=2, n=500)
+    r1 = stats.permutation_test((a, b), statistic=_diff, rng=1, n=500, corpus="t@0")
+    r2 = stats.permutation_test((a, b), statistic=_diff, rng=2, n=500, corpus="t@0")
     assert r1.seed != r2.seed          # the point is that the seed is recorded
 
 
@@ -44,7 +61,7 @@ def test_tc18_permutation_uses_the_plus_one_estimator():
     rng = np.random.default_rng(7)
     x, y = rng.normal(size=20), rng.normal(size=20)
     r = stats.permutation_test((x, y), statistic=_diff, rng=7, n=999,
-                               alternative="greater")
+                               alternative="greater", corpus="t@0")
     k = int((r.null >= r.value).sum())
     assert r.p == pytest.approx((k + 1) / (len(r.null) + 1))
 
@@ -77,7 +94,8 @@ def test_tc19_structural_null_via_monte_carlo():
         observed,
         draw=lambda gen, size: np.array(
             [gen.choice(N, size=K, replace=False) for _ in range(size)]),
-        statistic=statistic, rng=20260807, n=2000, alternative="greater")
+        statistic=statistic, rng=20260807, n=2000, alternative="greater",
+        corpus="t@0")
 
     assert r.method.startswith("monte_carlo")
     k = int((r.null >= r.value).sum())
@@ -88,7 +106,7 @@ def test_tc19_structural_null_via_monte_carlo():
 def test_tc19b_monte_carlo_also_requires_a_seed():
     with pytest.raises(TypeError):
         stats.monte_carlo_test([1, 2, 3], draw=lambda g, s: np.zeros((s, 3)),
-                               statistic=lambda x, axis=-1: 0)
+                               statistic=lambda x, axis=-1: 0, corpus="t@0")
 
 
 # ------------------------------------------------------------- TC-20, S-03
@@ -146,14 +164,15 @@ def test_tce11b_a_lone_result_is_not_a_family():
 def test_tc22_exact_matches_simulation():
     """R6: exact where exact exists. 08_monte_carlo.py simulated this."""
     exact = stats.exact_test("hypergeometric", M=124, n=62, N=21, k=20,
-                             alternative="greater")
+                             alternative="greater", corpus="t@0")
     assert 0 < exact.p < 1
     assert exact.method == "exact:hypergeometric"
     assert exact.seed is None            # nothing random happened
 
 
 def test_tc22b_exact_result_needs_no_seed_to_format():
-    r = stats.exact_test("binomial", k=8, n=10, p=0.5, alternative="greater")
+    r = stats.exact_test("binomial", k=8, n=10, p=0.5, alternative="greater",
+                       corpus="t@0")
     assert "p=" in format(r)
 
 
@@ -191,7 +210,7 @@ def test_tce12_pvalue_of_zero_is_clipped_in_combination():
 def test_tce13_warns_when_alpha_is_unreachable():
     with pytest.warns(UserWarning, match="unreachable"):
         stats.permutation_test(([1.0, 2, 3], [4.0, 5, 6]), statistic=_diff,
-                               rng=1, n=10, alpha=0.001)
+                               rng=1, n=10, alpha=0.001, corpus="t@0")
 
 
 def test_tce14_most_extreme_observation_never_gives_zero():
@@ -206,7 +225,7 @@ def test_tce14_most_extreme_observation_never_gives_zero():
     a = [100.0, 101, 102, 103, 104]
     b = [1.0, 2, 3, 4, 5]
     r = stats.permutation_test((a, b), statistic=_diff, rng=3, n=200,
-                               alternative="greater")
+                               alternative="greater", corpus="t@0")
     floor = 1 / (len(r.null) + 1)
     assert r.p > 0
     assert r.p >= floor
@@ -217,7 +236,7 @@ def test_tce14_most_extreme_observation_never_gives_zero():
 
 def test_tce15_empty_input_raises():
     with pytest.raises(ValueError):
-        stats.permutation_test(([], []), statistic=_diff, rng=1, n=10)
+        stats.permutation_test(([], []), statistic=_diff, rng=1, n=10, corpus="t@0")
 
 
 def test_tce16_family_across_runs_can_be_assembled_explicitly():
@@ -249,3 +268,92 @@ def test_tc24_no_independent_pvalue_arithmetic_outside_the_wrapper():
 def _mk(p):
     return stats.Result(value=0.0, p=p, method="permutation", seed=1,
                         n=1000, corpus="test@0", _family=None)
+
+
+# ==========================================================================
+# W-1 / W-2 — the two critical weaknesses from docs/review-code.md.
+#
+# Both were reproduced before being fixed: the architecture calls the
+# p-adjustment gate load-bearing, and it did not engage unless the caller
+# opted in by calling family(). A guard that protects only the careful
+# protects nobody who needed it.
+# ==========================================================================
+
+# ------------------------------------------------------------ W-1, S-03
+def test_w1_producing_several_pvalues_engages_the_gate_without_opt_in():
+    """The failure: 3 p-values, family() never called, all printed fine."""
+    rng = np.random.default_rng(0)
+    results = [
+        stats.permutation_test((rng.normal(size=8), rng.normal(size=8)),
+                               statistic=_diff, rng=i, n=200,
+                               corpus="test@0")
+        for i in range(3)
+    ]
+    # None of these declared a family. The gate must engage anyway.
+    with pytest.raises(stats.UnadjustedError):
+        format(results[-1])
+
+
+def test_w1b_a_single_pvalue_still_formats():
+    """The boundary. One result is not a family and must stay usable."""
+    stats.reset_family_tracking()
+    r = stats.permutation_test(([1.0, 2, 3, 4], [2.0, 3, 4, 9]),
+                               statistic=_diff, rng=1, n=200, corpus="test@0")
+    assert "p=" in format(r)
+
+
+def test_w1c_declaring_solo_opts_out_explicitly():
+    """Opting out must be possible, deliberate, and greppable."""
+    stats.reset_family_tracking()
+    rs = [stats.permutation_test(([1.0, 2, 3, 4], [2.0, 3, 4, 9]),
+                                 statistic=_diff, rng=i, n=200, corpus="test@0")
+          for i in range(3)]
+    with pytest.raises(stats.UnadjustedError):
+        format(rs[0])
+    solo = stats.solo(rs[0], reason="independent question, not a family")
+    assert "p=" in format(solo)
+
+
+def test_w1d_adjusting_a_declared_family_still_works():
+    stats.reset_family_tracking()
+    rs = [stats.permutation_test(([1.0, 2, 3, 4], [2.0, 3, 4, 9]),
+                                 statistic=_diff, rng=i, n=200, corpus="test@0")
+          for i in range(3)]
+    adj = stats.p_adjust(stats.family(rs), method="bh")
+    assert all("p=" in format(r) for r in adj)
+
+
+def test_w1e_exact_tests_count_toward_the_family_too():
+    """A p-value is a p-value; the gate must not have an exact-test hole."""
+    stats.reset_family_tracking()
+    a = stats.exact_test("binomial", k=8, n=10, p=0.5, corpus="t@0")
+    b = stats.exact_test("binomial", k=9, n=10, p=0.5, corpus="t@0")
+    with pytest.raises(stats.UnadjustedError):
+        format(b)
+    assert a.unadjusted_p is not None      # the escape hatch still works
+
+
+# ------------------------------------------------------------ W-2, S-05
+def test_w2_corpus_is_required_not_defaulted():
+    """'unspecified' satisfied the provenance check and meant nothing."""
+    stats.reset_family_tracking()
+    with pytest.raises(TypeError):
+        stats.permutation_test(([1.0, 2, 3], [2.0, 3, 4]),
+                               statistic=_diff, rng=1, n=50)
+
+
+def test_w2b_absent_provenance_must_be_stated_with_a_reason():
+    stats.reset_family_tracking()
+    r = stats.permutation_test(([1.0, 2, 3], [2.0, 3, 4]), statistic=_diff,
+                               rng=1, n=50, corpus="none: synthetic fixture")
+    assert "none: synthetic fixture" in format(r)
+
+
+def test_w2c_a_corpus_object_supplies_its_own_fingerprint():
+    stats.reset_family_tracking()
+    from thscript import corpus as _c
+    from pathlib import Path
+    c = _c.load("osis", path=Path(__file__).parent / "fixtures/corpus/mini_osis.xml")
+    r = stats.permutation_test(([1.0, 2, 3], [2.0, 3, 4]), statistic=_diff,
+                               rng=1, n=50, corpus=c)
+    assert c.fingerprint()[:12] in format(r)

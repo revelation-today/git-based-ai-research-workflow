@@ -132,7 +132,11 @@ def test_tc40_same_seed_same_bytes(tmp_path):
             ([1.0, 2, 3, 4, 5], [2.0, 3, 4, 5, 9]),
             statistic=lambda x, y, axis=0: x.mean(axis=axis) - y.mean(axis=axis),
             rng=99, n=500, corpus="test@0")
-        path.write_text(f"{r.p!r}\n", encoding="utf-8")
+        # `unadjusted_p`: this checks byte-identical output, not a
+        # reported result. Writing `r.p` straight to a file is exactly
+        # the escape route the gate now closes -- worth noting that the
+        # test suite reached for it naturally.
+        path.write_text(f"{r.unadjusted_p!r}\n", encoding="utf-8")
 
     a, b = tmp_path / "a.txt", tmp_path / "b.txt"
     produce(a)

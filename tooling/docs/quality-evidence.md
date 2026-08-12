@@ -13,7 +13,7 @@ repository on 2026-08-07. Nothing is asserted. Reproduce with
 
 | Measure | Tool | Result |
 |---|---|---|
-| Tests passing | pytest 9.1.1 | **129 / 129** |
+| Tests passing | pytest 9.1.1 | **137 / 137** |
 | Statement coverage | coverage 7.15.4 | **92 %** (751 statements, 59 missed) |
 | Type checking | mypy 2.3.0 | **0 errors** in 8 source files |
 | Static analysis, production code | ruff 0.16.1 | **3 findings**, all reviewed and justified |
@@ -139,10 +139,11 @@ overclaiming this project was built to catch.
   [`review-code.md`](review-code.md)). Every number here is from one
   machine, one Python, one OS.
 - **`agreement()` and `bootstrap_ci()` are untested.**
-- **Two known-critical design weaknesses are open**, and no metric here
-  reflects them: the p-adjustment gate is opt-in (W-1) and the provenance
-  check is satisfied by a placeholder (W-2). The suite is green *and* the
-  central mechanism can be bypassed by not calling `family()`.
+- ~~Two known-critical design weaknesses are open~~ — **both fixed
+  2026-08-08** (W-1, W-2). Worth keeping the original wording in mind
+  though: the suite was green *while* the central mechanism could be
+  bypassed by not calling `family()`. No metric on this page detected
+  that. A review did.
 - **The library covers round 1 only.** [`use-cases.md`](use-cases.md)
   records eight use cases with no implementation at all — so "92 % covered"
   means 92 % of what was built, which is roughly half of what is needed.

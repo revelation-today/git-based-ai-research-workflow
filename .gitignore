@@ -1,0 +1,6 @@
+# Windows reserved device name. A file literally called NUL keeps appearing
+# at the repository root -- some tool redirects to the Windows null device
+# from inside the working directory. It cannot be added to git ("short read
+# while indexing NUL") and blocks `git add -A` entirely until removed, and
+# removing it needs a \?\ path prefix. Ignored so it can never be staged.
+NUL
