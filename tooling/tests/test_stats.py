@@ -37,7 +37,10 @@ def test_tc17b_same_seed_gives_identical_results():
     a, b = [1.0, 2, 3, 4, 5], [2.0, 3, 4, 5, 9]
     r1 = stats.permutation_test((a, b), statistic=_diff, rng=7, n=500, corpus="t@0")
     r2 = stats.permutation_test((a, b), statistic=_diff, rng=7, n=500, corpus="t@0")
-    assert r1.p == r2.p
+    # `unadjusted_p`, not `.p`: this asserts DETERMINISM, not a finding.
+    # Reading `.p` runs the family gate, and two p-values have been
+    # produced here -- correctly, since nothing has been adjusted.
+    assert r1.unadjusted_p == r2.unadjusted_p
     assert r1.seed == 7
 
 

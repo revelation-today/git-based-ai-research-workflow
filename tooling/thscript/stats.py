@@ -22,7 +22,7 @@ look identical at the point of printing. Here they do not (L-02).
 from __future__ import annotations
 
 import warnings
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from collections.abc import Callable, Sequence
 
 import numpy as np
@@ -64,7 +64,7 @@ class _Family:
     adjusted: bool = False
 
 
-@dataclass
+@dataclass(repr=False, eq=False)
 class Result:
     """A number that knows where it came from (AD-2).
 
@@ -84,16 +84,16 @@ class Result:
 
     # -- the gate ---------------------------------------------------------
     def _check(self) -> None:
-        if self.p is not None and self.seed is None and \
+        if self._p is not None and self.seed is None and \
                 not self.method.startswith("exact"):
             raise ProvenanceError(
                 f"{self.method or 'result'} carries a p-value but no seed; "
                 "a resampled number that cannot be reproduced is not a result")
-        if self.p is not None and self.corpus is None:
+        if self._p is not None and self.corpus is None:
             raise ProvenanceError(
                 "no corpus fingerprint: this number cannot be tied to the "
                 "data it was computed from")
-        if self.p is None or self.adjusted is not None or self._solo_reason:
+        if self._p is None or self.adjusted is not None or self._solo_reason:
             return
 
         fam = self._family
@@ -114,14 +114,55 @@ class Result:
                 "Reporting several uncorrected p-values as if each stood "
                 "alone is the failure this check exists to prevent.")
 
+
+    # ---- the escape route ------------------------------------------------
+    # `p` is a PROPERTY, not a field, and reading it runs the same gate as
+    # formatting. Before this, `_check` was reachable only through
+    # __format__, so a number could leave through
+    #
+    #     json.dumps({"p": result.p})
+    #
+    # without ever being adjusted or declared solo -- which is precisely
+    # how it left. Formatting is not the only exit and was never the
+    # common one.
+    #
+    # `unadjusted_p` remains the deliberate bypass. That is the point of
+    # it: bypassing should be greppable, and `.p` was not.
+    @property
+    def p(self) -> float | None:
+        if self._p is not None:
+            self._check()
+        return self._p
+
+    @p.setter
+    def p(self, value: float | None) -> None:
+        self.__dict__["_p_store"] = value
+
+    @property
+    def _p(self) -> float | None:
+        """The raw value, for this module's own machinery only."""
+        return self.__dict__.get("_p_store")
+
+    def __repr__(self) -> str:
+        return (f"Result(value={self.value!r}, p={self._p!r}, "
+                f"method={self.method!r}, adjusted={self.adjusted!r})")
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Result):
+            return NotImplemented
+        return (self.value, self._p, self.method, self.seed, self.n,
+                self.corpus, self.adjusted) == \
+               (other.value, other._p, other.method, other.seed, other.n,
+                other.corpus, other.adjusted)
+
     def __format__(self, spec: str) -> str:
         self._check()
         bits = [f"{self.method}", f"value={self.value:.6g}"]
-        if self.p is not None:
-            shown = self.adjusted if self.adjusted is not None else self.p
+        if self._p is not None:
+            shown = self.adjusted if self.adjusted is not None else self._p
             bits.append(f"p={shown:.6g}")
             if self.adjusted is not None:
-                bits.append(f"(adjusted, raw {self.p:.6g})")
+                bits.append(f"(adjusted, raw {self._p:.6g})")
         if self.seed is not None:
             bits.append(f"seed={self.seed}")
         if self.n is not None:
@@ -140,7 +181,23 @@ class Result:
         Deliberately named so that bypassing is greppable and visible in
         review, rather than something that happens by accident.
         """
-        return self.p
+        return self._p
+
+
+
+def _evolve(r: "Result", **kw) -> "Result":
+    """`dataclasses.replace` for a Result.
+
+    Not `dataclasses.replace()`: that reads every init field with getattr, which now
+    goes through the gate on `p` and would raise inside the library's own
+    adjustment machinery -- the one place that must be able to read a raw
+    p-value.
+    """
+    base = dict(value=r.value, p=r._p, method=r.method, seed=r.seed,
+                n=r.n, corpus=r.corpus, null=r.null, adjusted=r.adjusted,
+                _family=r._family, _solo_reason=r._solo_reason)
+    base.update(kw)
+    return Result(**base)
 
 
 # ------------------------------------------------------------------ families
@@ -152,7 +209,7 @@ def family(results: Sequence[Result]) -> list[Result]:
     fact, including across separate runs (TC-E16).
     """
     fam = _Family(size=len(results))
-    return [replace(r, _family=fam) for r in results]
+    return [_evolve(r, _family=fam) for r in results]
 
 
 def solo(result: Result, *, reason: str) -> Result:
@@ -166,7 +223,7 @@ def solo(result: Result, *, reason: str) -> Result:
         raise ValueError(
             "solo() requires a reason: an unexplained opt-out is the same "
             "as no guard at all")
-    return replace(result, _solo_reason=reason)
+    return _evolve(result, _solo_reason=reason)
 
 
 def p_adjust(results: Sequence[Result], *, method: str = "bh") -> list[Result]:
@@ -175,7 +232,7 @@ def p_adjust(results: Sequence[Result], *, method: str = "bh") -> list[Result]:
     ``bh``/``by`` delegate to ``scipy.stats.false_discovery_control``;
     ``bonferroni``/``holm`` to ``statsmodels`` (scipy has neither).
     """
-    ps = [r.p for r in results]
+    ps = [r._p for r in results]
     if any(p is None for p in ps):
         raise ValueError("every member of a family must carry a p-value")
 
@@ -188,13 +245,13 @@ def p_adjust(results: Sequence[Result], *, method: str = "bh") -> list[Result]:
         raise ValueError(f"unknown method {method!r}")
 
     fam = _Family(size=len(results), adjusted=True)
-    return [replace(r, adjusted=float(a), _family=fam)
+    return [_evolve(r, adjusted=float(a), _family=fam)
             for r, a in zip(results, adj, strict=True)]
 
 
 def combine(results: Sequence[Result], *, method: str = "fisher") -> Result:
     """Combine p-values. Clipped, so a p of exactly 0 does not give -inf."""
-    ps = np.clip([r.p for r in results], 1e-300, 1.0)
+    ps = np.clip([r._p for r in results], 1e-300, 1.0)
     stat, p = _st.combine_pvalues(ps, method=method)
     return Result(value=float(stat), p=float(p), method=f"combine:{method}",
                   seed=results[0].seed if results else None,
@@ -208,7 +265,7 @@ def _register(r: Result) -> Result:
     Called by every producing function. This is what makes the W-1 guard
     engage without the caller opting in.
     """
-    if r.p is not None:
+    if r._p is not None:
         _produced.append(r)
     return r
 
